@@ -243,11 +243,11 @@ sw_treeMaker::sw_treeMaker(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("../../MC/SingleEle_ntuple_NOPU.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/u/user/quantumapple/L1Pixel_KNU/MC/SingleEle_ntuple_NOPU.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("../../MC/SingleEle_ntuple_NOPU.root");
+         f = new TFile("/u/user/quantumapple/L1Pixel_KNU/MC/SingleEle_ntuple_NOPU.root");
       }
-      TDirectory * dir = (TDirectory*)f->Get("../../MC/SingleEle_ntuple_NOPU.root:/NtupleMaker");
+      TDirectory * dir = (TDirectory*)f->Get("/u/user/quantumapple/L1Pixel_KNU/MC/SingleEle_ntuple_NOPU.root:/NtupleMaker");
       dir->GetObject("t",tree);
 
    }
