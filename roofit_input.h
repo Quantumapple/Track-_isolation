@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Wed May 25 23:38:21 2016 by ROOT version 6.04/08
+// Thu May 17 11:29:42 2018 by ROOT version 6.06/01
 // from TTree t/t
-// found on file: ROI.root
+// found on file: data.root
 //////////////////////////////////////////////////////////
 
 #ifndef roofit_input_h
@@ -23,26 +23,12 @@ public :
 // Fixed size dimensions of array or collections stored in the TTree if any.
 
    // Declaration of leaf types
-   Float_t         abs_pterr;
-   Float_t         closest_egEt;
-   Float_t         closest_egEta;
-   Float_t         closest_egPhi;
-   Float_t         closest_eg_dr;
-   vector<float>   *bpix_l1_dphi_roi;
-   vector<float>   *bpix_l2_dphi_roi;
-   vector<float>   *bpix_l3_dphi_roi;
-   vector<float>   *bpix_l4_dphi_roi;
+   vector<float>   *bsl1_l1l2_dphi;
+   vector<float>   *genpT;
 
    // List of branches
-   TBranch        *b_abs_pterr;   //!
-   TBranch        *b_closest_egEt;   //!
-   TBranch        *b_closest_egEta;   //!
-   TBranch        *b_closest_egPhi;   //!
-   TBranch        *b_closest_eg_dr;   //!
-   TBranch        *b_bpix_l1_dphi_roi;   //!
-   TBranch        *b_bpix_l2_dphi_roi;   //!
-   TBranch        *b_bpix_l3_dphi_roi;   //!
-   TBranch        *b_bpix_l4_dphi_roi;   //!
+   TBranch        *b_bsl1_l1l2_dphi;   //!
+   TBranch        *b_genpT;   //!
 
    roofit_input(TTree *tree=0);
    virtual ~roofit_input();
@@ -50,7 +36,7 @@ public :
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
-   virtual void     Loop(float low_et, float high_et);
+   virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 };
@@ -63,9 +49,9 @@ roofit_input::roofit_input(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("ROI.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("data.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("ROI.root");
+         f = new TFile("data.root");
       }
       f->GetObject("t",tree);
 
@@ -109,22 +95,16 @@ void roofit_input::Init(TTree *tree)
    // (once per file to be processed).
 
    // Set object pointer
-   bpix_l1_dphi_roi = 0;
+   bsl1_l1l2_dphi = 0;
+   genpT = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
    fCurrent = -1;
    fChain->SetMakeClass(1);
 
-   fChain->SetBranchAddress("abs_pterr", &abs_pterr, &b_abs_pterr);
-   fChain->SetBranchAddress("closest_egEt", &closest_egEt, &b_closest_egEt);
-   fChain->SetBranchAddress("closest_egEta", &closest_egEta, &b_closest_egEta);
-   fChain->SetBranchAddress("closest_egPhi", &closest_egPhi, &b_closest_egPhi);
-   fChain->SetBranchAddress("closest_eg_dr", &closest_eg_dr, &b_closest_egEt);
-   fChain->SetBranchAddress("bpix_l1_dphi_roi", &bpix_l1_dphi_roi, &b_bpix_l1_dphi_roi);
-   fChain->SetBranchAddress("bpix_l2_dphi_roi", &bpix_l2_dphi_roi, &b_bpix_l2_dphi_roi);
-   fChain->SetBranchAddress("bpix_l3_dphi_roi", &bpix_l3_dphi_roi, &b_bpix_l3_dphi_roi);
-   fChain->SetBranchAddress("bpix_l4_dphi_roi", &bpix_l4_dphi_roi, &b_bpix_l4_dphi_roi);
+   fChain->SetBranchAddress("bsl1_l1l2_dphi", &bsl1_l1l2_dphi, &b_bsl1_l1l2_dphi);
+   fChain->SetBranchAddress("genpT", &genpT, &b_genpT);
    Notify();
 }
 
