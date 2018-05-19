@@ -3,6 +3,7 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <TF1.h>
 
 #include "RooGlobalFunc.h"
 #include "RooRealVar.h"
@@ -25,11 +26,15 @@ void roofit_input::Loop()
 
    Long64_t nentries = fChain->GetEntries();
    Long64_t nbytes = 0, nb = 0;
-
+  
+   Int_t count = 0;
    
    Int_t nbins = 150; Float_t x1 = 0.; Float_t x2 = 150.;
-   TH1F* hist_bsl1_l1l2 = new TH1F("hist_bsl1_l1l2",";P_{T} (GeV); #Delta#phi", nbins, x1, x2);
-  
+   TH1F* hist_bsl1_l1l2_a = new TH1F("hist_bsl1_l1l2_a",";P_{T} (GeV); #Delta#phi", 18, 0.2, 2.0);
+   TH1F* hist_bsl1_l1l2_b = new TH1F("hist_bsl1_l1l2_b",";P_{T} (GeV); #Delta#phi", 23, 2.0, 25.);
+   TH1F* hist_bsl1_l1l2_c = new TH1F("hist_bsl1_l1l2_c",";P_{T} (GeV); #Delta#phi", 10, 25., 50.);
+   TH1F* hist_bsl1_l1l2_d = new TH1F("hist_bsl1_l1l2_d",";P_{T} (GeV); #Delta#phi", 20, 50., 150.);
+
    ofstream Bsl1_l1l2_points;
    Bsl1_l1l2_points.open("./Bsl1_l1l2_points.h");
 
@@ -37,8 +42,8 @@ void roofit_input::Loop()
    Bsl1_l1l2_points << "#define Bsl1_l1l2_points_h" << endl;
    Bsl1_l1l2_points << endl;
 
-   Bsl1_l1l2_points << "double gen_Pt[150] ={}, point[150] = {}; " << endl;
-   Bsl1_l1l2_points << "int points = " << nbins << ";" << endl;
+   Bsl1_l1l2_points << "double gen_Pt[70] ={}, point[70] = {}; " << endl;
+   Bsl1_l1l2_points << "int points = 70;" << endl;
 
    Bsl1_l1l2_points << "void set_arrary(){" << endl;
    Bsl1_l1l2_points << endl;
@@ -46,33 +51,37 @@ void roofit_input::Loop()
    Float_t low_pt = 0.;
    Float_t high_pt = 1.;
    
-   //for(Int_t nth = 0; nth < 150; nth++)
-   for(Int_t nth = 0; nth < 50; nth++)
+   TFile *output = new TFile("fit.root","RECREATE");
+   TH1F *H[75];
+   Char_t histname[15];
+
+   Float_t min = -1.;
+   Float_t max = 1.;
+
+   TF1 *func = new TF1("func","[0]*TMath::Gaus(x,[1],[2],1)",min,max);
+
+   for(Int_t nth = 2; nth < 4; nth++)
    {
-       cout << "Process: (" << nth << "/150)" << endl;
-       TString file_ = "./Fix_results/phi_Pt";
+       cout << "Process: (" << count+1 << "/70)" << endl;
+       TString file_ = "./Fix_results/phi_";
        TString ith_;
 
-       ith_.Form("%d", nth);
-       file_ = file_ + ith_ + ".pdf";
+       ith_.Form("%d", count+1);
+       file_ = file_ + ith_ + "th.pdf";
 
-       low_pt = 0.+ nth;
-       high_pt = low_pt + 1.;
+       low_pt = 0.+ nth*0.1;
+       high_pt = low_pt + 0.1;
 
        cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
 
-       TTree *out_tree = new TTree("t","t");
-       Float_t bsl1_l1l2_dphi_; 
-       out_tree->Branch("bsl1_l1l2_Dphi", &bsl1_l1l2_dphi_, "bsl1_l1l2_Dphi/F");
-       
+       sprintf(histname, "hist_%dth", count+1);
+       H[count] = new TH1F(histname,"",250,-0.3,0.05);
+
        for (Long64_t jentry=0; jentry<nentries;jentry++) {
-       //for (Long64_t jentry=0; jentry<10;jentry++) {
 	   Long64_t ientry = LoadTree(jentry);
 	   if (ientry < 0) break;
 	   nb = fChain->GetEntry(jentry);   nbytes += nb;
 	   // if (Cut(ientry) < 0) continue;
-
-	   //cout << "Process: (" << jentry << "/" << nentries << ")" << endl;
 
 	   int size = bsl1_l1l2_dphi->size();
 	   int pT_size = genpT->size(); 
@@ -84,87 +93,431 @@ void roofit_input::Loop()
 
            Float_t gen_pT = genpT->at(0);
 	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
-	   cout << "generator level pT: " << gen_pT << endl;
+	   //cout << "generator level pT: " << gen_pT << endl;
+           
+	   H[count]->Fill(bsl1_l1l2_dphi->at(0));
 
-           bsl1_l1l2_dphi_ = bsl1_l1l2_dphi->at(0);
-	   out_tree->Fill();
+       }// end of event loop
+
+       func->SetParameters(70, H[count]->GetMean(), 0.01);
+       H[count]->Fit(func,"0R");
+       cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       hist_bsl1_l1l2_a->SetBinContent(count+1, fabs(func->GetParameter(1)));
+       gStyle->SetOptFit(1111);
+
+       func->SetLineColor(kRed);
+       func->SetLineWidth(2);
+
+       TCanvas* c1 = new TCanvas("c1","",800,800) ;
+       c1->cd(1); 
+       gPad->SetLeftMargin(0.15);  
+       H[count]->Draw();
+       func->Draw("same");
+
+       c1->SaveAs(file_);
+       c1->Write();
+
+       c1->Clear();
+       delete c1;
+  
+       count++;
+       cout << endl; 
+
+   } // end of nth loop ( 0.2 ~ 0.3 GeV )
+   
+   for(Int_t nth = 4; nth < 10; nth++)
+   {
+       cout << "Process: (" << count+1 << "/70)" << endl;
+       TString file_ = "./Fix_results/phi_";
+       TString ith_;
+
+       ith_.Form("%d", count+1);
+       file_ = file_ + ith_ + "th.pdf";
+
+       low_pt = 0.+ nth*0.1;
+       high_pt = low_pt + 0.1;
+
+       cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
+
+       sprintf(histname, "hist_%dth", count+1);
+       H[count] = new TH1F(histname,"",250,-0.11,0.03);
+
+       for (Long64_t jentry=0; jentry<nentries;jentry++) {
+	   Long64_t ientry = LoadTree(jentry);
+	   if (ientry < 0) break;
+	   nb = fChain->GetEntry(jentry);   nbytes += nb;
+	   // if (Cut(ientry) < 0) continue;
+
+	   int size = bsl1_l1l2_dphi->size();
+	   int pT_size = genpT->size(); 
+
+	   if( size == 0 ) continue;
+
+	   //cout << "Size of dphi vector: " << size << ", size of pT vector: " << pT_size << endl;
+	   //cout << "dPhi: " << bsl1_l1l2_dphi->at(0) << ", pT: " << genpT->at(0) << endl;
+
+           Float_t gen_pT = genpT->at(0);
+	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
+	   //cout << "generator level pT: " << gen_pT << endl;
+           
+	   H[count]->Fill(bsl1_l1l2_dphi->at(0));
+
+       }// end of event loop
+
+       func->SetParameters(70, H[count]->GetMean(), 0.001);
+       H[count]->Fit(func,"0R");
+       cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       hist_bsl1_l1l2_a->SetBinContent(count+1, fabs(func->GetParameter(1)));
+       gStyle->SetOptFit(1111);
+
+       func->SetLineColor(kRed);
+       func->SetLineWidth(2);
+
+       TCanvas* c1 = new TCanvas("c1","",800,800) ;
+       c1->cd(1); 
+       gPad->SetLeftMargin(0.15);  
+       H[count]->Draw();
+       func->Draw("same");
+
+       c1->SaveAs(file_);
+       c1->Write();
+
+       c1->Clear();
+       delete c1;
+  
+       count++;
+       cout << endl; 
+
+   } // end of nth loop ( 0.4 ~ 1 GeV )
+  
+   for(Int_t nth = 10; nth < 20; nth++)
+   {
+       cout << "Process: (" << count+1 << "/70)" << endl;
+       TString file_ = "./Fix_results/phi_";
+       TString ith_;
+
+       ith_.Form("%d", count+1);
+       file_ = file_ + ith_ + "th.pdf";
+
+       low_pt = 0.+ nth*0.1;
+       high_pt = low_pt + 0.1;
+
+       cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
+
+       sprintf(histname, "hist_%dth", count+1);
+       H[count] = new TH1F(histname,"",250,-0.04,0.);
+
+       for (Long64_t jentry=0; jentry<nentries;jentry++) {
+	   Long64_t ientry = LoadTree(jentry);
+	   if (ientry < 0) break;
+	   nb = fChain->GetEntry(jentry);   nbytes += nb;
+	   // if (Cut(ientry) < 0) continue;
+
+	   int size = bsl1_l1l2_dphi->size();
+	   int pT_size = genpT->size(); 
+
+	   if( size == 0 ) continue;
+
+	   //cout << "Size of dphi vector: " << size << ", size of pT vector: " << pT_size << endl;
+	   //cout << "dPhi: " << bsl1_l1l2_dphi->at(0) << ", pT: " << genpT->at(0) << endl;
+
+           Float_t gen_pT = genpT->at(0);
+	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
+	   //cout << "generator level pT: " << gen_pT << endl;
+           
+	   H[count]->Fill(bsl1_l1l2_dphi->at(0));
+
+       }// end of event loop
+
+       func->SetParameters(70, H[count]->GetMean(), 0.001);
+       H[count]->Fit(func,"0R");
+       cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       hist_bsl1_l1l2_a->SetBinContent(count+1, fabs(func->GetParameter(1)));
+       gStyle->SetOptFit(1111);
+
+       func->SetLineColor(kRed);
+       func->SetLineWidth(2);
+
+       TCanvas* c1 = new TCanvas("c1","",800,800) ;
+       c1->cd(1); 
+       gPad->SetLeftMargin(0.15);  
+       H[count]->Draw();
+       func->Draw("same");
+
+       c1->SaveAs(file_);
+       c1->Write();
+
+       c1->Clear();
+       delete c1;
+  
+       count++;
+       cout << endl; 
+
+   } // end of nth loop ( 1 ~ 2 GeV )
+
+   for(Int_t nth = 2; nth < 25; nth++)
+   {
+       cout << "Process: (" << count+1 << "/70)" << endl;
+       TString file_ = "./Fix_results/phi_";
+       TString ith_;
+
+       ith_.Form("%d", count+1);
+       file_ = file_ + ith_ + "th.pdf";
+
+       low_pt = nth;
+       high_pt = low_pt + 1.;
+
+       cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
+
+       sprintf(histname, "hist_%dth", count+1);
+       H[count] = new TH1F(histname,"",250,-0.04,0.04);
+       
+       for (Long64_t jentry=0; jentry<nentries;jentry++) {
+	   Long64_t ientry = LoadTree(jentry);
+	   if (ientry < 0) break;
+	   nb = fChain->GetEntry(jentry);   nbytes += nb;
+	   // if (Cut(ientry) < 0) continue;
+
+	   int size = bsl1_l1l2_dphi->size();
+	   int pT_size = genpT->size(); 
+
+	   if( size == 0 ) continue;
+
+	   //cout << "Size of dphi vector: " << size << ", size of pT vector: " << pT_size << endl;
+	   //cout << "dPhi: " << bsl1_l1l2_dphi->at(0) << ", pT: " << genpT->at(0) << endl;
+
+           Float_t gen_pT = genpT->at(0);
+	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
+	   //cout << "generator level pT: " << gen_pT << endl;
+
+	   H[count]->Fill(bsl1_l1l2_dphi->at(0));
 
        }// end of event loop
        cout << endl;
 
-       float low_x = -0.1, high_x = 0.1;
-       RooRealVar bsl1_l1l2_Dphi("bsl1_l1l2_Dphi","bsl1_l1l2_Dphi", low_x, high_x) ;
+       func->SetParameters(70, H[count]->GetMean(), 0.001);
+       H[count]->Fit(func,"0R");
+       cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       hist_bsl1_l1l2_b->SetBinContent(nth-1, fabs(func->GetParameter(1)));
+       gStyle->SetOptFit(1111);
 
-       RooDataSet ds1("ds1","ds1",RooArgSet(bsl1_l1l2_Dphi),Import(*out_tree)) ;
+       func->SetLineColor(kRed);
+       func->SetLineWidth(2);
 
-       RooPlot* frame1 = bsl1_l1l2_Dphi.frame(Title("bsl1_l1l2_Dphi")) ;
-       ds1.plotOn(frame1) ;
+       TCanvas* c1 = new TCanvas("c1","",800,800) ;
+       c1->cd(1); 
+       gPad->SetLeftMargin(0.15);  
+       H[count]->Draw();
+       func->Draw("same");
 
-       RooRealVar mean1("mean1","mean1", -.05, -.1, .1) ;
-       RooRealVar sigma1("sigma1","sigma1", .05, .0001, 10.) ;
-       RooGaussian gauss1("gauss1","gauss1",bsl1_l1l2_Dphi,mean1,sigma1) ;
+       c1->SaveAs(file_);
+       c1->Write();
 
-       RooRealVar l1_a0("a0","a0",0.5,0.,1.) ;
-       RooRealVar l1_a1("a1","a1",-0.2,0.,1.) ;
-       RooChebychev l1_bkg("bkg","Background",bsl1_l1l2_Dphi,RooArgSet(l1_a0,l1_a1)) ;
+       c1->Clear();
+       delete c1;
+  
+       count++;
+       cout << endl; 
 
-       RooRealVar sig1frac("sig1frac","fraction of component 1 in signal",0.98,0.95,1.) ;
-       RooAddPdf sig("sig","Signal",RooArgList(gauss1, l1_bkg),sig1frac) ;
-
-       sig.fitTo(ds1) ;
-       sig.plotOn(frame1,LineColor(kCyan)) ;
-       sig.plotOn(frame1, Components(gauss1), LineStyle(kDashed), LineColor(kRed)) ;
-       sig.plotOn(frame1, Components(l1_bkg), LineStyle(kDashed), LineColor(kBlue)) ;
-
-       hist_bsl1_l1l2->SetBinContent(nth+1, fabs(mean1.getVal()));
-
-       Bsl1_l1l2_points << "gen_Pt[" << nth << "] = " << nth << "; point[" << nth << "] = " << fabs(mean1.getVal()) << ";" << endl;
-
-       TCanvas* c = new TCanvas("Region of interest","Region of interest",800,800) ;
-
-       c->cd(1) ; gPad->SetLeftMargin(0.15) ; frame1->GetYaxis()->SetTitleOffset(1.4) ; frame1->Draw() ;  
-
-       c->SaveAs(file_);
-
-       out_tree->Delete();
-       c->Clear();
-       delete c;
+   } // end of nth loop ( 2 ~ 25 GeV )
+  
    
-   } // end of nth loop
+   for(Int_t nth = 0; nth < 10; nth++)
+   {
+       cout << "Process: (" << count+1 << "/70)" << endl;
+       TString file_ = "./Fix_results/phi_";
+       TString ith_;
+
+       ith_.Form("%d", count+1);
+       file_ = file_ + ith_ + "th.pdf";
+       
+       low_pt = 25. + nth*2.5;
+       high_pt = low_pt + 2.5;
+
+       cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
+
+       sprintf(histname, "hist_%dth", count+1);
+       H[count] = new TH1F(histname,"",250,-0.012,0.012);
+
+       for (Long64_t jentry=0; jentry<nentries;jentry++) {
+       //for (Long64_t jentry=0; jentry<10;jentry++) {
+	   Long64_t ientry = LoadTree(jentry);
+	   if (ientry < 0) break;
+	   nb = fChain->GetEntry(jentry);   nbytes += nb;
+	   // if (Cut(ientry) < 0) continue;
+
+	   int size = bsl1_l1l2_dphi->size();
+	   int pT_size = genpT->size(); 
+
+	   if( size == 0 ) continue;
+
+	   //cout << "Size of dphi vector: " << size << ", size of pT vector: " << pT_size << endl;
+	   //cout << "dPhi: " << bsl1_l1l2_dphi->at(0) << ", pT: " << genpT->at(0) << endl;
+
+           Float_t gen_pT = genpT->at(0);
+	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
+	   //cout << "generator level pT: " << gen_pT << endl;
+
+	   H[count]->Fill(bsl1_l1l2_dphi->at(0));
+
+       }// end of event loop
+       cout << endl;
+       
+       func->SetParameters(70, H[count]->GetMean(), 0.001);
+       H[count]->Fit(func,"0R");
+       cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       hist_bsl1_l1l2_c->SetBinContent(nth+1, fabs(func->GetParameter(1)));
+       gStyle->SetOptFit(1111);
+
+       func->SetLineColor(kRed);
+       func->SetLineWidth(2);
+
+       TCanvas* c1 = new TCanvas("c1","",800,800) ;
+       c1->cd(1); 
+       gPad->SetLeftMargin(0.15);  
+       H[count]->Draw();
+       func->Draw("same");
+
+       c1->SaveAs(file_);
+       c1->Write();
+
+       c1->Clear();
+       delete c1;
+  
+       count++;
+       cout << endl; 
+
+   } // end of nth loop ( 25 ~ 50 GeV )
+
+   for(Int_t nth = 0; nth < 20; nth++)
+   {
+       cout << "Process: (" << count+1 << "/70)" << endl;
+       TString file_ = "./Fix_results/phi_";
+       TString ith_;
+
+       ith_.Form("%d", count+1);
+       file_ = file_ + ith_ + "th.pdf";
+       
+       low_pt = 50. + nth*5.;
+       high_pt = low_pt + 5.;
+
+       cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
+
+       sprintf(histname, "hist_%dth", count+1);
+       H[count] = new TH1F(histname,"",250,-0.005,0.005);
+
+       for (Long64_t jentry=0; jentry<nentries;jentry++) {
+       //for (Long64_t jentry=0; jentry<10;jentry++) {
+	   Long64_t ientry = LoadTree(jentry);
+	   if (ientry < 0) break;
+	   nb = fChain->GetEntry(jentry);   nbytes += nb;
+	   // if (Cut(ientry) < 0) continue;
+
+	   int size = bsl1_l1l2_dphi->size();
+	   int pT_size = genpT->size(); 
+
+	   if( size == 0 ) continue;
+
+	   //cout << "Size of dphi vector: " << size << ", size of pT vector: " << pT_size << endl;
+	   //cout << "dPhi: " << bsl1_l1l2_dphi->at(0) << ", pT: " << genpT->at(0) << endl;
+
+           Float_t gen_pT = genpT->at(0);
+	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
+	   //cout << "generator level pT: " << gen_pT << endl;
+
+	   H[count]->Fill(bsl1_l1l2_dphi->at(0));
+
+       }// end of event loop
+       cout << endl;
+       
+       func->SetParameters(70, H[count]->GetMean(), 0.001);
+       H[count]->Fit(func,"0R");
+       cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       hist_bsl1_l1l2_d->SetBinContent(nth+1, fabs(func->GetParameter(1)));
+       gStyle->SetOptFit(1111);
+
+       func->SetLineColor(kRed);
+       func->SetLineWidth(2);
+
+       TCanvas* c1 = new TCanvas("c1","",800,800) ;
+       c1->cd(1); 
+       gPad->SetLeftMargin(0.15);  
+       H[count]->Draw();
+       func->Draw("same");
+
+       c1->SaveAs(file_);
+       c1->Write();
+
+       c1->Clear();
+       delete c1;
+  
+       count++;
+       cout << endl; 
+
+   } // end of nth loop ( 50 ~ 150 GeV )
    
-   TCanvas *c1 = new TCanvas("c1","c1",700,700);
+   TCanvas *c2 = new TCanvas("c2","c2",700,700);
    gStyle->SetOptStat(0);
    gStyle->SetLineWidth(2); // axis width, default is 1
-   c1->SetTopMargin(0.05);
-   c1->SetBottomMargin(0.12);
-   c1->SetRightMargin(0.03);
-   c1->SetLeftMargin(0.2);
-   c1->SetGrid();
-   c1->SetTicky(1);
-   c1->SetTickx(1);
+   c2->SetTopMargin(0.05);
+   c2->SetBottomMargin(0.12);
+   c2->SetRightMargin(0.03);
+   c2->SetLeftMargin(0.2);
+   c2->SetGrid();
+   c2->SetTicky(1);
+   c2->SetTickx(1);
+   c2->SetLogy();
 
-   hist_bsl1_l1l2->SetTitle("");
-   hist_bsl1_l1l2->GetXaxis()->SetTitleOffset(1.3);
-   hist_bsl1_l1l2->GetXaxis()->SetTitleSize(0.045);
-   hist_bsl1_l1l2->GetXaxis()->SetNdivisions(505);
-   hist_bsl1_l1l2->GetYaxis()->SetNdivisions(506);
-   hist_bsl1_l1l2->GetXaxis()->SetLabelSize(0.05);
-   hist_bsl1_l1l2->GetYaxis()->SetLabelSize(0.05);
-   hist_bsl1_l1l2->GetXaxis()->SetRangeUser(x1,x2);
-   hist_bsl1_l1l2->GetYaxis()->SetRangeUser(-0.01, 0.08);
-   hist_bsl1_l1l2->GetYaxis()->SetTitleOffset(1.5);
-   hist_bsl1_l1l2->GetYaxis()->SetTitleSize(0.050);
+   TH1F* h1= new TH1F("h1",";P_{T} (GeV); #Delta#phi", nbins, x1, x2);
+   h1->SetTitle("");
+   h1->GetXaxis()->SetTitleOffset(1.3);
+   h1->GetXaxis()->SetTitleSize(0.045);
+   h1->GetXaxis()->SetNdivisions(505);
+   h1->GetYaxis()->SetNdivisions(506);
+   h1->GetXaxis()->SetLabelSize(0.05);
+   h1->GetYaxis()->SetLabelSize(0.05);
+   h1->GetXaxis()->SetRangeUser(x1,x2);
+   h1->GetYaxis()->SetRangeUser(0.0001, 1.);
+   h1->GetYaxis()->SetTitleOffset(1.5);
+   h1->GetYaxis()->SetTitleSize(0.050);
+   h1->Draw();
 
-   hist_bsl1_l1l2->SetMarkerColor(1);
-   hist_bsl1_l1l2->SetMarkerStyle(20);
-   hist_bsl1_l1l2->SetMarkerSize(1.);
-   hist_bsl1_l1l2->Draw("hist p");
+   hist_bsl1_l1l2_a->SetMarkerColor(1);
+   hist_bsl1_l1l2_a->SetMarkerStyle(20);
+   hist_bsl1_l1l2_a->SetMarkerSize(1.);
+   hist_bsl1_l1l2_a->Draw("hist p same");
+  
+   hist_bsl1_l1l2_b->SetMarkerColor(1);
+   hist_bsl1_l1l2_b->SetMarkerStyle(20);
+   hist_bsl1_l1l2_b->SetMarkerSize(1.);
+   hist_bsl1_l1l2_b->Draw("hist p same");
+   
+   hist_bsl1_l1l2_c->SetMarkerColor(1);
+   hist_bsl1_l1l2_c->SetMarkerStyle(20);
+   hist_bsl1_l1l2_c->SetMarkerSize(1.);
+   hist_bsl1_l1l2_c->Draw("hist p same");
+  
+   hist_bsl1_l1l2_d->SetMarkerColor(1);
+   hist_bsl1_l1l2_d->SetMarkerStyle(20);
+   hist_bsl1_l1l2_d->SetMarkerSize(1.);
+   hist_bsl1_l1l2_d->Draw("hist p same");
 
    Bsl1_l1l2_points << "}" << endl;
    Bsl1_l1l2_points << "#endif" << endl;
    Bsl1_l1l2_points.close();
 
-   c1->Print("Fix_results/Bsl1_l1l2_dphi.pdf");
-
+   h1->Write();
+   hist_bsl1_l1l2_a->Write();
+   hist_bsl1_l1l2_b->Write();
+   hist_bsl1_l1l2_c->Write();
+   hist_bsl1_l1l2_d->Write();
+   c2->Print("Fix_results/Bsl1_l1l2_dphi.pdf");
+   
 
 }
