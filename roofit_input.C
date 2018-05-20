@@ -102,7 +102,7 @@ void roofit_input::Loop()
        func->SetParameters(70, H[count]->GetMean(), 0.01);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
-       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
        hist_bsl1_l1l2_a->SetBinContent(count+1, fabs(func->GetParameter(1)));
        gStyle->SetOptFit(1111);
 
@@ -168,7 +168,7 @@ void roofit_input::Loop()
        func->SetParameters(70, H[count]->GetMean(), 0.001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
-       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
        hist_bsl1_l1l2_a->SetBinContent(count+1, fabs(func->GetParameter(1)));
        gStyle->SetOptFit(1111);
 
@@ -234,7 +234,7 @@ void roofit_input::Loop()
        func->SetParameters(70, H[count]->GetMean(), 0.001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
-       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
        hist_bsl1_l1l2_a->SetBinContent(count+1, fabs(func->GetParameter(1)));
        gStyle->SetOptFit(1111);
 
@@ -301,7 +301,7 @@ void roofit_input::Loop()
        func->SetParameters(70, H[count]->GetMean(), 0.001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
-       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
        hist_bsl1_l1l2_b->SetBinContent(nth-1, fabs(func->GetParameter(1)));
        gStyle->SetOptFit(1111);
 
@@ -370,7 +370,7 @@ void roofit_input::Loop()
        func->SetParameters(70, H[count]->GetMean(), 0.001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
-       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
        hist_bsl1_l1l2_c->SetBinContent(nth+1, fabs(func->GetParameter(1)));
        gStyle->SetOptFit(1111);
 
@@ -438,7 +438,7 @@ void roofit_input::Loop()
        func->SetParameters(70, H[count]->GetMean(), 0.001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
-       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << count << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
+       Bsl1_l1l2_points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << ";" << endl;
        hist_bsl1_l1l2_d->SetBinContent(nth+1, fabs(func->GetParameter(1)));
        gStyle->SetOptFit(1111);
 
