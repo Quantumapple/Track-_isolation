@@ -70,42 +70,43 @@ void Bsl1_l1l2_points(){
   
   TF1 *fit_func = new TF1("func","( [0]*pow(x,0) + [1]*pow(x,[2])*exp(-pow(x,[3])+[4]) )", 0, 150);
   
-  fit_func->SetParameter(1,0.01);
- 
+  fit_func->SetParLimits(0,3.5e-9,3.8e-9);
+  fit_func->SetParameter(0,3.6e-9);
+
+  fit_func->SetParLimits(1,0.0002,0.0003);
+  fit_func->SetParameter(1,0.00003);
+
+  fit_func->SetParLimits(2,-0.57,-0.55);
+  fit_func->SetParameter(2,-0.56);
+
+  fit_func->SetParLimits(3,0.190,0.200);
+  fit_func->SetParameter(3,0.199);
+
+  fit_func->SetParLimits(4,5.3,5.4);
+  fit_func->SetParameter(4,5.4);
+
   a->Fit(fit_func,"0W"); 
   fit_func->Draw("lsame");
   fit_func->SetLineColor(1);
   
-  /*
-  double p[10]={0}, p2[10]={0};
+  
+  double p[10]={0};
   fit_func->GetParameters(p);
-  fit_func2->GetParameters(p2);
   cout<<"\n/// Set Parameter before fit"<<endl;
   for(int k=0; k<5; k++) if(p[k]!=0)  cout<<"p["<<k<<"] = "<<p[k] <<";"<<endl;
   cout<<endl;
-  for(int k=0; k<5; k++) if(p2[k]!=0) cout<<"p["<<k<<"] = "<<p2[k]<<";"<<endl;
-  cout<<endl;
 
   ofstream fit_result;
-  fit_result.open(roi_name + ".txt");    
+  fit_result.open("parameters.txt");    
 
   fit_result << endl;  
-  fit_result << "if( i == " << nth_roi << " && up_down == 0){" <<endl;
   for( int i=0; i < 5; i++){
       fit_result << "p[" << i << "] = " << fit_func->GetParameter(i) << ";" << endl;
   }   
-  fit_result << "return p[0]*pow(eget,0) + p[1]*pow(eget,p[2])*exp(-pow(eget,p[3])+p[4]);" << endl;
-  fit_result << "}" << endl; 
-
-  fit_result << "if( i == " << nth_roi << " && up_down == 1){" << endl;
-  for( int i=0; i < 5; i++){
-      fit_result << "p[" << i << "] = " << fit_func2->GetParameter(i) << ";" << endl;
-  }   
-  fit_result << "return p[0]*pow(eget,0) + p[1]*pow(eget,p[2])*exp(-pow(eget,p[3])+p[4]);" << endl;
-  fit_result << "}" << endl; 
+  //fit_result << "return p[0]*pow(eget,0) + p[1]*pow(eget,p[2])*exp(-pow(eget,p[3])+p[4]);" << endl;
   fit_result << endl;  
   fit_result.close();
-  */
+  
 
   cc->Update();
   
