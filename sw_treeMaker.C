@@ -34,7 +34,20 @@ void sw_treeMaker::Loop(int nevent = 0, int debug = 0)
    TTree* out_tree = new TTree("t","t");
 
    vector<float> bsl1_l1l2_dphi; out_tree->Branch("bsl1_l1l2_dphi",&bsl1_l1l2_dphi);
-   vector<float> genpT;          out_tree->Branch("genpT",&genpT);
+   vector<float> bsl1_l1l3_dphi; out_tree->Branch("bsl1_l1l3_dphi",&bsl1_l1l3_dphi);
+   vector<float> bsl2_l2l3_dphi; out_tree->Branch("bsl2_l2l3_dphi",&bsl2_l2l3_dphi);
+   vector<float> l1l2_l2l3_dphi; out_tree->Branch("l1l2_l2l3_dphi",&l1l2_l2l3_dphi);
+   vector<float> l1l2_l2l4_dphi; out_tree->Branch("l1l2_l2l4_dphi",&l1l2_l2l4_dphi);
+   vector<float> l1l3_l3l4_dphi; out_tree->Branch("l1l3_l3l4_dphi",&l1l3_l3l4_dphi);
+   vector<float> l2l3_l3l4_dphi; out_tree->Branch("l2l3_l3l4_dphi",&l2l3_l3l4_dphi);
+   
+   vector<float> genpT_case1;    out_tree->Branch("genpT_case1",&genpT_case1);
+   vector<float> genpT_case2;    out_tree->Branch("genpT_case2",&genpT_case2);
+   vector<float> genpT_case3;    out_tree->Branch("genpT_case3",&genpT_case3);
+   vector<float> genpT_case4;    out_tree->Branch("genpT_case4",&genpT_case4);
+   vector<float> genpT_case5;    out_tree->Branch("genpT_case5",&genpT_case5);
+   vector<float> genpT_case6;    out_tree->Branch("genpT_case6",&genpT_case6);
+   vector<float> genpT_case7;    out_tree->Branch("genpT_case7",&genpT_case7);
    
    Long64_t nentries = fChain->GetEntries();
 
@@ -52,14 +65,31 @@ void sw_treeMaker::Loop(int nevent = 0, int debug = 0)
 
       cout << "Process: (" << jentry << "/" << nentries << ")" << endl;
 
-      bsl1_l1l2_dphi.clear();
-      genpT.clear();
+      bsl1_l1l2_dphi.clear(); 
+      bsl1_l1l3_dphi.clear(); 
+      bsl2_l2l3_dphi.clear(); 
+      l1l2_l2l3_dphi.clear(); 
+      l1l2_l2l4_dphi.clear(); 
+      l1l3_l3l4_dphi.clear(); 
+      l2l3_l3l4_dphi.clear(); 
+   
+      genpT_case1.clear();
+      genpT_case2.clear();
+      genpT_case3.clear();
+      genpT_case4.clear();
+      genpT_case5.clear();
+      genpT_case6.clear();
+      genpT_case7.clear();
       
       vector<track> v1; 
       vector<track> v2; 
+      vector<track> v3; 
+      vector<track> v4; 
 
       v1.clear();
       v2.clear();
+      v3.clear();
+      v4.clear();
 
       for(Int_t i = 0; i < bHitN; i++)
       {
@@ -77,10 +107,14 @@ void sw_treeMaker::Loop(int nevent = 0, int debug = 0)
 
 	  if( R < 5.5 )            v1.push_back(track(deltaR,bHitGx->at(i),bHitGy->at(i),bHitGz->at(i)));
 	  if( R > 5.5 && R < 8.5 ) v2.push_back(track(deltaR,bHitGx->at(i),bHitGy->at(i),bHitGz->at(i)));
+	  if( R > 8.5 && R < 13. ) v3.push_back(track(deltaR,bHitGx->at(i),bHitGy->at(i),bHitGz->at(i)));
+	  if( R > 13. && R < 18. ) v4.push_back(track(deltaR,bHitGx->at(i),bHitGy->at(i),bHitGz->at(i)));
       }
 
       sort(v1.begin(), v1.end(), track::comp); 
       sort(v2.begin(), v2.end(), track::comp); 
+      sort(v3.begin(), v3.end(), track::comp); 
+      sort(v4.begin(), v4.end(), track::comp); 
       
       file->cd();
       
@@ -99,13 +133,119 @@ void sw_treeMaker::Loop(int nevent = 0, int debug = 0)
 	  if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
 
           bsl1_l1l2_dphi.push_back(deltaPhi);
-          //genpT.push_back(propgenPartPt->at(0));
-          genpT.push_back(genPartPt->at(0));
+          genpT_case1.push_back(propgenPartPt->at(0));
       }
 
+      if( v1.size() != 0 && v3.size() != 0 ) // PVL1 - L1L3
+      {
+	  TVector3 pixel1;
+	  pixel1.SetXYZ( v1[0].pos_x - simVx->at(0), v1[0].pos_y - simVy->at(0), v1[0].pos_z - simVz->at(0) );
+	  
+	  TVector3 pixel2;
+	  pixel2.SetXYZ( v3[0].pos_x - v1[0].pos_x, v3[0].pos_y - v1[0].pos_y, v3[0].pos_z - v1[0].pos_z );
+
+	  Float_t phi1 = pixel1.Phi();
+	  Float_t phi2 = pixel2.Phi();
+	  Float_t deltaPhi = phi1 - phi2;
+	  if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+	  if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+          
+	  bsl1_l1l3_dphi.push_back(deltaPhi);
+          genpT_case2.push_back(propgenPartPt->at(0));
+      }
+      
+      if( v2.size() != 0 && v3.size() != 0 ) // PVL2 - L2L3
+      {
+	  TVector3 pixel1;
+	  pixel1.SetXYZ( v2[0].pos_x - simVx->at(0), v2[0].pos_y - simVy->at(0), v2[0].pos_z - simVz->at(0) );
+	  
+	  TVector3 pixel2;
+	  pixel2.SetXYZ( v3[0].pos_x - v2[0].pos_x, v3[0].pos_y - v2[0].pos_y, v3[0].pos_z - v2[0].pos_z );
+
+	  Float_t phi1 = pixel1.Phi();
+	  Float_t phi2 = pixel2.Phi();
+	  Float_t deltaPhi = phi1 - phi2;
+	  if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+	  if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+	  
+	  bsl2_l2l3_dphi.push_back(deltaPhi);
+          genpT_case3.push_back(propgenPartPt->at(0));
+      }
+      
+      if( v1.size() != 0 && v2.size() != 0 && v3.size() != 0 ) // L1L2 - L2L3
+      {
+	  TVector3 pixel1;
+	  pixel1.SetXYZ( v2[0].pos_x - v1[0].pos_x, v2[0].pos_y - v1[0].pos_y, v2[0].pos_z - v1[0].pos_z );
+	  
+	  TVector3 pixel2;
+	  pixel2.SetXYZ( v3[0].pos_x - v2[0].pos_x, v3[0].pos_y - v2[0].pos_y, v3[0].pos_z - v2[0].pos_z );
+
+	  Float_t phi1 = pixel1.Phi();
+	  Float_t phi2 = pixel2.Phi();
+	  Float_t deltaPhi = phi1 - phi2;
+	  if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+	  if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+
+	  l1l2_l2l3_dphi.push_back(deltaPhi);
+          genpT_case4.push_back(propgenPartPt->at(0));
+      }
+      
+      if( v1.size() != 0 && v2.size() != 0 && v4.size() != 0 ) // L1L2 - L2L4
+      {
+	  TVector3 pixel1;
+	  pixel1.SetXYZ( v2[0].pos_x - v1[0].pos_x, v2[0].pos_y - v1[0].pos_y, v2[0].pos_z - v1[0].pos_z );
+	  
+	  TVector3 pixel2;
+	  pixel2.SetXYZ( v4[0].pos_x - v2[0].pos_x, v4[0].pos_y - v2[0].pos_y, v4[0].pos_z - v2[0].pos_z );
+
+	  Float_t phi1 = pixel1.Phi();
+	  Float_t phi2 = pixel2.Phi();
+	  Float_t deltaPhi = phi1 - phi2;
+	  if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+	  if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+	  
+	  l1l2_l2l4_dphi.push_back(deltaPhi);
+          genpT_case5.push_back(propgenPartPt->at(0));
+      }
+      
+      if( v1.size() != 0 && v3.size() != 0 && v4.size() != 0 ) // L1L3 - L3L4
+      {
+	  TVector3 pixel1;
+	  pixel1.SetXYZ( v3[0].pos_x - v1[0].pos_x, v3[0].pos_y - v1[0].pos_y, v3[0].pos_z - v1[0].pos_z );
+	  
+	  TVector3 pixel2;
+	  pixel2.SetXYZ( v4[0].pos_x - v3[0].pos_x, v4[0].pos_y - v3[0].pos_y, v4[0].pos_z - v3[0].pos_z );
+
+	  Float_t phi1 = pixel1.Phi();
+	  Float_t phi2 = pixel2.Phi();
+	  Float_t deltaPhi = phi1 - phi2;
+	  if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+	  if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+
+	  l1l3_l3l4_dphi.push_back(deltaPhi);
+          genpT_case6.push_back(propgenPartPt->at(0));
+      }
+      
+      if( v2.size() != 0 && v3.size() != 0 && v4.size() != 0 ) // L2L3 - L3L4
+      {
+	  TVector3 pixel1;
+	  pixel1.SetXYZ( v3[0].pos_x - v2[0].pos_x, v3[0].pos_y - v2[0].pos_y, v3[0].pos_z - v2[0].pos_z );
+	  
+	  TVector3 pixel2;
+	  pixel2.SetXYZ( v4[0].pos_x - v3[0].pos_x, v4[0].pos_y - v3[0].pos_y, v4[0].pos_z - v3[0].pos_z );
+
+	  Float_t phi1 = pixel1.Phi();
+	  Float_t phi2 = pixel2.Phi();
+	  Float_t deltaPhi = phi1 - phi2;
+	  if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+	  if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+
+	  l2l3_l3l4_dphi.push_back(deltaPhi);
+          genpT_case7.push_back(propgenPartPt->at(0));
+      }
+       
       out_tree->Fill(); 
  
-       
 
    } // end of event loop
 
