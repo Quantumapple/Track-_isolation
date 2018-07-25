@@ -1,4 +1,4 @@
-Measure a function between Deltaphi and transver momentum
+Measure a function between Deltaphi and pT 
 =========================================================
 
 sw-treeMaker code calculate Delta phi according to layer combinations <br>
