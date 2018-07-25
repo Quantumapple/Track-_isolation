@@ -11,11 +11,11 @@ void test::Loop(int nth_case)
    Long64_t nentries = fChain->GetEntriesFast();
    Long64_t nbytes = 0, nb = 0;
    
-   TH1F *hist_bsl1_l1l2_a = new TH1F("hist_bsl1_l1l2_a",";P_{T} (GeV); #Delta#phi", 18, 0.2, 2.0);
-   TH1F *hist_bsl1_l1l2_b = new TH1F("hist_bsl1_l1l2_b",";P_{T} (GeV); #Delta#phi", 6, 2.0, 5.0);
-   TH1F *hist_bsl1_l1l2_c = new TH1F("hist_bsl1_l1l2_c",";P_{T} (GeV); #Delta#phi", 20, 5.0, 25.);
-   TH1F *hist_bsl1_l1l2_d = new TH1F("hist_bsl1_l1l2_d",";P_{T} (GeV); #Delta#phi", 10, 25., 50.);
-   TH1F *hist_bsl1_l1l2_e = new TH1F("hist_bsl1_l1l2_e",";P_{T} (GeV); #Delta#phi", 20, 50., 150.);
+   TH1F *hist_bsl1_l1l2_a = new TH1F("hist_bsl1_l1l2_a",";P_{T} (GeV); #Delta#phi", 2, 2, 4);       // 1 GeV
+   TH1F *hist_bsl1_l1l2_b = new TH1F("hist_bsl1_l1l2_b",";P_{T} (GeV); #Delta#phi", 6, 4., 10.);    // 1 GeV
+   TH1F *hist_bsl1_l1l2_c = new TH1F("hist_bsl1_l1l2_c",";P_{T} (GeV); #Delta#phi", 10, 10., 30.);   // 2 GeV
+   TH1F *hist_bsl1_l1l2_d = new TH1F("hist_bsl1_l1l2_d",";P_{T} (GeV); #Delta#phi", 10, 30., 60.);   // 3 GeV
+   TH1F *hist_bsl1_l1l2_e = new TH1F("hist_bsl1_l1l2_e",";P_{T} (GeV); #Delta#phi", 8, 60., 100.);   // 5 GeV
 
    ofstream points;
    TString file_name = "fitting_points.h";
@@ -27,8 +27,8 @@ void test::Loop(int nth_case)
    points << "#define fitting_points_h" << endl;
    points << endl;
 
-   points << "double gen_Pt[74] ={}, point[74] = {}, error[74] = {};" << endl;
-   points << "int points = 74;" << endl;
+   points << "double gen_Pt[36] ={}, point[36] = {}, error[36] = {};" << endl;
+   points << "int points = 36;" << endl;
 
    points << "void set_arrary(){" << endl;
    points << endl;
@@ -38,27 +38,27 @@ void test::Loop(int nth_case)
    Float_t min = -1.;
    Float_t max = 1.;
 
-   TH1F *H[75];
+   TH1F *H[40];
    Char_t histname[15];
    TF1 *func = new TF1("func","[0]*TMath::Gaus(x,[1],[2],1)",min,max);
 
    
-   for(Int_t nth = 2; nth < 4; nth++)
+   for(Int_t nth = 0; nth < 2; nth++)
    {
-       cout << "Process: (" << count+1 << "/74)" << endl;
+       cout << "Process: (" << count+1 << "/36)" << endl;
        TString file_ = "./Plots/phi_";
        TString ith_;
 
        ith_.Form("%d", count+1);
        file_ = file_ + ith_ + "th.pdf";
 
-       low_pt = 0.+ nth*0.1;
-       high_pt = low_pt + 0.1;
+       low_pt = 2.+ nth;
+       high_pt = low_pt + 1.;
 
        cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
 
        sprintf(histname, "hist_%dth", count+1);
-       H[count] = new TH1F(histname,"",1000,-0.8,0.2);
+       H[count] = new TH1F(histname,"",500,-0.1,0.1);
 
        for (Long64_t jentry=0; jentry<nentries;jentry++) {
 	   Long64_t ientry = LoadTree(jentry);
@@ -67,126 +67,40 @@ void test::Loop(int nth_case)
 	   // if (Cut(ientry) < 0) continue;
 
 	   Int_t size = 0;
-	   if( nth_case == 0 )size = genpT_case1->size();
-	   if( nth_case == 1 )size = genpT_case2->size();
-	   if( nth_case == 2 )size = genpT_case3->size();
-	   if( nth_case == 3 )size = genpT_case4->size();
-	   if( nth_case == 4 )size = genpT_case5->size();
-	   if( nth_case == 5 )size = genpT_case6->size();
+	   if( nth_case == 1 ) size = genpT_case1->size();
+	   if( nth_case == 2 ) size = genpT_case2->size();
+	   if( nth_case == 3 ) size = genpT_case3->size();
+	   if( nth_case == 4 ) size = genpT_case4->size();
+	   if( nth_case == 5 ) size = genpT_case5->size();
 
 	   if( size == 0 ) continue;
 
-           Float_t gen_pT = -1.;
-	   if( nth_case == 0 ) gen_pT = genpT_case1->at(0);
-	   if( nth_case == 1 ) gen_pT = genpT_case2->at(0);
-	   if( nth_case == 2 ) gen_pT = genpT_case3->at(0);
-	   if( nth_case == 3 ) gen_pT = genpT_case4->at(0);
-	   if( nth_case == 4 ) gen_pT = genpT_case5->at(0);
-	   if( nth_case == 5 ) gen_pT = genpT_case6->at(0);
+       Float_t gen_pT = -1.;
+	   if( nth_case == 1 ) gen_pT = genpT_case1->at(0);
+	   if( nth_case == 2 ) gen_pT = genpT_case2->at(0);
+	   if( nth_case == 3 ) gen_pT = genpT_case3->at(0);
+	   if( nth_case == 4 ) gen_pT = genpT_case4->at(0);
+	   if( nth_case == 5 ) gen_pT = genpT_case5->at(0);
 
 	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
 
-           Float_t dphi = -999.;
-	   if( nth_case == 0 ) dphi = bsl1_l1l2_dphi->at(0);
+       Float_t dphi = -999.;
 	   if( nth_case == 1 ) dphi = bsl1_l1l3_dphi->at(0);
 	   if( nth_case == 2 ) dphi = bsl1_l1l4_dphi->at(0);
 	   if( nth_case == 3 ) dphi = bsl2_l2l3_dphi->at(0);
 	   if( nth_case == 4 ) dphi = bsl2_l2l4_dphi->at(0);
 	   if( nth_case == 5 ) dphi = bsl3_l3l4_dphi->at(0);
 
-           H[count]->Fill(dphi);
+       H[count]->Fill(dphi);
 
        }// end of event loop
 
-       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.3, H[count]->GetMean()+0.3);
-       func->SetParameters(70, H[count]->GetMean(), 0.01);
-       H[count]->Fit(func,"0R");
-       cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
-       points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << "; error[" << count << "] = " << fabs(func->GetParameter(2)) << ";" << endl;
-       hist_bsl1_l1l2_a->SetBinContent(count+1, fabs(func->GetParameter(1)));
-       gStyle->SetOptFit(1111);
-
-       func->SetLineColor(kRed);
-       func->SetLineWidth(2);
-
-       TCanvas* c1 = new TCanvas("c1","",800,800) ;
-       c1->cd(1); 
-       gPad->SetLeftMargin(0.15);  
-       H[count]->Draw();
-       func->Draw("same");
-
-       c1->SaveAs(file_);
-       c1->Write();
-
-       c1->Clear();
-       delete c1;
-
-       count++;
-       cout << endl; 
-
-   } // end of nth loop ( 0.2 ~ 0.3 GeV )
-
-   for(Int_t nth = 4; nth < 10; nth++)
-   {
-       cout << "Process: (" << count+1 << "/74)" << endl;
-       TString file_ = "./Plots/phi_";
-       TString ith_;
-
-       ith_.Form("%d", count+1);
-       file_ = file_ + ith_ + "th.pdf";
-
-       low_pt = 0.+ nth*0.1;
-       high_pt = low_pt + 0.1;
-
-       cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
-
-       sprintf(histname, "hist_%dth", count+1);
-       H[count] = new TH1F(histname,"",1000,-0.8,0.2);
-
-       for (Long64_t jentry=0; jentry<nentries;jentry++) {
-	   Long64_t ientry = LoadTree(jentry);
-	   if (ientry < 0) break;
-	   nb = fChain->GetEntry(jentry);   nbytes += nb;
-	   // if (Cut(ientry) < 0) continue;
-
-	   Int_t size = 0;
-	   if( nth_case == 0 )size = genpT_case1->size();
-	   if( nth_case == 1 )size = genpT_case2->size();
-	   if( nth_case == 2 )size = genpT_case3->size();
-	   if( nth_case == 3 )size = genpT_case4->size();
-	   if( nth_case == 4 )size = genpT_case5->size();
-	   if( nth_case == 5 )size = genpT_case6->size();
-
-	   if( size == 0 ) continue;
-
-           Float_t gen_pT = -1.;
-	   if( nth_case == 0 ) gen_pT = genpT_case1->at(0);
-	   if( nth_case == 1 ) gen_pT = genpT_case2->at(0);
-	   if( nth_case == 2 ) gen_pT = genpT_case3->at(0);
-	   if( nth_case == 3 ) gen_pT = genpT_case4->at(0);
-	   if( nth_case == 4 ) gen_pT = genpT_case5->at(0);
-	   if( nth_case == 5 ) gen_pT = genpT_case6->at(0);
-
-	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
-
-           Float_t dphi = -999.;
-	   if( nth_case == 0 ) dphi = bsl1_l1l2_dphi->at(0);
-	   if( nth_case == 1 ) dphi = bsl1_l1l3_dphi->at(0);
-	   if( nth_case == 2 ) dphi = bsl1_l1l4_dphi->at(0);
-	   if( nth_case == 3 ) dphi = bsl2_l2l3_dphi->at(0);
-	   if( nth_case == 4 ) dphi = bsl2_l2l4_dphi->at(0);
-	   if( nth_case == 5 ) dphi = bsl3_l3l4_dphi->at(0);
-
-           H[count]->Fill(dphi);
-
-       }// end of event loop
-
-       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.15, H[count]->GetMean()+0.15);
+       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.02, H[count]->GetMean()+0.02);
        func->SetParameters(70, H[count]->GetMean(), 0.001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
        points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << "; error[" << count << "] = " << fabs(func->GetParameter(2)) << ";" << endl;
-       hist_bsl1_l1l2_a->SetBinContent(count+1, fabs(func->GetParameter(1)));
+       hist_bsl1_l1l2_a->SetBinContent(nth+1, fabs(func->GetParameter(1)));
        gStyle->SetOptFit(1111);
 
        func->SetLineColor(kRed);
@@ -207,148 +121,61 @@ void test::Loop(int nth_case)
        count++;
        cout << endl; 
 
-   } // end of nth loop ( 0.4 ~ 1 GeV )
-
-   for(Int_t nth = 10; nth < 20; nth++)
-   {
-       cout << "Process: (" << count+1 << "/74)" << endl;
-       TString file_ = "./Plots/phi_";
-       TString ith_;
-
-       ith_.Form("%d", count+1);
-       file_ = file_ + ith_ + "th.pdf";
-
-       low_pt = 0.+ nth*0.1;
-       high_pt = low_pt + 0.1;
-
-       cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
-
-       sprintf(histname, "hist_%dth", count+1);
-       H[count] = new TH1F(histname,"",1000,-1.,1.);
-
-       for (Long64_t jentry=0; jentry<nentries;jentry++) {
-	   Long64_t ientry = LoadTree(jentry);
-	   if (ientry < 0) break;
-	   nb = fChain->GetEntry(jentry);   nbytes += nb;
-	   // if (Cut(ientry) < 0) continue;
-	   
-	   Int_t size = 0;
-	   if( nth_case == 0 )size = genpT_case1->size();
-	   if( nth_case == 1 )size = genpT_case2->size();
-	   if( nth_case == 2 )size = genpT_case3->size();
-	   if( nth_case == 3 )size = genpT_case4->size();
-	   if( nth_case == 4 )size = genpT_case5->size();
-	   if( nth_case == 5 )size = genpT_case6->size();
-
-	   if( size == 0 ) continue;
-
-           Float_t gen_pT = -1.;
-	   if( nth_case == 0 ) gen_pT = genpT_case1->at(0);
-	   if( nth_case == 1 ) gen_pT = genpT_case2->at(0);
-	   if( nth_case == 2 ) gen_pT = genpT_case3->at(0);
-	   if( nth_case == 3 ) gen_pT = genpT_case4->at(0);
-	   if( nth_case == 4 ) gen_pT = genpT_case5->at(0);
-	   if( nth_case == 5 ) gen_pT = genpT_case6->at(0);
-
-	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
-
-           Float_t dphi = -999.;
-	   if( nth_case == 0 ) dphi = bsl1_l1l2_dphi->at(0);
-	   if( nth_case == 1 ) dphi = bsl1_l1l3_dphi->at(0);
-	   if( nth_case == 2 ) dphi = bsl1_l1l4_dphi->at(0);
-	   if( nth_case == 3 ) dphi = bsl2_l2l3_dphi->at(0);
-	   if( nth_case == 4 ) dphi = bsl2_l2l4_dphi->at(0);
-	   if( nth_case == 5 ) dphi = bsl3_l3l4_dphi->at(0);
-
-           H[count]->Fill(dphi);
-
-       }// end of event loop
-
-       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.1, H[count]->GetMean()+0.1);
-       func->SetParameters(70, H[count]->GetMean(), 0.001);
-       H[count]->Fit(func,"0R");
-       cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
-       points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << "; error[" << count << "] = " << fabs(func->GetParameter(2)) << ";" << endl;
-       hist_bsl1_l1l2_a->SetBinContent(count+1, fabs(func->GetParameter(1)));
-       gStyle->SetOptFit(1111);
-
-       func->SetLineColor(kRed);
-       func->SetLineWidth(2);
-
-       TCanvas* c1 = new TCanvas("c1","",800,800) ;
-       c1->cd(1); 
-       gPad->SetLeftMargin(0.15);  
-       H[count]->Draw();
-       func->Draw("same");
-
-       c1->SaveAs(file_);
-       c1->Write();
-
-       c1->Clear();
-       delete c1;
-
-       count++;
-       cout << endl; 
-
-   } // end of nth loop ( 1 ~ 2 GeV )
+   } // end of nth loop ( 2 ~ 4 GeV )
 
    for(Int_t nth = 0; nth < 6; nth++)
    {
-       cout << "Process: (" << count+1 << "/74)" << endl;
+       cout << "Process: (" << count+1 << "/36)" << endl;
        TString file_ = "./Plots/phi_";
        TString ith_;
 
        ith_.Form("%d", count+1);
        file_ = file_ + ith_ + "th.pdf";
 
-       low_pt = 2. + nth*0.5;
-       high_pt = low_pt + 0.5;
+       low_pt = 4.+ nth;
+       high_pt = low_pt + 1.;
 
        cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
 
        sprintf(histname, "hist_%dth", count+1);
-       H[count] = new TH1F(histname,"",1000,-0.5,0.5);
+       H[count] = new TH1F(histname,"",500,-0.08,0.08);
 
        for (Long64_t jentry=0; jentry<nentries;jentry++) {
 	   Long64_t ientry = LoadTree(jentry);
 	   if (ientry < 0) break;
 	   nb = fChain->GetEntry(jentry);   nbytes += nb;
 	   // if (Cut(ientry) < 0) continue;
-	   
+
 	   Int_t size = 0;
-	   if( nth_case == 0 )size = genpT_case1->size();
-	   if( nth_case == 1 )size = genpT_case2->size();
-	   if( nth_case == 2 )size = genpT_case3->size();
-	   if( nth_case == 3 )size = genpT_case4->size();
-	   if( nth_case == 4 )size = genpT_case5->size();
-	   if( nth_case == 5 )size = genpT_case6->size();
+	   if( nth_case == 1 )size = genpT_case1->size();
+	   if( nth_case == 2 )size = genpT_case2->size();
+	   if( nth_case == 3 )size = genpT_case3->size();
+	   if( nth_case == 4 )size = genpT_case4->size();
+	   if( nth_case == 5 )size = genpT_case5->size();
 
 	   if( size == 0 ) continue;
 
-           Float_t gen_pT = -1.;
-	   if( nth_case == 0 ) gen_pT = genpT_case1->at(0);
-	   if( nth_case == 1 ) gen_pT = genpT_case2->at(0);
-	   if( nth_case == 2 ) gen_pT = genpT_case3->at(0);
-	   if( nth_case == 3 ) gen_pT = genpT_case4->at(0);
-	   if( nth_case == 4 ) gen_pT = genpT_case5->at(0);
-	   if( nth_case == 5 ) gen_pT = genpT_case6->at(0);
+       Float_t gen_pT = -1.;
+	   if( nth_case == 1 ) gen_pT = genpT_case1->at(0);
+	   if( nth_case == 2 ) gen_pT = genpT_case2->at(0);
+	   if( nth_case == 3 ) gen_pT = genpT_case3->at(0);
+	   if( nth_case == 4 ) gen_pT = genpT_case4->at(0);
+	   if( nth_case == 5 ) gen_pT = genpT_case5->at(0);
 
 	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
 
-           Float_t dphi = -999.;
-	   if( nth_case == 0 ) dphi = bsl1_l1l2_dphi->at(0);
+       Float_t dphi = -999.;
 	   if( nth_case == 1 ) dphi = bsl1_l1l3_dphi->at(0);
 	   if( nth_case == 2 ) dphi = bsl1_l1l4_dphi->at(0);
 	   if( nth_case == 3 ) dphi = bsl2_l2l3_dphi->at(0);
 	   if( nth_case == 4 ) dphi = bsl2_l2l4_dphi->at(0);
 	   if( nth_case == 5 ) dphi = bsl3_l3l4_dphi->at(0);
 
-           H[count]->Fill(dphi);
+       H[count]->Fill(dphi);
 
        }// end of event loop
-       cout << endl;
 
-       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.07, H[count]->GetMean()+0.07);
+       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.008, H[count]->GetMean()+0.008);
        func->SetParameters(70, H[count]->GetMean(), 0.001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
@@ -374,24 +201,24 @@ void test::Loop(int nth_case)
        count++;
        cout << endl; 
 
-   } // end of nth loop ( 2 ~ 5 GeV )
+   } // end of nth loop ( 4 ~ 10 GeV )
 
-   for(Int_t nth = 5; nth < 25; nth++)
+   for(Int_t nth = 0; nth < 4; nth++)
    {
-       cout << "Process: (" << count+1 << "/74)" << endl;
+       cout << "Process: (" << count+1 << "/36)" << endl;
        TString file_ = "./Plots/phi_";
        TString ith_;
 
        ith_.Form("%d", count+1);
        file_ = file_ + ith_ + "th.pdf";
 
-       low_pt = nth;
-       high_pt = low_pt + 1.;
+       low_pt = 10.+ nth*2;
+       high_pt = low_pt + 2.;
 
        cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
 
        sprintf(histname, "hist_%dth", count+1);
-       H[count] = new TH1F(histname,"",1000,-0.3,0.3);
+       H[count] = new TH1F(histname,"",500,-0.06,0.06);
 
        for (Long64_t jentry=0; jentry<nentries;jentry++) {
 	   Long64_t ientry = LoadTree(jentry);
@@ -400,44 +227,40 @@ void test::Loop(int nth_case)
 	   // if (Cut(ientry) < 0) continue;
 	   
 	   Int_t size = 0;
-	   if( nth_case == 0 )size = genpT_case1->size();
-	   if( nth_case == 1 )size = genpT_case2->size();
-	   if( nth_case == 2 )size = genpT_case3->size();
-	   if( nth_case == 3 )size = genpT_case4->size();
-	   if( nth_case == 4 )size = genpT_case5->size();
-	   if( nth_case == 5 )size = genpT_case6->size();
+	   if( nth_case == 1 )size = genpT_case1->size();
+	   if( nth_case == 2 )size = genpT_case2->size();
+	   if( nth_case == 3 )size = genpT_case3->size();
+	   if( nth_case == 4 )size = genpT_case4->size();
+	   if( nth_case == 5 )size = genpT_case5->size();
 
 	   if( size == 0 ) continue;
 
-           Float_t gen_pT = -1.;
-	   if( nth_case == 0 ) gen_pT = genpT_case1->at(0);
-	   if( nth_case == 1 ) gen_pT = genpT_case2->at(0);
-	   if( nth_case == 2 ) gen_pT = genpT_case3->at(0);
-	   if( nth_case == 3 ) gen_pT = genpT_case4->at(0);
-	   if( nth_case == 4 ) gen_pT = genpT_case5->at(0);
-	   if( nth_case == 5 ) gen_pT = genpT_case6->at(0);
+       Float_t gen_pT = -1.;
+	   if( nth_case == 1 ) gen_pT = genpT_case1->at(0);
+	   if( nth_case == 2 ) gen_pT = genpT_case2->at(0);
+	   if( nth_case == 3 ) gen_pT = genpT_case3->at(0);
+	   if( nth_case == 4 ) gen_pT = genpT_case4->at(0);
+	   if( nth_case == 5 ) gen_pT = genpT_case5->at(0);
 
 	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
 
-           Float_t dphi = -999.;
-	   if( nth_case == 0 ) dphi = bsl1_l1l2_dphi->at(0);
+       Float_t dphi = -999.;
 	   if( nth_case == 1 ) dphi = bsl1_l1l3_dphi->at(0);
 	   if( nth_case == 2 ) dphi = bsl1_l1l4_dphi->at(0);
 	   if( nth_case == 3 ) dphi = bsl2_l2l3_dphi->at(0);
 	   if( nth_case == 4 ) dphi = bsl2_l2l4_dphi->at(0);
 	   if( nth_case == 5 ) dphi = bsl3_l3l4_dphi->at(0);
 
-           H[count]->Fill(dphi);
-       
-       }// end of event loop
-       cout << endl;
+       H[count]->Fill(dphi);
 
-       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.02, H[count]->GetMean()+0.02);
-       func->SetParameters(70, H[count]->GetMean(), 0.001);
+       }// end of event loop
+
+       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.005, H[count]->GetMean()+0.005);
+       func->SetParameters(70, H[count]->GetMean(), 0.0001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
        points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << "; error[" << count << "] = " << fabs(func->GetParameter(2)) << ";" << endl;
-       hist_bsl1_l1l2_c->SetBinContent(nth-4, fabs(func->GetParameter(1)));
+       hist_bsl1_l1l2_c->SetBinContent(nth+1, fabs(func->GetParameter(1)));
        gStyle->SetOptFit(1111);
 
        func->SetLineColor(kRed);
@@ -458,25 +281,24 @@ void test::Loop(int nth_case)
        count++;
        cout << endl; 
 
-   } // end of nth loop ( 5 ~ 25 GeV )
+   } // end of nth loop ( 10 ~ 18 GeV )
 
-
-   for(Int_t nth = 0; nth < 10; nth++)
+   for(Int_t nth = 0; nth < 6; nth++)
    {
-       cout << "Process: (" << count+1 << "/74)" << endl;
+       cout << "Process: (" << count+1 << "/36)" << endl;
        TString file_ = "./Plots/phi_";
        TString ith_;
 
        ith_.Form("%d", count+1);
        file_ = file_ + ith_ + "th.pdf";
 
-       low_pt = 25. + nth*2.5;
-       high_pt = low_pt + 2.5;
+       low_pt = 18.+ nth*2;
+       high_pt = low_pt + 2.;
 
        cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
 
        sprintf(histname, "hist_%dth", count+1);
-       H[count] = new TH1F(histname,"",1000,-0.2,0.2);
+       H[count] = new TH1F(histname,"",1000,-0.06,0.06);
 
        for (Long64_t jentry=0; jentry<nentries;jentry++) {
 	   Long64_t ientry = LoadTree(jentry);
@@ -485,40 +307,118 @@ void test::Loop(int nth_case)
 	   // if (Cut(ientry) < 0) continue;
 	   
 	   Int_t size = 0;
-	   if( nth_case == 0 )size = genpT_case1->size();
-	   if( nth_case == 1 )size = genpT_case2->size();
-	   if( nth_case == 2 )size = genpT_case3->size();
-	   if( nth_case == 3 )size = genpT_case4->size();
-	   if( nth_case == 4 )size = genpT_case5->size();
-	   if( nth_case == 5 )size = genpT_case6->size();
+	   if( nth_case == 1 )size = genpT_case1->size();
+	   if( nth_case == 2 )size = genpT_case2->size();
+	   if( nth_case == 3 )size = genpT_case3->size();
+	   if( nth_case == 4 )size = genpT_case4->size();
+	   if( nth_case == 5 )size = genpT_case5->size();
 
 	   if( size == 0 ) continue;
 
-           Float_t gen_pT = -1.;
-	   if( nth_case == 0 ) gen_pT = genpT_case1->at(0);
-	   if( nth_case == 1 ) gen_pT = genpT_case2->at(0);
-	   if( nth_case == 2 ) gen_pT = genpT_case3->at(0);
-	   if( nth_case == 3 ) gen_pT = genpT_case4->at(0);
-	   if( nth_case == 4 ) gen_pT = genpT_case5->at(0);
-	   if( nth_case == 5 ) gen_pT = genpT_case6->at(0);
+       Float_t gen_pT = -1.;
+	   if( nth_case == 1 ) gen_pT = genpT_case1->at(0);
+	   if( nth_case == 2 ) gen_pT = genpT_case2->at(0);
+	   if( nth_case == 3 ) gen_pT = genpT_case3->at(0);
+	   if( nth_case == 4 ) gen_pT = genpT_case4->at(0);
+	   if( nth_case == 5 ) gen_pT = genpT_case5->at(0);
 
 	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
 
-           Float_t dphi = -999.;
-	   if( nth_case == 0 ) dphi = bsl1_l1l2_dphi->at(0);
+       Float_t dphi = -999.;
 	   if( nth_case == 1 ) dphi = bsl1_l1l3_dphi->at(0);
 	   if( nth_case == 2 ) dphi = bsl1_l1l4_dphi->at(0);
 	   if( nth_case == 3 ) dphi = bsl2_l2l3_dphi->at(0);
 	   if( nth_case == 4 ) dphi = bsl2_l2l4_dphi->at(0);
 	   if( nth_case == 5 ) dphi = bsl3_l3l4_dphi->at(0);
 
-           H[count]->Fill(dphi);
+       H[count]->Fill(dphi);
+
+       }// end of event loop
+
+       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.003, H[count]->GetMean()+0.003);
+       func->SetParameters(70, H[count]->GetMean(), 0.0001);
+       H[count]->Fit(func,"0R");
+       cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
+       points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << "; error[" << count << "] = " << fabs(func->GetParameter(2)) << ";" << endl;
+       hist_bsl1_l1l2_c->SetBinContent(nth+4, fabs(func->GetParameter(1)));
+       gStyle->SetOptFit(1111);
+
+       func->SetLineColor(kRed);
+       func->SetLineWidth(2);
+
+       TCanvas* c1 = new TCanvas("c1","",800,800) ;
+       c1->cd(1); 
+       gPad->SetLeftMargin(0.15);  
+       H[count]->Draw();
+       func->Draw("same");
+
+       c1->SaveAs(file_);
+       c1->Write();
+
+       c1->Clear();
+       delete c1;
+
+       count++;
+       cout << endl; 
+
+   } // end of nth loop ( 18 ~ 30 GeV )
+  
+      
+   for(Int_t nth = 0; nth < 10; nth++)
+   {
+       cout << "Process: (" << count+1 << "/36)" << endl;
+       TString file_ = "./Plots/phi_";
+       TString ith_;
+
+       ith_.Form("%d", count+1);
+       file_ = file_ + ith_ + "th.pdf";
+
+       low_pt = 30. + nth*3;
+       high_pt = low_pt + 3.;
+
+       cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
+
+       sprintf(histname, "hist_%dth", count+1);
+       H[count] = new TH1F(histname,"",1000,-0.05,0.05);
+
+       for (Long64_t jentry=0; jentry<nentries;jentry++) {
+	   Long64_t ientry = LoadTree(jentry);
+	   if (ientry < 0) break;
+	   nb = fChain->GetEntry(jentry);   nbytes += nb;
+	   // if (Cut(ientry) < 0) continue;
+	   
+	   Int_t size = 0;
+	   if( nth_case == 1 )size = genpT_case1->size();
+	   if( nth_case == 2 )size = genpT_case2->size();
+	   if( nth_case == 3 )size = genpT_case3->size();
+	   if( nth_case == 4 )size = genpT_case4->size();
+	   if( nth_case == 5 )size = genpT_case5->size();
+
+	   if( size == 0 ) continue;
+
+       Float_t gen_pT = -1.;
+	   if( nth_case == 1 ) gen_pT = genpT_case1->at(0);
+	   if( nth_case == 2 ) gen_pT = genpT_case2->at(0);
+	   if( nth_case == 3 ) gen_pT = genpT_case3->at(0);
+	   if( nth_case == 4 ) gen_pT = genpT_case4->at(0);
+	   if( nth_case == 5 ) gen_pT = genpT_case5->at(0);
+
+	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
+
+       Float_t dphi = -999.;
+	   if( nth_case == 1 ) dphi = bsl1_l1l3_dphi->at(0);
+	   if( nth_case == 2 ) dphi = bsl1_l1l4_dphi->at(0);
+	   if( nth_case == 3 ) dphi = bsl2_l2l3_dphi->at(0);
+	   if( nth_case == 4 ) dphi = bsl2_l2l4_dphi->at(0);
+	   if( nth_case == 5 ) dphi = bsl3_l3l4_dphi->at(0);
+
+       H[count]->Fill(dphi);
 
        }// end of event loop
        cout << endl;
 
-       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.015,H[count]->GetMean()+0.015);
-       func->SetParameters(70, H[count]->GetMean(), 0.001);
+       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.002, H[count]->GetMean()+0.002);
+       func->SetParameters(70, H[count]->GetMean(), 0.0001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
        points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << "; error[" << count << "] = " << fabs(func->GetParameter(2)) << ";" << endl;
@@ -543,24 +443,24 @@ void test::Loop(int nth_case)
        count++;
        cout << endl; 
 
-   } // end of nth loop ( 25 ~ 50 GeV )
+   } // end of nth loop ( 30 ~ 60 GeV )
 
-   for(Int_t nth = 0; nth < 20; nth++)
+   for(Int_t nth = 0; nth < 8; nth++)
    {
-       cout << "Process: (" << count+1 << "/74)" << endl;
+       cout << "Process: (" << count+1 << "/36)" << endl;
        TString file_ = "./Plots/phi_";
        TString ith_;
 
        ith_.Form("%d", count+1);
        file_ = file_ + ith_ + "th.pdf";
 
-       low_pt = 50. + nth*5.;
+       low_pt = 60. + nth*5.;
        high_pt = low_pt + 5.;
 
        cout << "Low pT bound: " << low_pt << ", high pT bound: " << high_pt << endl;
 
        sprintf(histname, "hist_%dth", count+1);
-       H[count] = new TH1F(histname,"",1000,-0.15,0.15);
+       H[count] = new TH1F(histname,"",1000,-0.05,0.05);
 
        for (Long64_t jentry=0; jentry<nentries;jentry++) {
 	   Long64_t ientry = LoadTree(jentry);
@@ -569,40 +469,37 @@ void test::Loop(int nth_case)
 	   // if (Cut(ientry) < 0) continue;
 	   
 	   Int_t size = 0;
-	   if( nth_case == 0 )size = genpT_case1->size();
-	   if( nth_case == 1 )size = genpT_case2->size();
-	   if( nth_case == 2 )size = genpT_case3->size();
-	   if( nth_case == 3 )size = genpT_case4->size();
-	   if( nth_case == 4 )size = genpT_case5->size();
-	   if( nth_case == 5 )size = genpT_case6->size();
+	   if( nth_case == 1 )size = genpT_case1->size();
+	   if( nth_case == 2 )size = genpT_case2->size();
+	   if( nth_case == 3 )size = genpT_case3->size();
+	   if( nth_case == 4 )size = genpT_case4->size();
+	   if( nth_case == 5 )size = genpT_case5->size();
 
 	   if( size == 0 ) continue;
 
-           Float_t gen_pT = -1.;
-	   if( nth_case == 0 ) gen_pT = genpT_case1->at(0);
-	   if( nth_case == 1 ) gen_pT = genpT_case2->at(0);
-	   if( nth_case == 2 ) gen_pT = genpT_case3->at(0);
-	   if( nth_case == 3 ) gen_pT = genpT_case4->at(0);
-	   if( nth_case == 4 ) gen_pT = genpT_case5->at(0);
-	   if( nth_case == 5 ) gen_pT = genpT_case6->at(0);
+       Float_t gen_pT = -1.;
+	   if( nth_case == 1 ) gen_pT = genpT_case1->at(0);
+	   if( nth_case == 2 ) gen_pT = genpT_case2->at(0);
+	   if( nth_case == 3 ) gen_pT = genpT_case3->at(0);
+	   if( nth_case == 4 ) gen_pT = genpT_case4->at(0);
+	   if( nth_case == 5 ) gen_pT = genpT_case5->at(0);
 
 	   if( gen_pT > high_pt || gen_pT < low_pt ) continue;
 
-           Float_t dphi = -999.;
-	   if( nth_case == 0 ) dphi = bsl1_l1l2_dphi->at(0);
+       Float_t dphi = -999.;
 	   if( nth_case == 1 ) dphi = bsl1_l1l3_dphi->at(0);
 	   if( nth_case == 2 ) dphi = bsl1_l1l4_dphi->at(0);
 	   if( nth_case == 3 ) dphi = bsl2_l2l3_dphi->at(0);
 	   if( nth_case == 4 ) dphi = bsl2_l2l4_dphi->at(0);
 	   if( nth_case == 5 ) dphi = bsl3_l3l4_dphi->at(0);
 
-           H[count]->Fill(dphi);
-
+       H[count]->Fill(dphi);
+       
        }// end of event loop
        cout << endl;
 
-       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.012,H[count]->GetMean()+0.012);
-       func->SetParameters(70, H[count]->GetMean(), 0.001);
+       H[count]->GetXaxis()->SetRangeUser(H[count]->GetMean()-0.002, H[count]->GetMean()+0.002);
+       func->SetParameters(70, H[count]->GetMean(), 0.0001);
        H[count]->Fit(func,"0R");
        cout << "Fit parameters: " << "Const: " << func->GetParameter(0) << ", Mean: " << func->GetParameter(1) << ", sigma: " << func->GetParameter(2) << endl;
        points << "gen_Pt[" << count << "] = " << low_pt << "; point[" << count << "] = " << fabs(func->GetParameter(1)) << "; error[" << count << "] = " << fabs(func->GetParameter(2)) << ";" << endl;
@@ -627,7 +524,9 @@ void test::Loop(int nth_case)
        count++;
        cout << endl; 
 
-   } // end of nth loop ( 50 ~ 150 GeV )
+   } // end of nth loop ( 60 ~ 100 GeV )
+
+
 
    TCanvas *c2 = new TCanvas("c2","c2",700,700);
    gStyle->SetOptStat(0);
@@ -641,7 +540,7 @@ void test::Loop(int nth_case)
    c2->SetTickx(1);
    c2->SetLogy();
 
-   Int_t nbins = 150; Float_t x1 = 0.; Float_t x2 = 150.;
+   Int_t nbins = 105; Float_t x1 = 0.; Float_t x2 = 105.;
    TH1F* h1= new TH1F("h1",";P_{T} (GeV); #Delta#phi", nbins, x1, x2);
    h1->SetTitle("");
    h1->GetXaxis()->SetTitleOffset(1.3);
