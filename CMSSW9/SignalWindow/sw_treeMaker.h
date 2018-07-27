@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Thu May 10 17:07:06 2018 by ROOT version 6.06/01
-// from TTree l1pixtrktree/l1pixtrktree
-// found on file: Resultall.root
+// Fri Jul 27 04:35:02 2018 by ROOT version 6.10/05
+// from TTree L1PiXTRKTree/L1PiXTRKTree
+// found on file: SingleEleNoPU__107.root
 //////////////////////////////////////////////////////////
 
 #ifndef sw_treeMaker_h
@@ -28,22 +28,20 @@ public :
    // Declaration of leaf types
    Int_t           nVtx;
    Int_t           nMeanPU;
-   Int_t           genPartN;
    vector<float>   *genPartE;
    vector<float>   *genPartPt;
    vector<float>   *genPartEta;
    vector<float>   *genPartPhi;
    vector<int>     *genPartCharge;
    vector<int>     *genPartId;
-   vector<float>   *propgenPartE;
-   vector<float>   *propgenPartPt;
-   vector<float>   *propgenPartEta;
-   vector<float>   *propgenPartPhi;
-   vector<int>     *propgenPartCharge;
-   vector<int>     *propgenPartId;
-   vector<float>   *propgenPartx;
-   vector<float>   *propgenParty;
-   vector<float>   *propgenPartz;
+   vector<float>   *propgenElPartE;
+   vector<float>   *propgenElPartPt;
+   vector<float>   *propgenElPartEta;
+   vector<float>   *propgenElPartPhi;
+   vector<int>     *propgenElPartCharge;
+   vector<float>   *propgenElPartx;
+   vector<float>   *propgenElParty;
+   vector<float>   *propgenElPartz;
    Int_t           simTrkN;
    vector<float>   *simTrkPt;
    vector<float>   *simTrkEta;
@@ -65,33 +63,46 @@ public :
    vector<float>   *Brempos_x;
    vector<float>   *Brempos_y;
    vector<float>   *Brempos_z;
-   vector<int>     *bHitLayer;
-   vector<int>     *bHitLadder;
-   vector<int>     *bHitModule;
-   vector<int>     *fHitDisk;
-   vector<int>     *fHitBlade;
-   vector<int>     *fHitSide;
-   vector<int>     *fHitPanel;
-   vector<int>     *fHitModule;
-   Int_t           bHitN;
-   Int_t           fHitN;
-   vector<float>   *fHitGx;
-   vector<float>   *fHitGy;
-   vector<float>   *fHitGz;
-   vector<float>   *fHitPhi;
-   vector<float>   *fHitEta;
-   vector<float>   *fClSize;
-   vector<float>   *fClSizeX;
-   vector<float>   *fClSizeY;
-   vector<float>   *bHitGx;
-   vector<float>   *bHitGy;
-   vector<float>   *bHitGz;
-   vector<float>   *bHitPhi;
-   vector<float>   *bHitEta;
-   vector<float>   *bClSize;
-   vector<float>   *bClSizeX;
-   vector<float>   *bClSizeY;
-   Int_t           egCrysN;
+   vector<float>   *propgenPoPartE;
+   vector<float>   *propgenPoPartPt;
+   vector<float>   *propgenPoPartEta;
+   vector<float>   *propgenPoPartPhi;
+   vector<int>     *propgenPoPartCharge;
+   vector<float>   *propgenPoPartx;
+   vector<float>   *propgenPoParty;
+   vector<float>   *propgenPoPartz;
+   vector<int>     *bRecHitLayer;
+   vector<int>     *bRecHitLadder;
+   vector<int>     *bRecHitModule;
+   vector<int>     *fRecHitDisk;
+   vector<int>     *fRecHitBlade;
+   vector<int>     *fRecHitSide;
+   vector<int>     *fRecHitPanel;
+   vector<int>     *fRecHitModule;
+   Int_t           bRecHitN;
+   Int_t           fRecHitN;
+   vector<float>   *fRecHitGx;
+   vector<float>   *fRecHitGy;
+   vector<float>   *fRecHitGz;
+   vector<float>   *fRhSize;
+   vector<float>   *fRhSizeX;
+   vector<float>   *fRhSizeY;
+   vector<float>   *bRecHitGx;
+   vector<float>   *bRecHitGy;
+   vector<float>   *bRecHitGz;
+   vector<float>   *bRhSize;
+   vector<float>   *bRhSizeX;
+   vector<float>   *bRhSizeY;
+   Int_t           bfastsimHitN;
+   Int_t           ffastsimHitN;
+   vector<int>     *bfastsimHitLayer;
+   vector<float>   *bfastsimHitGx;
+   vector<float>   *bfastsimHitGy;
+   vector<float>   *bfastsimHitGz;
+   vector<int>     *ffastsimHitLayer;
+   vector<float>   *ffastsimHitGx;
+   vector<float>   *ffastsimHitGy;
+   vector<float>   *ffastsimHitGz;
    vector<float>   *egCrysE;
    vector<float>   *egCrysEt;
    vector<float>   *egCrysEta;
@@ -99,7 +110,6 @@ public :
    vector<float>   *egCrysGx;
    vector<float>   *egCrysGy;
    vector<float>   *egCrysGz;
-   Int_t           egCrysClusterN;
    vector<float>   *egCrysClusterE;
    vector<float>   *egCrysClusterEt;
    vector<float>   *egCrysClusterEta;
@@ -143,8 +153,23 @@ public :
    vector<float>   *cl3d_x;
    vector<float>   *cl3d_y;
    vector<int>     *cl3d_z;
+   vector<float>   *cl3d_hovere;
+   vector<int>     *cl3d_showerlength;
+   vector<int>     *cl3d_coreshowerlength;
+   vector<int>     *cl3d_firstlayer;
+   vector<int>     *cl3d_maxlayer;
+   vector<float>   *cl3d_seetot;
+   vector<float>   *cl3d_seemax;
+   vector<float>   *cl3d_spptot;
+   vector<float>   *cl3d_sppmax;
+   vector<float>   *cl3d_szz;
+   vector<float>   *cl3d_srrtot;
+   vector<float>   *cl3d_srrmax;
+   vector<float>   *cl3d_srrmean;
+   vector<float>   *cl3d_emaxe;
+   vector<float>   *cl3d_bdteg;
+   vector<float>   *cl3d_egid;
    UShort_t        egN;
-   vector<float>   *egE;
    vector<float>   *egEt;
    vector<float>   *egEta;
    vector<float>   *egPhi;
@@ -168,22 +193,20 @@ public :
    // List of branches
    TBranch        *b_nVtx;   //!
    TBranch        *b_nMeanPU;   //!
-   TBranch        *b_genPartN;   //!
    TBranch        *b_genPartE;   //!
    TBranch        *b_genPartPt;   //!
    TBranch        *b_genPartEta;   //!
    TBranch        *b_genPartPhi;   //!
    TBranch        *b_genPartCharge;   //!
    TBranch        *b_genPartId;   //!
-   TBranch        *b_propgenPartE;   //!
-   TBranch        *b_propgenPartPt;   //!
-   TBranch        *b_propgenPartEta;   //!
-   TBranch        *b_propgenPartPhi;   //!
-   TBranch        *b_propgenPartCharge;   //!
-   TBranch        *b_propgenPartId;   //!
-   TBranch        *b_propgenPartx;   //!
-   TBranch        *b_propgenParty;   //!
-   TBranch        *b_propgenPartz;   //!
+   TBranch        *b_propgenElPartE;   //!
+   TBranch        *b_propgenElPartPt;   //!
+   TBranch        *b_propgenElPartEta;   //!
+   TBranch        *b_propgenElPartPhi;   //!
+   TBranch        *b_propgenElPartCharge;   //!
+   TBranch        *b_propgenElPartx;   //!
+   TBranch        *b_propgenElParty;   //!
+   TBranch        *b_propgenElPartz;   //!
    TBranch        *b_simTrkN;   //!
    TBranch        *b_simTrkPt;   //!
    TBranch        *b_simTrkEta;   //!
@@ -205,33 +228,46 @@ public :
    TBranch        *b_Brempos_x;   //!
    TBranch        *b_Brempos_y;   //!
    TBranch        *b_Brempos_z;   //!
-   TBranch        *b_bHitLayer;   //!
-   TBranch        *b_bHitLadder;   //!
-   TBranch        *b_bHitModule;   //!
-   TBranch        *b_fHitDisk;   //!
-   TBranch        *b_fHitBlade;   //!
-   TBranch        *b_fHitSide;   //!
-   TBranch        *b_fHitPanel;   //!
-   TBranch        *b_fHitModule;   //!
-   TBranch        *b_bHitN;   //!
-   TBranch        *b_fHitN;   //!
-   TBranch        *b_fHitGx;   //!
-   TBranch        *b_fHitGy;   //!
-   TBranch        *b_fHitGz;   //!
-   TBranch        *b_fHitPhi;   //!
-   TBranch        *b_fHitEta;   //!
-   TBranch        *b_fClSize;   //!
-   TBranch        *b_fClSizeX;   //!
-   TBranch        *b_fClSizeY;   //!
-   TBranch        *b_bHitGx;   //!
-   TBranch        *b_bHitGy;   //!
-   TBranch        *b_bHitGz;   //!
-   TBranch        *b_bHitPhi;   //!
-   TBranch        *b_bHitEta;   //!
-   TBranch        *b_bClSize;   //!
-   TBranch        *b_bClSizeX;   //!
-   TBranch        *b_bClSizeY;   //!
-   TBranch        *b_egCrysN;   //!
+   TBranch        *b_propgenPoPartE;   //!
+   TBranch        *b_propgenPoPartPt;   //!
+   TBranch        *b_propgenPoPartEta;   //!
+   TBranch        *b_propgenPoPartPhi;   //!
+   TBranch        *b_propgenPoPartCharge;   //!
+   TBranch        *b_propgenPoPartx;   //!
+   TBranch        *b_propgenPoParty;   //!
+   TBranch        *b_propgenPoPartz;   //!
+   TBranch        *b_bRecHitLayer;   //!
+   TBranch        *b_bRecHitLadder;   //!
+   TBranch        *b_bRecHitModule;   //!
+   TBranch        *b_fRecHitDisk;   //!
+   TBranch        *b_fRecHitBlade;   //!
+   TBranch        *b_fRecHitSide;   //!
+   TBranch        *b_fRecHitPanel;   //!
+   TBranch        *b_fRecHitModule;   //!
+   TBranch        *b_bRecHitN;   //!
+   TBranch        *b_fRecHitN;   //!
+   TBranch        *b_fRecHitGx;   //!
+   TBranch        *b_fRecHitGy;   //!
+   TBranch        *b_fRecHitGz;   //!
+   TBranch        *b_fRhSize;   //!
+   TBranch        *b_fRhSizeX;   //!
+   TBranch        *b_fRhSizeY;   //!
+   TBranch        *b_bRecHitGx;   //!
+   TBranch        *b_bRecHitGy;   //!
+   TBranch        *b_bRecHitGz;   //!
+   TBranch        *b_bRhSize;   //!
+   TBranch        *b_bRhSizeX;   //!
+   TBranch        *b_bRhSizeY;   //!
+   TBranch        *b_bfastsimHitN;   //!
+   TBranch        *b_ffastsimHitN;   //!
+   TBranch        *b_bfastsimHitLayer;   //!
+   TBranch        *b_bfastsimHitGx;   //!
+   TBranch        *b_bfastsimHitGy;   //!
+   TBranch        *b_bfastsimHitGz;   //!
+   TBranch        *b_ffastsimHitLayer;   //!
+   TBranch        *b_ffastsimHitGx;   //!
+   TBranch        *b_ffastsimHitGy;   //!
+   TBranch        *b_ffastsimHitGz;   //!
    TBranch        *b_egCrysE;   //!
    TBranch        *b_egCrysEt;   //!
    TBranch        *b_egCrysEta;   //!
@@ -239,7 +275,6 @@ public :
    TBranch        *b_egCrysGx;   //!
    TBranch        *b_egCrysGy;   //!
    TBranch        *b_egCrysGz;   //!
-   TBranch        *b_egCrysClusterN;   //!
    TBranch        *b_egCrysClusterE;   //!
    TBranch        *b_egCrysClusterEt;   //!
    TBranch        *b_egCrysClusterEta;   //!
@@ -283,8 +318,23 @@ public :
    TBranch        *b_cl3d_x;   //!
    TBranch        *b_cl3d_y;   //!
    TBranch        *b_cl3d_z;   //!
+   TBranch        *b_cl3d_hovere;   //!
+   TBranch        *b_cl3d_showerlength;   //!
+   TBranch        *b_cl3d_coreshowerlength;   //!
+   TBranch        *b_cl3d_firstlayer;   //!
+   TBranch        *b_cl3d_maxlayer;   //!
+   TBranch        *b_cl3d_seetot;   //!
+   TBranch        *b_cl3d_seemax;   //!
+   TBranch        *b_cl3d_spptot;   //!
+   TBranch        *b_cl3d_sppmax;   //!
+   TBranch        *b_cl3d_szz;   //!
+   TBranch        *b_cl3d_srrtot;   //!
+   TBranch        *b_cl3d_srrmax;   //!
+   TBranch        *b_cl3d_srrmean;   //!
+   TBranch        *b_cl3d_emaxe;   //!
+   TBranch        *b_cl3d_bdteg;   //!
+   TBranch        *b_cl3d_egid;   //!
    TBranch        *b_egN;   //!
-   TBranch        *b_egE;   //!
    TBranch        *b_egEt;   //!
    TBranch        *b_egEta;   //!
    TBranch        *b_egPhi;   //!
@@ -305,6 +355,14 @@ public :
    TBranch        *b_egShape;   //!
    TBranch        *b_egTowerHoE;   //!
 
+   inline float deltaPhi(float phi1, float phi2) {
+     float result = phi1 - phi2;
+     while(result >= float(M_PI)) result -= float(2*M_PI);
+     while(result < -float(M_PI)) result += float(2*M_PI);
+
+     return result;
+   }
+
    sw_treeMaker(TTree *tree=0);
    virtual ~sw_treeMaker();
    virtual Int_t    Cut(Long64_t entry);
@@ -314,6 +372,10 @@ public :
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
+
+   TFile *outfile;
+   TTree *out_tree;
+
 };
 
 #endif
@@ -324,15 +386,38 @@ sw_treeMaker::sw_treeMaker(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("Resultall.root");
-      if (!f || !f->IsOpen()) {
-         f = new TFile("Resultall.root");
-      }
-      TDirectory * dir = (TDirectory*)f->Get("Resultall.root:/l1PiXTRKTree");
-      dir->GetObject("l1pixtrktree",tree);
+   //   TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("SingleEleNoPU__107.root");
+   //   if (!f || !f->IsOpen()) {
+   //      f = new TFile("SingleEleNoPU__107.root");
+   //   }
+   //   TDirectory * dir = (TDirectory*)f->Get("SingleEleNoPU__107.root:/l1PiXTRKTree");
+   //   dir->GetObject("L1PiXTRKTree",tree);
 
+   //}
+   //Init(tree);
+
+   TChain *chain = new TChain("l1PiXTRKTree/L1PiXTRKTree","");
+   string line;
+   ifstream myfile("txt_to_path");
+   if( myfile.is_open()) 
+    {
+      while( getline (myfile,line) )
+      {
+         if( line.length() != 0 ) {
+            cout << line << endl;
+            char file_path[300];
+            strcpy(file_path, line.c_str());
+            chain->Add(file_path);
+         }
+      }
+      myfile.close();
+    }
+    tree = chain;
    }
    Init(tree);
+  
+   outfile = new TFile("../output_tmp/Tree_output","RECREATE");
+   out_tree = new TTree("t","t");
 }
 
 sw_treeMaker::~sw_treeMaker()
@@ -377,15 +462,14 @@ void sw_treeMaker::Init(TTree *tree)
    genPartPhi = 0;
    genPartCharge = 0;
    genPartId = 0;
-   propgenPartE = 0;
-   propgenPartPt = 0;
-   propgenPartEta = 0;
-   propgenPartPhi = 0;
-   propgenPartCharge = 0;
-   propgenPartId = 0;
-   propgenPartx = 0;
-   propgenParty = 0;
-   propgenPartz = 0;
+   propgenElPartE = 0;
+   propgenElPartPt = 0;
+   propgenElPartEta = 0;
+   propgenElPartPhi = 0;
+   propgenElPartCharge = 0;
+   propgenElPartx = 0;
+   propgenElParty = 0;
+   propgenElPartz = 0;
    simTrkPt = 0;
    simTrkEta = 0;
    simTrkPhi = 0;
@@ -403,30 +487,42 @@ void sw_treeMaker::Init(TTree *tree)
    Brempos_x = 0;
    Brempos_y = 0;
    Brempos_z = 0;
-   bHitLayer = 0;
-   bHitLadder = 0;
-   bHitModule = 0;
-   fHitDisk = 0;
-   fHitBlade = 0;
-   fHitSide = 0;
-   fHitPanel = 0;
-   fHitModule = 0;
-   fHitGx = 0;
-   fHitGy = 0;
-   fHitGz = 0;
-   fHitPhi = 0;
-   fHitEta = 0;
-   fClSize = 0;
-   fClSizeX = 0;
-   fClSizeY = 0;
-   bHitGx = 0;
-   bHitGy = 0;
-   bHitGz = 0;
-   bHitPhi = 0;
-   bHitEta = 0;
-   bClSize = 0;
-   bClSizeX = 0;
-   bClSizeY = 0;
+   propgenPoPartE = 0;
+   propgenPoPartPt = 0;
+   propgenPoPartEta = 0;
+   propgenPoPartPhi = 0;
+   propgenPoPartCharge = 0;
+   propgenPoPartx = 0;
+   propgenPoParty = 0;
+   propgenPoPartz = 0;
+   bRecHitLayer = 0;
+   bRecHitLadder = 0;
+   bRecHitModule = 0;
+   fRecHitDisk = 0;
+   fRecHitBlade = 0;
+   fRecHitSide = 0;
+   fRecHitPanel = 0;
+   fRecHitModule = 0;
+   fRecHitGx = 0;
+   fRecHitGy = 0;
+   fRecHitGz = 0;
+   fRhSize = 0;
+   fRhSizeX = 0;
+   fRhSizeY = 0;
+   bRecHitGx = 0;
+   bRecHitGy = 0;
+   bRecHitGz = 0;
+   bRhSize = 0;
+   bRhSizeX = 0;
+   bRhSizeY = 0;
+   bfastsimHitLayer = 0;
+   bfastsimHitGx = 0;
+   bfastsimHitGy = 0;
+   bfastsimHitGz = 0;
+   ffastsimHitLayer = 0;
+   ffastsimHitGx = 0;
+   ffastsimHitGy = 0;
+   ffastsimHitGz = 0;
    egCrysE = 0;
    egCrysEt = 0;
    egCrysEta = 0;
@@ -476,7 +572,22 @@ void sw_treeMaker::Init(TTree *tree)
    cl3d_x = 0;
    cl3d_y = 0;
    cl3d_z = 0;
-   egE = 0;
+   cl3d_hovere = 0;
+   cl3d_showerlength = 0;
+   cl3d_coreshowerlength = 0;
+   cl3d_firstlayer = 0;
+   cl3d_maxlayer = 0;
+   cl3d_seetot = 0;
+   cl3d_seemax = 0;
+   cl3d_spptot = 0;
+   cl3d_sppmax = 0;
+   cl3d_szz = 0;
+   cl3d_srrtot = 0;
+   cl3d_srrmax = 0;
+   cl3d_srrmean = 0;
+   cl3d_emaxe = 0;
+   cl3d_bdteg = 0;
+   cl3d_egid = 0;
    egEt = 0;
    egEta = 0;
    egPhi = 0;
@@ -504,22 +615,20 @@ void sw_treeMaker::Init(TTree *tree)
 
    fChain->SetBranchAddress("nVtx", &nVtx, &b_nVtx);
    fChain->SetBranchAddress("nMeanPU", &nMeanPU, &b_nMeanPU);
-   fChain->SetBranchAddress("genPartN", &genPartN, &b_genPartN);
    fChain->SetBranchAddress("genPartE", &genPartE, &b_genPartE);
    fChain->SetBranchAddress("genPartPt", &genPartPt, &b_genPartPt);
    fChain->SetBranchAddress("genPartEta", &genPartEta, &b_genPartEta);
    fChain->SetBranchAddress("genPartPhi", &genPartPhi, &b_genPartPhi);
    fChain->SetBranchAddress("genPartCharge", &genPartCharge, &b_genPartCharge);
    fChain->SetBranchAddress("genPartId", &genPartId, &b_genPartId);
-   fChain->SetBranchAddress("propgenPartE", &propgenPartE, &b_propgenPartE);
-   fChain->SetBranchAddress("propgenPartPt", &propgenPartPt, &b_propgenPartPt);
-   fChain->SetBranchAddress("propgenPartEta", &propgenPartEta, &b_propgenPartEta);
-   fChain->SetBranchAddress("propgenPartPhi", &propgenPartPhi, &b_propgenPartPhi);
-   fChain->SetBranchAddress("propgenPartCharge", &propgenPartCharge, &b_propgenPartCharge);
-   fChain->SetBranchAddress("propgenPartId", &propgenPartId, &b_propgenPartId);
-   fChain->SetBranchAddress("propgenPartx", &propgenPartx, &b_propgenPartx);
-   fChain->SetBranchAddress("propgenParty", &propgenParty, &b_propgenParty);
-   fChain->SetBranchAddress("propgenPartz", &propgenPartz, &b_propgenPartz);
+   fChain->SetBranchAddress("propgenElPartE", &propgenElPartE, &b_propgenElPartE);
+   fChain->SetBranchAddress("propgenElPartPt", &propgenElPartPt, &b_propgenElPartPt);
+   fChain->SetBranchAddress("propgenElPartEta", &propgenElPartEta, &b_propgenElPartEta);
+   fChain->SetBranchAddress("propgenElPartPhi", &propgenElPartPhi, &b_propgenElPartPhi);
+   fChain->SetBranchAddress("propgenElPartCharge", &propgenElPartCharge, &b_propgenElPartCharge);
+   fChain->SetBranchAddress("propgenElPartx", &propgenElPartx, &b_propgenElPartx);
+   fChain->SetBranchAddress("propgenElParty", &propgenElParty, &b_propgenElParty);
+   fChain->SetBranchAddress("propgenElPartz", &propgenElPartz, &b_propgenElPartz);
    fChain->SetBranchAddress("simTrkN", &simTrkN, &b_simTrkN);
    fChain->SetBranchAddress("simTrkPt", &simTrkPt, &b_simTrkPt);
    fChain->SetBranchAddress("simTrkEta", &simTrkEta, &b_simTrkEta);
@@ -541,33 +650,46 @@ void sw_treeMaker::Init(TTree *tree)
    fChain->SetBranchAddress("Brempos_x", &Brempos_x, &b_Brempos_x);
    fChain->SetBranchAddress("Brempos_y", &Brempos_y, &b_Brempos_y);
    fChain->SetBranchAddress("Brempos_z", &Brempos_z, &b_Brempos_z);
-   fChain->SetBranchAddress("bHitLayer", &bHitLayer, &b_bHitLayer);
-   fChain->SetBranchAddress("bHitLadder", &bHitLadder, &b_bHitLadder);
-   fChain->SetBranchAddress("bHitModule", &bHitModule, &b_bHitModule);
-   fChain->SetBranchAddress("fHitDisk", &fHitDisk, &b_fHitDisk);
-   fChain->SetBranchAddress("fHitBlade", &fHitBlade, &b_fHitBlade);
-   fChain->SetBranchAddress("fHitSide", &fHitSide, &b_fHitSide);
-   fChain->SetBranchAddress("fHitPanel", &fHitPanel, &b_fHitPanel);
-   fChain->SetBranchAddress("fHitModule", &fHitModule, &b_fHitModule);
-   fChain->SetBranchAddress("bHitN", &bHitN, &b_bHitN);
-   fChain->SetBranchAddress("fHitN", &fHitN, &b_fHitN);
-   fChain->SetBranchAddress("fHitGx", &fHitGx, &b_fHitGx);
-   fChain->SetBranchAddress("fHitGy", &fHitGy, &b_fHitGy);
-   fChain->SetBranchAddress("fHitGz", &fHitGz, &b_fHitGz);
-   fChain->SetBranchAddress("fHitPhi", &fHitPhi, &b_fHitPhi);
-   fChain->SetBranchAddress("fHitEta", &fHitEta, &b_fHitEta);
-   fChain->SetBranchAddress("fClSize", &fClSize, &b_fClSize);
-   fChain->SetBranchAddress("fClSizeX", &fClSizeX, &b_fClSizeX);
-   fChain->SetBranchAddress("fClSizeY", &fClSizeY, &b_fClSizeY);
-   fChain->SetBranchAddress("bHitGx", &bHitGx, &b_bHitGx);
-   fChain->SetBranchAddress("bHitGy", &bHitGy, &b_bHitGy);
-   fChain->SetBranchAddress("bHitGz", &bHitGz, &b_bHitGz);
-   fChain->SetBranchAddress("bHitPhi", &bHitPhi, &b_bHitPhi);
-   fChain->SetBranchAddress("bHitEta", &bHitEta, &b_bHitEta);
-   fChain->SetBranchAddress("bClSize", &bClSize, &b_bClSize);
-   fChain->SetBranchAddress("bClSizeX", &bClSizeX, &b_bClSizeX);
-   fChain->SetBranchAddress("bClSizeY", &bClSizeY, &b_bClSizeY);
-   fChain->SetBranchAddress("egCrysN", &egCrysN, &b_egCrysN);
+   fChain->SetBranchAddress("propgenPoPartE", &propgenPoPartE, &b_propgenPoPartE);
+   fChain->SetBranchAddress("propgenPoPartPt", &propgenPoPartPt, &b_propgenPoPartPt);
+   fChain->SetBranchAddress("propgenPoPartEta", &propgenPoPartEta, &b_propgenPoPartEta);
+   fChain->SetBranchAddress("propgenPoPartPhi", &propgenPoPartPhi, &b_propgenPoPartPhi);
+   fChain->SetBranchAddress("propgenPoPartCharge", &propgenPoPartCharge, &b_propgenPoPartCharge);
+   fChain->SetBranchAddress("propgenPoPartx", &propgenPoPartx, &b_propgenPoPartx);
+   fChain->SetBranchAddress("propgenPoParty", &propgenPoParty, &b_propgenPoParty);
+   fChain->SetBranchAddress("propgenPoPartz", &propgenPoPartz, &b_propgenPoPartz);
+   fChain->SetBranchAddress("bRecHitLayer", &bRecHitLayer, &b_bRecHitLayer);
+   fChain->SetBranchAddress("bRecHitLadder", &bRecHitLadder, &b_bRecHitLadder);
+   fChain->SetBranchAddress("bRecHitModule", &bRecHitModule, &b_bRecHitModule);
+   fChain->SetBranchAddress("fRecHitDisk", &fRecHitDisk, &b_fRecHitDisk);
+   fChain->SetBranchAddress("fRecHitBlade", &fRecHitBlade, &b_fRecHitBlade);
+   fChain->SetBranchAddress("fRecHitSide", &fRecHitSide, &b_fRecHitSide);
+   fChain->SetBranchAddress("fRecHitPanel", &fRecHitPanel, &b_fRecHitPanel);
+   fChain->SetBranchAddress("fRecHitModule", &fRecHitModule, &b_fRecHitModule);
+   fChain->SetBranchAddress("bRecHitN", &bRecHitN, &b_bRecHitN);
+   fChain->SetBranchAddress("fRecHitN", &fRecHitN, &b_fRecHitN);
+   fChain->SetBranchAddress("fRecHitGx", &fRecHitGx, &b_fRecHitGx);
+   fChain->SetBranchAddress("fRecHitGy", &fRecHitGy, &b_fRecHitGy);
+   fChain->SetBranchAddress("fRecHitGz", &fRecHitGz, &b_fRecHitGz);
+   fChain->SetBranchAddress("fRhSize", &fRhSize, &b_fRhSize);
+   fChain->SetBranchAddress("fRhSizeX", &fRhSizeX, &b_fRhSizeX);
+   fChain->SetBranchAddress("fRhSizeY", &fRhSizeY, &b_fRhSizeY);
+   fChain->SetBranchAddress("bRecHitGx", &bRecHitGx, &b_bRecHitGx);
+   fChain->SetBranchAddress("bRecHitGy", &bRecHitGy, &b_bRecHitGy);
+   fChain->SetBranchAddress("bRecHitGz", &bRecHitGz, &b_bRecHitGz);
+   fChain->SetBranchAddress("bRhSize", &bRhSize, &b_bRhSize);
+   fChain->SetBranchAddress("bRhSizeX", &bRhSizeX, &b_bRhSizeX);
+   fChain->SetBranchAddress("bRhSizeY", &bRhSizeY, &b_bRhSizeY);
+   fChain->SetBranchAddress("bfastsimHitN", &bfastsimHitN, &b_bfastsimHitN);
+   fChain->SetBranchAddress("ffastsimHitN", &ffastsimHitN, &b_ffastsimHitN);
+   fChain->SetBranchAddress("bfastsimHitLayer", &bfastsimHitLayer, &b_bfastsimHitLayer);
+   fChain->SetBranchAddress("bfastsimHitGx", &bfastsimHitGx, &b_bfastsimHitGx);
+   fChain->SetBranchAddress("bfastsimHitGy", &bfastsimHitGy, &b_bfastsimHitGy);
+   fChain->SetBranchAddress("bfastsimHitGz", &bfastsimHitGz, &b_bfastsimHitGz);
+   fChain->SetBranchAddress("ffastsimHitLayer", &ffastsimHitLayer, &b_ffastsimHitLayer);
+   fChain->SetBranchAddress("ffastsimHitGx", &ffastsimHitGx, &b_ffastsimHitGx);
+   fChain->SetBranchAddress("ffastsimHitGy", &ffastsimHitGy, &b_ffastsimHitGy);
+   fChain->SetBranchAddress("ffastsimHitGz", &ffastsimHitGz, &b_ffastsimHitGz);
    fChain->SetBranchAddress("egCrysE", &egCrysE, &b_egCrysE);
    fChain->SetBranchAddress("egCrysEt", &egCrysEt, &b_egCrysEt);
    fChain->SetBranchAddress("egCrysEta", &egCrysEta, &b_egCrysEta);
@@ -575,7 +697,6 @@ void sw_treeMaker::Init(TTree *tree)
    fChain->SetBranchAddress("egCrysGx", &egCrysGx, &b_egCrysGx);
    fChain->SetBranchAddress("egCrysGy", &egCrysGy, &b_egCrysGy);
    fChain->SetBranchAddress("egCrysGz", &egCrysGz, &b_egCrysGz);
-   fChain->SetBranchAddress("egCrysClusterN", &egCrysClusterN, &b_egCrysClusterN);
    fChain->SetBranchAddress("egCrysClusterE", &egCrysClusterE, &b_egCrysClusterE);
    fChain->SetBranchAddress("egCrysClusterEt", &egCrysClusterEt, &b_egCrysClusterEt);
    fChain->SetBranchAddress("egCrysClusterEta", &egCrysClusterEta, &b_egCrysClusterEta);
@@ -619,8 +740,23 @@ void sw_treeMaker::Init(TTree *tree)
    fChain->SetBranchAddress("cl3d_x", &cl3d_x, &b_cl3d_x);
    fChain->SetBranchAddress("cl3d_y", &cl3d_y, &b_cl3d_y);
    fChain->SetBranchAddress("cl3d_z", &cl3d_z, &b_cl3d_z);
+   fChain->SetBranchAddress("cl3d_hovere", &cl3d_hovere, &b_cl3d_hovere);
+   fChain->SetBranchAddress("cl3d_showerlength", &cl3d_showerlength, &b_cl3d_showerlength);
+   fChain->SetBranchAddress("cl3d_coreshowerlength", &cl3d_coreshowerlength, &b_cl3d_coreshowerlength);
+   fChain->SetBranchAddress("cl3d_firstlayer", &cl3d_firstlayer, &b_cl3d_firstlayer);
+   fChain->SetBranchAddress("cl3d_maxlayer", &cl3d_maxlayer, &b_cl3d_maxlayer);
+   fChain->SetBranchAddress("cl3d_seetot", &cl3d_seetot, &b_cl3d_seetot);
+   fChain->SetBranchAddress("cl3d_seemax", &cl3d_seemax, &b_cl3d_seemax);
+   fChain->SetBranchAddress("cl3d_spptot", &cl3d_spptot, &b_cl3d_spptot);
+   fChain->SetBranchAddress("cl3d_sppmax", &cl3d_sppmax, &b_cl3d_sppmax);
+   fChain->SetBranchAddress("cl3d_szz", &cl3d_szz, &b_cl3d_szz);
+   fChain->SetBranchAddress("cl3d_srrtot", &cl3d_srrtot, &b_cl3d_srrtot);
+   fChain->SetBranchAddress("cl3d_srrmax", &cl3d_srrmax, &b_cl3d_srrmax);
+   fChain->SetBranchAddress("cl3d_srrmean", &cl3d_srrmean, &b_cl3d_srrmean);
+   fChain->SetBranchAddress("cl3d_emaxe", &cl3d_emaxe, &b_cl3d_emaxe);
+   fChain->SetBranchAddress("cl3d_bdteg", &cl3d_bdteg, &b_cl3d_bdteg);
+   fChain->SetBranchAddress("cl3d_egid", &cl3d_egid, &b_cl3d_egid);
    fChain->SetBranchAddress("egN", &egN, &b_egN);
-   fChain->SetBranchAddress("egE", &egE, &b_egE);
    fChain->SetBranchAddress("egEt", &egEt, &b_egEt);
    fChain->SetBranchAddress("egEta", &egEta, &b_egEta);
    fChain->SetBranchAddress("egPhi", &egPhi, &b_egPhi);
