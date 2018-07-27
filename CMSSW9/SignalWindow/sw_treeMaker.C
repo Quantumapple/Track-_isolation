@@ -16,9 +16,9 @@ void sw_treeMaker::Loop()
 
    bool debug = false;
 
-   TFile *file = new TFile("R1_ROI.root","recreate");
+   //TFile *file = new TFile("R1_ROI.root","recreate");
 
-   TTree* out_tree = new TTree("t","t");
+   //TTree* out_tree = new TTree("t","t");
 
    float abs_pterr; out_tree->Branch("abs_pterr", &abs_pterr, "abs_pterr/F");
    float closest_egEt; out_tree->Branch("closest_egEt", &closest_egEt, "closest_egEt/F");
@@ -150,7 +150,7 @@ void sw_treeMaker::Loop()
       int layers[9] = {};  // initialize as 0 for each event, save number of hits for each pixel layer 
       layers[0] = 1; // beam spot
 
-      file->cd();
+      outfile->cd();
 
       int bpix_size = bRecHitGx->size();
       for(int a=0; a<bpix_size; a++){
@@ -271,5 +271,5 @@ void sw_treeMaker::Loop()
       out_tree->Fill(); 
    }
 
-   file->Write();
+   outfile->Write();
 }
