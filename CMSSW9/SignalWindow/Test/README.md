@@ -25,3 +25,14 @@ Then, open submit\_control.py to edit the code.
     <p> number_of_cores = 269</p>
     <p> fr = open('./inputlist_SE_PU200_HGCAL_EGID.txt', 'r')</p>
    </blockquote>
+
+3. Depend on your account, change 'workspace' path to your own directory.
+   <blockquote>
+    <p> workspace = "/cms/ldap_home/jongho/L1PixelTrigger/SignalWindow/Results/"</p>
+   </blockquote> 
+
+## Run command
+After changing all variables, then you put:
+   <blockquote>
+    <p> python submit_control.py</p>
+   </blockquote>
