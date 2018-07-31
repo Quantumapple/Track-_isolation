@@ -266,11 +266,11 @@ sw_ntuple::sw_ntuple(TTree *tree) : fChain(0)
 // used to generate this class and read the Tree.
 // CMSSW_9_2_0
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("SingleElectron_Pt8to100_Eta3p1_NoPU_91X_upgrade2023_realistic_v3.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("SingleElectron_Pt8to100_Eta3p1_NoPU_91X_upgrade2023_realistic_v3_100.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("SingleElectron_Pt8to100_Eta3p1_NoPU_91X_upgrade2023_realistic_v3.root");
+         f = new TFile("SingleElectron_Pt8to100_Eta3p1_NoPU_91X_upgrade2023_realistic_v3_100.root");
       }
-      TDirectory * dir = (TDirectory*)f->Get("SingleElectron_Pt8to100_Eta3p1_NoPU_91X_upgrade2023_realistic_v3.root:/l1PiXTRKTree");
+      TDirectory * dir = (TDirectory*)f->Get("SingleElectron_Pt8to100_Eta3p1_NoPU_91X_upgrade2023_realistic_v3_100.root:/l1PiXTRKTree");
       dir->GetObject("L1PiXTRKTree",tree);
 
    }
