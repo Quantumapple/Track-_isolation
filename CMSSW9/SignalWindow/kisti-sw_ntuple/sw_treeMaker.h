@@ -362,6 +362,9 @@ public :
 
      return result;
    }
+   
+   double getMedian(const std::vector<float> &vec);
+   double getMedianErr(const std::vector<float> &vec);
 
    sw_treeMaker(TTree *tree=0);
    virtual ~sw_treeMaker();
@@ -805,4 +808,40 @@ Int_t sw_treeMaker::Cut(Long64_t entry)
 // returns -1 otherwise.
    return 1;
 }
+
+double sw_ntuple::getMedian(const std::vector<float> &vec)
+{
+  // /SHarper/SHNtupliser/src/MathFuncs.cc
+
+  double median=0.;
+
+  //odd number, definate median
+  if(vec.size() % 2 !=0) {
+    int middleNr = (vec.size())/2; // index number
+    median = vec[middleNr];
+  }else{ //even number, take median as halfway between the two middle values
+    int middleNr = (vec.size())/2;
+    median= vec[middleNr];
+    median+= vec[middleNr-1];
+    median/=2.;
+  }
+  return median;
+
+}
+
+double sw_ntuple::getMedianErr(const std::vector<float> &vec)
+{
+  double err = 0.;
+
+  int middleNr_down = (int)((vec.size()) * 0.1635);
+  int middleNr_up = (int)((vec.size()) * 0.8365);
+
+  err = (vec[middleNr_up] - vec[middleNr_down])/2.;
+
+  return err;
+
+}
+
+
+
 #endif // #ifdef sw_treeMaker_cxx
