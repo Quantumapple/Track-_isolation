@@ -283,7 +283,7 @@ void sw_treeMaker::Loop()
             }
         }
 
-        file->Write();
+        outfile->Write();
 
     }
 }
