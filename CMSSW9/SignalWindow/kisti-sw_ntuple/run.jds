@@ -1,0 +1,9 @@
+executable = run.sh 
+universe   = vanilla 
+log        = log.log 
+output     = out.out 
+error      = err.err 
+transfer_input_files = x_sw_treeMaker.C 
+should_transfer_files = YES 
+when_to_transfer_output = ON_EXIT 
+queue

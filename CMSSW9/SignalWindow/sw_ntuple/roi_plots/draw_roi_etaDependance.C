@@ -2,7 +2,7 @@ void draw_roi_etaDependance()
 {
 
  TFile* infile1 = NULL;
- TString filename1 = "/Volumes/Samsung_T3/Pixel_plots/CMSSW_9_2_0/sw_ntuple/roi_plots/roi_median.root";
+ TString filename1 = "/home/jongho/Analysis/TrkIso-par/sw_ntuple/roi_plots/roi_median.root";
  infile1 = new TFile(filename1);
 
 
