@@ -1,0 +1,1 @@
+root://cms-xrdr.sdfarm.kr:1094//xrd/store/user/jhkim/L1Pixel/SE_PU200_HGCAL_EGID/SingleEleNoPU__10.root
