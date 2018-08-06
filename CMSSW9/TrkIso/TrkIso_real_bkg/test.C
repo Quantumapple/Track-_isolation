@@ -36,8 +36,8 @@ void test::Loop()
    const double PiX_PiX_deta_width_[9] = {0.0045, 0.0055, 0.0031, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
    
    // Histogram for number of tracks
-   TH1F *h_track = new TH1F("h1"," ; Number of tracks; ",30,0,30);
-   TH1F *h_pT = new TH1F("h2"," ; Isolation; ",100,0.,1.);
+   //TH1F *h_track = new TH1F("h1"," ; Number of tracks; ",30,0,30);
+   //TH1F *h_pT = new TH1F("h2"," ; Isolation; ",100,0.,1.);
    
    //nentries = 2000;
    for (Long64_t jentry=0; jentry<nentries;jentry++) { //nentries
@@ -916,6 +916,110 @@ void test::Loop()
      all.erase(unique(all.begin(), all.end(), track::uni31),all.end());
      all.erase(unique(all.begin(), all.end(), track::uni32),all.end());
 
+     vector<Float_t> pT_vector;
+     Int_t all_size = all.size();
+     if( all.size() <= 1 ) ntCl_iso_match.push_back(true);
+     else {
+         pT_vector.clear();
+         for(Int_t cur = 0; cur < all_size; cur++)
+         {
+             if( all[cur].index == 1 )
+             {
+                 Float_t p[5] = {};
+                 p[0] = -0.0865347;
+                 p[1] = 0.0055108;
+                 p[2] = -1.05129;
+                 p[3] = -0.0268743;
+                 p[4] = 3.3316;
+
+                 TVector3 pixel1; pixel1.SetXYZ( all[cur].pos_x1, all[cur].pos_y1, all[cur].pos_z1 - recoPV );
+                 TVector3 pixel2; pixel2.SetXYZ( all[cur].pos_x3 - all[cur].pos_x1, all[cur].pos_y3 - all[cur].pos_y1, all[cur].pos_z3 - all[cur].pos_z1 );
+
+                 Float_t phi1 = pixel1.Phi(); Float_t phi2 = pixel2.Phi();
+                 Float_t deltaPhi = phi1 - phi2;
+                 if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+                 if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+                 Float_t x = fabs(deltaPhi);
+                 Float_t recopT = p[0]*pow(x,0) + p[1]*pow(x,p[2])*exp(-pow(x,p[3])+p[4]);
+                 pT_vector.push_back(recopT);
+             }
+             if( all[cur].index == 2 )
+             {
+                 Float_t p[5] = {};
+                 p[0] = -0.228916;
+                 p[1] = 0.0059613;
+                 p[2] = -1.1059;
+                 p[3] = -0.0653335;
+                 p[4] = 3.52806;
+
+                 TVector3 pixel1; pixel1.SetXYZ( all[cur].pos_x2, all[cur].pos_y2, all[cur].pos_z2 - recoPV );
+                 TVector3 pixel2; pixel2.SetXYZ( all[cur].pos_x3 - all[cur].pos_x2, all[cur].pos_y3 - all[cur].pos_y2, all[cur].pos_z3 - all[cur].pos_z2 );
+
+                 Float_t phi1 = pixel1.Phi(); Float_t phi2 = pixel2.Phi();
+                 Float_t deltaPhi = phi1 - phi2;
+                 if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+                 if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+                 Float_t x = fabs(deltaPhi);
+                 Float_t recopT = p[0]*pow(x,0) + p[1]*pow(x,p[2])*exp(-pow(x,p[3])+p[4]);
+                 pT_vector.push_back(recopT);
+             }
+             if( all[cur].index == 3 )
+             {
+                 Float_t p[5] = {};
+                 p[0] = 0.194839; 
+                 p[1] = 0.00561084; 
+                 p[2] = -1.24477; 
+                 p[3] = -0.113004; 
+                 p[4] = 3.23352; 
+
+                 TVector3 pixel1; pixel1.SetXYZ( all[cur].pos_x2, all[cur].pos_y2, all[cur].pos_z2 - recoPV );
+                 TVector3 pixel2; pixel2.SetXYZ( all[cur].pos_x3 - all[cur].pos_x2, all[cur].pos_y3 - all[cur].pos_y2, all[cur].pos_z3 - all[cur].pos_z2 );
+
+                 Float_t phi1 = pixel1.Phi(); Float_t phi2 = pixel2.Phi();
+                 Float_t deltaPhi = phi1 - phi2;
+                 if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+                 if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+                 Float_t x = fabs(deltaPhi);
+                 Float_t recopT = p[0]*pow(x,0) + p[1]*pow(x,p[2])*exp(-pow(x,p[3])+p[4]);
+                 pT_vector.push_back(recopT);
+             }
+             if( all[cur].index == 4 )
+             {
+                 Float_t p[5] = {};
+                 p[0] = -0.228916;
+                 p[1] = 0.0059613;
+                 p[2] = -1.1059;
+                 p[3] = -0.0653335;
+                 p[4] = 3.52806;
+
+                 TVector3 pixel1; pixel1.SetXYZ( all[cur].pos_x1, all[cur].pos_y1, all[cur].pos_z1 - recoPV );
+                 TVector3 pixel2; pixel2.SetXYZ( all[cur].pos_x3 - all[cur].pos_x2, all[cur].pos_y3 - all[cur].pos_y2, all[cur].pos_z3 - all[cur].pos_z2 );
+
+                 Float_t phi1 = pixel1.Phi(); Float_t phi2 = pixel2.Phi();
+                 Float_t deltaPhi = phi1 - phi2;
+                 if( deltaPhi >= TMath::Pi() ) deltaPhi -= 2.*TMath::Pi();
+                 if( deltaPhi < -TMath::Pi() ) deltaPhi += 2.*TMath::Pi();
+                 Float_t x = fabs(deltaPhi);
+                 Float_t recopT = p[0]*pow(x,0) + p[1]*pow(x,p[2])*exp(-pow(x,p[3])+p[4]);
+                 pT_vector.push_back(recopT);
+             }
+         }
+
+         sort(pT_vector.begin(), pT_vector.end());
+         Float_t denomi = 0.; Float_t nomi = 0.;
+         Int_t vec_size = pT_vector.size();
+         cout << "    pT list" << endl;
+         for(Int_t k = 0; k < vec_size; k++) cout << "     pT: " << pT_vector.at(k) << endl;
+         for(Int_t k = 0; k < vec_size; k++) denomi += pT_vector.at(k);
+         for(Int_t k = 0; k < vec_size-1; k++) nomi += pT_vector.at(k);
+         cout << "      ratio: " << nomi/denomi << endl;
+         cout << "---------------------------------" << endl;
+         //h_pT->Fill(nomi/denomi);
+         if( nomi/denomi < 0.08 ) ntCl_iso_match.push_back(true);
+         else ntCl_iso_match.push_back(false);
+     }
+
+     /*
      if( EgEt > 20. ) 
      {
          cout << "    Number of tracks: " << all.size() << endl;
@@ -924,7 +1028,7 @@ void test::Loop()
          h_track->Fill(all.size());
          Int_t all_size = all.size();
          if( all.size() <= 1 ) {
-             ntCl_iso_match.push_back(true);
+             //ntCl_iso_match.push_back(true);
              h_pT->Fill(0.00);
          }
          if( all.size() >= 2 )
@@ -1025,11 +1129,11 @@ void test::Loop()
              cout << "      ratio: " << nomi/denomi << endl;
              cout << "---------------------------------" << endl;
              h_pT->Fill(nomi/denomi);
-             if( nomi/denomi < 0.08 ) ntCl_iso_match.push_back(true);
-             else ntCl_iso_match.push_back(false);
+             //if( nomi/denomi < 0.08 ) ntCl_iso_match.push_back(true);
+             //else ntCl_iso_match.push_back(false);
          }
      }
-     else ntCl_iso_match.push_back(false);
+     */
   } // end of egamma loop    
 
      // find egamma objects (HGCAL) passing pixtrk signal windows
