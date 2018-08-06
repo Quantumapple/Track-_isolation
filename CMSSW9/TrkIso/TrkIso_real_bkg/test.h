@@ -517,6 +517,7 @@ public :
    vector<float> ntL1TkEleEta, ntL1TkEleIsoEta; 
    vector<float> ntL1TkElePhi, ntL1TkEleIsoPhi;
    vector<bool> ntCl_match; 
+   vector<bool> ntCl_iso_match; 
    vector<bool> withoutEM_match; 
    vector<bool> withEM_match; 
    vector<bool> isTrack_match;
@@ -693,6 +694,7 @@ test::test(TTree *tree) : fChain(0)
    pixtrk_tree->Branch("ntL1TkElePhi",&ntL1TkElePhi);
    pixtrk_tree->Branch("ntL1TkEleIsoPhi",&ntL1TkEleIsoPhi);
    pixtrk_tree->Branch("ntCl_match",&ntCl_match);
+   pixtrk_tree->Branch("ntCl_iso_match",&ntCl_iso_match);
    pixtrk_tree->Branch("withoutEM_match",&withoutEM_match);
    pixtrk_tree->Branch("withEM_match",&withEM_match);
    pixtrk_tree->Branch("isTrack_match",&isTrack_match);

@@ -58,6 +58,7 @@ void test::Loop()
       ntEgEta.clear();
       ntclusterIsEG.clear();
       ntCl_match.clear();
+      ntCl_iso_match.clear();
       isTrack_match.clear();
       chi2.clear();
       track_dr.clear();
@@ -800,7 +801,7 @@ void test::Loop()
      cout << "  EgEta: " << EgEta << endl;
      if( flag123 == false && flag124 == false && flag134 == false && flag234 == false ) 
      {
-         //iso_ntCl_match.push_back(false);
+         ntCl_iso_match.push_back(false);
          continue;  
      }
      //if( fabs(EgEta) > 0.8 ) continue; 
@@ -922,7 +923,10 @@ void test::Loop()
          vector<Float_t> pT_vector;
          h_track->Fill(all.size());
          Int_t all_size = all.size();
-         if( all.size() <= 1 ) h_pT->Fill(0.00);
+         if( all.size() <= 1 ) {
+             ntCl_iso_match.push_back(true);
+             h_pT->Fill(0.00);
+         }
          if( all.size() >= 2 )
          {
              pT_vector.clear();
@@ -1016,12 +1020,16 @@ void test::Loop()
              Int_t vec_size = pT_vector.size();
              cout << "    pT list" << endl;
              for(Int_t k = 0; k < vec_size; k++) cout << "     pT: " << pT_vector.at(k) << endl;
-             cout << "---------------------------------" << endl;
              for(Int_t k = 0; k < vec_size; k++) denomi += pT_vector.at(k);
              for(Int_t k = 0; k < vec_size-1; k++) nomi += pT_vector.at(k);
+             cout << "      ratio: " << nomi/denomi << endl;
+             cout << "---------------------------------" << endl;
              h_pT->Fill(nomi/denomi);
+             if( nomi/denomi < 0.08 ) ntCl_iso_match.push_back(true);
+             else ntCl_iso_match.push_back(false);
          }
      }
+     else ntCl_iso_match.push_back(false);
   } // end of egamma loop    
 
      // find egamma objects (HGCAL) passing pixtrk signal windows
