@@ -585,7 +585,24 @@ public :
    vector<track> L124;
    vector<track> L134;
    vector<track> L234;
+  
+   int ntnEg3;
+   int bit2;
+   int trigger_bit_width_iso_;
+   int iso_pix_comb_;
+   
+   vector<int> PiXTRKbit_iso;
+   vector<int> pix_comb_iso;
+   vector<int> trigger_bit_width_iso;
+   
+   vector<float> iso_ntEgEt; 
+   vector<float> iso_ntEgEta; 
+   vector<float> iso_ntEgPhi; 
+   
+   vector<bool> iso_ntCl_match; 
+   vector<bool> iso_only_match; 
 
+   vector<float> reco_pT;
 };
 
 #endif
@@ -621,8 +638,8 @@ test::test(TTree *tree) : fChain(0)
    Ele = 1, Pos = 2;
    skip = 1;
 
-   //outfile = new TFile("../output_tmp/Tree_output","recreate");
-   outfile = new TFile("result.root","recreate");
+   outfile = new TFile("../output_tmp/Tree_output","recreate");
+   //outfile = new TFile("result.root","recreate");
    pixtrk_tree = new TTree("t","t");
 
    count_Entry = 1;
@@ -667,6 +684,21 @@ test::test(TTree *tree) : fChain(0)
 
    pixtrk_tree->Branch("fired",&fired,"fired/I");
 
+   // Track isolation variables
+   /*
+   pixtrk_tree->Branch("ntnEg3", &ntnEg3, "ntnEg3/I");
+   
+   pixtrk_tree->Branch("iso_ntEgEt",&iso_ntEgEt);
+   pixtrk_tree->Branch("iso_ntEgEta",&iso_ntEgEta);
+   pixtrk_tree->Branch("iso_ntEgPhi",&iso_ntEgPhi);
+   
+   pixtrk_tree->Branch("PiXTRKbit_iso",&PiXTRKbit_iso);
+   pixtrk_tree->Branch("trigger_bit_width_iso",&trigger_bit_width_iso);
+   pixtrk_tree->Branch("pix_comb_iso",&pix_comb_iso);
+   
+   pixtrk_tree->Branch("iso_ntCl_match",&iso_ntCl_match);
+   pixtrk_tree->Branch("iso_only_match",&iso_only_match);
+   */
 }
 
 test::~test()

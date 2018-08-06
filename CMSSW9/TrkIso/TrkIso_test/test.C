@@ -19,6 +19,7 @@ void test::Loop()
    float dr_cut = 0.1;
 
    bit1 = 0x1;
+   bit2 = 0x1;
 
    debug = false;
 
@@ -81,6 +82,22 @@ void test::Loop()
 
       nt_lastSimtkpt = lastSimtkpt;
       nt_initialSimtkpt = initialSimtkpt;
+       
+      // Track isolation variables initialize
+      /*
+      ntnEg3 = 0;
+
+      iso_ntEgEt.clear(); 
+      iso_ntEgEta.clear(); 
+      iso_ntEgPhi.clear(); 
+   
+      PiXTRKbit_iso.clear();
+      pix_comb_iso.clear();
+      trigger_bit_width_iso.clear();
+
+      iso_ntCl_match.clear();
+      iso_only_match.clear();
+      */
  
       float tempDR = 999.;
       int   indx = -1;
