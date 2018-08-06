@@ -1,0 +1,2 @@
+root://cms-xrdr.sdfarm.kr:1094//xrd/store/user/jhkim/L1Pixel/MinBias_PU200_HGCAL_EGID/SingleEleNoPU__1.root
+root://cms-xrdr.sdfarm.kr:1094//xrd/store/user/jhkim/L1Pixel/MinBias_PU200_HGCAL_EGID/SingleEleNoPU__2.root
