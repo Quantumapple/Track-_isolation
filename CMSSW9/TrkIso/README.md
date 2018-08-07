@@ -9,12 +9,11 @@ For signal sample: <br>
 <p> InputDir = "/xrootd/store/user/jhkim/L1Pixel/SE_PU200_HGCAL_EGID" </p>
 <p> number_of_cores = 269 </p>
 <p> fr = open('./inputlist_SE_PU200_HGCAL_EGID.txt', 'r') </p>
-<blockquote>
-<br>
+</blockquote>
 
 For minbias sample: <br>
 <blockquote>
 <p> InputDir = "/xrootd/store/user/jhkim/L1Pixel/MinBias_PU200_HGCAL_EGID" </p>
 <p> number_of_cores = 621 </p>
 <p> fr = open('./inputlist_MinBias_PU200_HGCAL_EGID.txt', 'r') </p>
-<blockquote>
+</blockquote>
