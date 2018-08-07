@@ -117,6 +117,13 @@ void sw_treeMaker::Loop()
        cout << "  At 3rd layer: " << nominator[2] << endl;
        cout << "  At 4th layer: " << nominator[3] << endl;
        cout << endl;
+       cout << "So the efficiency of pixel detectors are: " << endl;
+       cout << "  At 1st layer: " << nominator[0]/denominator << endl;
+       cout << "  At 2nd layer: " << nominator[1]/denominator << endl;
+       cout << "  At 3rd layer: " << nominator[2]/denominator << endl;
+       cout << "  At 4th layer: " << nominator[3]/denominator << endl;
+       cout << endl;
+       
        cout << "############# Move to next eta bin ###########" << endl << endl;
  
        Float_t ratio1 = nominator[0]/denominator;
