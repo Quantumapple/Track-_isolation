@@ -17,3 +17,6 @@ For minbias sample: <br>
 <p> number_of_cores = 621 </p>
 <p> fr = open('./inputlist_MinBias_PU200_HGCAL_EGID.txt', 'r') </p>
 </blockquote>
+
+<br>
+Indeed, test directory run code locally.
