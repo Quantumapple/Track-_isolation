@@ -262,9 +262,9 @@ void sw_treeMaker::Loop()
            eff_di4->SetBinContent(bin+1, fratio4);
            eff_di4->SetBinError(bin+1, sqrt( fratio4 * (1-fratio4)/denominator));
            eff_di5->SetBinContent(bin+1, fratio5);
-           eff_di5->SetBinError(bin+1, sqrt( fratio5 * (1-fratio4)/denominator));
+           eff_di5->SetBinError(bin+1, sqrt( fratio5 * (1-fratio5)/denominator));
            eff_di6->SetBinContent(bin+1, fratio6);
-           eff_di6->SetBinError(bin+1, sqrt( fratio6 * (1-fratio4)/denominator));
+           eff_di6->SetBinError(bin+1, sqrt( fratio6 * (1-fratio6)/denominator));
        }
 
        // Initialize for next eta bin
