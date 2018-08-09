@@ -21,10 +21,15 @@ void test::Loop()
    float nth_bin_right;
 
    TH1F *bkg_plot = new TH1F("h1"," ; |#eta|; Pixel efficiency",nbins,x1,x2); 
-   TH1F *L1 = new TH1F("L1","L1",nbins,x1,x2);
-   TH1F *D1 = new TH1F("D1","D1",nbins,x1,x2);
-   TH1F *D2 = new TH1F("D2","D2",nbins,x1,x2);
-   TH1F *D3 = new TH1F("D3","D3",nbins,x1,x2);
+   //TH1F *L1 = new TH1F("L1","L1",nbins,x1,x2);
+   //TH1F *D1 = new TH1F("D1","D1",nbins,x1,x2);
+   //TH1F *D2 = new TH1F("D2","D2",nbins,x1,x2);
+   //TH1F *D3 = new TH1F("D3","D3",nbins,x1,x2);
+   
+   TGraph *L1 = new TGraph(nbins);
+   TGraph *D1 = new TGraph(nbins);
+   TGraph *D2 = new TGraph(nbins);
+   TGraph *D3 = new TGraph(nbins);
  
    Float_t denominator = 0.;
    Float_t nominator[4] = {};
@@ -123,24 +128,34 @@ void test::Loop()
        Float_t eff_di3 = nominator[3]/denominator;
 
        if( denominator == 0. ) { 
-           L1->SetBinContent(i+1, 0.);
-           L1->SetBinError(i+1, 0.); 
-           D1->SetBinContent(i+1, 0.);
-           D1->SetBinError(i+1, 0.); 
-           D2->SetBinContent(i+1, 0.);
-           D2->SetBinError(i+1, 0.); 
-           D3->SetBinContent(i+1, 0.);
-           D3->SetBinError(i+1, 0.); 
+           //L1->SetBinContent(i+1, 0.);
+           //L1->SetBinError(i+1, 0.); 
+           //D1->SetBinContent(i+1, 0.);
+           //D1->SetBinError(i+1, 0.); 
+           //D2->SetBinContent(i+1, 0.);
+           //D2->SetBinError(i+1, 0.); 
+           //D3->SetBinContent(i+1, 0.);
+           //D3->SetBinError(i+1, 0.); 
+           
+           L1->SetPoint(i, (nth_bin_left+nth_bin_right)/2., 0.);
+           D1->SetPoint(i, (nth_bin_left+nth_bin_right)/2., 0.);
+           D2->SetPoint(i, (nth_bin_left+nth_bin_right)/2., 0.);
+           D3->SetPoint(i, (nth_bin_left+nth_bin_right)/2., 0.);
        }
        else {
-           L1->SetBinContent(i+1, eff_la1);
-           L1->SetBinError(i+1, sqrt( eff_la1 * (1-eff_la1) / denominator) ); 
-           D1->SetBinContent(i+1, eff_di1);
-           D1->SetBinError(i+1, sqrt( eff_di1 * (1-eff_di1) / denominator) ); 
-           D2->SetBinContent(i+1, eff_di2);
-           D2->SetBinError(i+1, sqrt( eff_di2 * (1-eff_di1) / denominator) ); 
-           D3->SetBinContent(i+1, eff_di3);
-           D3->SetBinError(i+1, sqrt( eff_di3 * (1-eff_di1) / denominator) ); 
+           //L1->SetBinContent(i+1, eff_la1);
+           //L1->SetBinError(i+1, sqrt( eff_la1 * (1-eff_la1) / denominator) ); 
+           //D1->SetBinContent(i+1, eff_di1);
+           //D1->SetBinError(i+1, sqrt( eff_di1 * (1-eff_di1) / denominator) ); 
+           //D2->SetBinContent(i+1, eff_di2);
+           //D2->SetBinError(i+1, sqrt( eff_di2 * (1-eff_di2) / denominator) ); 
+           //D3->SetBinContent(i+1, eff_di3);
+           //D3->SetBinError(i+1, sqrt( eff_di3 * (1-eff_di3) / denominator) ); 
+           
+           L1->SetBinContent(i, (nth_bin_left+nth_bin_right)/2., eff_la1);
+           D1->SetBinContent(i, (nth_bin_left+nth_bin_right)/2., eff_di1);
+           D2->SetBinContent(i, (nth_bin_left+nth_bin_right)/2., eff_di2);
+           D3->SetBinContent(i, (nth_bin_left+nth_bin_right)/2., eff_di3);
        }
 
        cout << "Eta bin from " << nth_bin_left << " to " << nth_bin_right << endl;
@@ -157,9 +172,11 @@ void test::Loop()
 
    } // eta bin loop
 
-  TCanvas *c1 = new TCanvas("c1","",1366,768);
-  c1->SetLeftMargin(0.12);
-  c1->SetBottomMargin(0.12);
+  //TCanvas *c1 = new TCanvas("c1","",1366,768);
+  //c1->SetLeftMargin(0.12);
+  //c1->SetBottomMargin(0.12);
+
+
 
   bkg_plot->GetXaxis()->SetTitleSize(0.05);
   bkg_plot->GetXaxis()->CenterTitle(true);
@@ -169,45 +186,51 @@ void test::Loop()
   bkg_plot->GetYaxis()->SetNdivisions(506);
   bkg_plot->GetYaxis()->SetLabelSize(0.02);
   bkg_plot->GetYaxis()->SetRangeUser(0, 1.02);
-  bkg_plot->Draw();
+  //bkg_plot->Draw();
+  bkg_plot->Write();
 
   L1->SetMarkerStyle(20);
   L1->SetMarkerColor(2);
   L1->SetMarkerSize(1.4);
   L1->SetLineWidth(1);
   L1->SetLineColor(2);
-  L1->Draw("HIST PL same");
+  //L1->Draw("HIST PL same");
+  L1->Write("Barrel1st");
   
   D1->SetMarkerStyle(21);
   D1->SetMarkerColor(3);
   D1->SetMarkerSize(1.4);
   D1->SetLineWidth(1);
   D1->SetLineColor(3);
-  D1->Draw("HIST PL same");
+  //D1->Draw("HIST PL same");
+  D1->Write("Disk1st");
   
   D2->SetMarkerStyle(22);
   D2->SetMarkerColor(4);
   D2->SetMarkerSize(1.4);
   D2->SetLineWidth(1);
   D2->SetLineColor(4);
-  D2->Draw("HIST PL same");
+  //D2->Draw("HIST PL same");
+  D2->Write("Disk2nd");
   
   D3->SetMarkerStyle(29);
   D3->SetMarkerColor(kYellow-1);
   D3->SetMarkerSize(1.4);
   D3->SetLineWidth(1);
   D3->SetLineColor(kYellow-1);
-  D3->Draw("HIST PL same");
+  //D3->Draw("HIST PL same");
+  D3->Write("Disk3rd");
 
-  gStyle->SetOptStat(0);
+  //gStyle->SetOptStat(0);
   
-  TLegend *lgd1 = new TLegend(0.2, 0.2, 0.55, 0.45);
-  lgd1->AddEntry(L1, "1st Barrel" ,"lp");
-  lgd1->AddEntry(D1, "1st Disk" ,"lp");
-  lgd1->AddEntry(D2, "2nd Disk" ,"lp");
-  lgd1->AddEntry(D3, "3rd Disk" ,"lp");
-  lgd1->Draw();
+  //TLegend *lgd1 = new TLegend(0.2, 0.2, 0.55, 0.45);
+  //lgd1->AddEntry(L1, "1st Barrel" ,"lp");
+  //lgd1->AddEntry(D1, "1st Disk" ,"lp");
+  //lgd1->AddEntry(D2, "2nd Disk" ,"lp");
+  //lgd1->AddEntry(D3, "3rd Disk" ,"lp");
+  //lgd1->Draw();
   
-  c1->SaveAs("eff.png");
+  //c1->SaveAs("eff.png");
+  output->Close();
 
 }
