@@ -17,16 +17,29 @@ void sw_treeMaker::Loop()
    Float_t dr_cut = 0.1;
   
    TH1F *bkg_plot = new TH1F("h1"," ; |#eta|; Pixel efficiency",nbins,x1,x2);
-   TH1F *eff_la1 = new TH1F("eff_la1","1st Barrel",nbins,x1,x2);
-   TH1F *eff_la2 = new TH1F("eff_la2","2nd Barrel",nbins,x1,x2);
-   TH1F *eff_la3 = new TH1F("eff_la3","3rd Barrel",nbins,x1,x2);
-   TH1F *eff_la4 = new TH1F("eff_la4","4th Barrel",nbins,x1,x2);
-   TH1F *eff_di1 = new TH1F("eff_di1","1st Disk",nbins,x1,x2);
-   TH1F *eff_di2 = new TH1F("eff_di2","2nd Disk",nbins,x1,x2);
-   TH1F *eff_di3 = new TH1F("eff_di3","3rd Disk",nbins,x1,x2);
-   TH1F *eff_di4 = new TH1F("eff_di4","4th Disk",nbins,x1,x2);
-   TH1F *eff_di5 = new TH1F("eff_di5","5th Disk",nbins,x1,x2);
-   TH1F *eff_di6 = new TH1F("eff_di6","6th Disk",nbins,x1,x2);
+   //TH1F *eff_la1 = new TH1F("eff_la1","1st Barrel",nbins,x1,x2);
+   //TH1F *eff_la2 = new TH1F("eff_la2","2nd Barrel",nbins,x1,x2);
+   //TH1F *eff_la3 = new TH1F("eff_la3","3rd Barrel",nbins,x1,x2);
+   //TH1F *eff_la4 = new TH1F("eff_la4","4th Barrel",nbins,x1,x2);
+   //TH1F *eff_di1 = new TH1F("eff_di1","1st Disk",nbins,x1,x2);
+   //TH1F *eff_di2 = new TH1F("eff_di2","2nd Disk",nbins,x1,x2);
+   //TH1F *eff_di3 = new TH1F("eff_di3","3rd Disk",nbins,x1,x2);
+   //TH1F *eff_di4 = new TH1F("eff_di4","4th Disk",nbins,x1,x2);
+   //TH1F *eff_di5 = new TH1F("eff_di5","5th Disk",nbins,x1,x2);
+   //TH1F *eff_di6 = new TH1F("eff_di6","6th Disk",nbins,x1,x2);
+
+   TGraph *eff_la1 = new TGraph(nbins);
+   TGraph *eff_la2 = new TGraph(nbins);
+   TGraph *eff_la3 = new TGraph(nbins);
+   TGraph *eff_la4 = new TGraph(nbins);
+   
+   TGraph *eff_di1 = new TGraph(nbins);
+   TGraph *eff_di2 = new TGraph(nbins);
+   TGraph *eff_di3 = new TGraph(nbins);
+   TGraph *eff_di4 = new TGraph(nbins);
+   TGraph *eff_di5 = new TGraph(nbins);
+   TGraph *eff_di6 = new TGraph(nbins);
+
 
    Float_t denominator = 0.;
    Float_t Bnominator[4] = {};
@@ -221,50 +234,61 @@ void sw_treeMaker::Loop()
        Float_t fratio6 = Fnominator[5]/denominator;
 
        if( denominator == 0 ) {
-           eff_la1->SetBinContent(bin+1, 0.);
-           eff_la1->SetBinError(bin+1, 0.);
-           eff_la2->SetBinContent(bin+1, 0.);
-           eff_la2->SetBinError(bin+1, 0.);
-           eff_la3->SetBinContent(bin+1, 0.);
-           eff_la3->SetBinError(bin+1, 0.);
-           eff_la4->SetBinContent(bin+1, 0.);
-           eff_la4->SetBinError(bin+1, 0.);
+           //eff_la1->SetBinContent(bin+1, 0.);
+           //eff_la1->SetBinError(bin+1, 0.);
+           //eff_la2->SetBinContent(bin+1, 0.);
+           //eff_la2->SetBinError(bin+1, 0.);
+           //eff_la3->SetBinContent(bin+1, 0.);
+           //eff_la3->SetBinError(bin+1, 0.);
+           //eff_la4->SetBinContent(bin+1, 0.);
+           //eff_la4->SetBinError(bin+1, 0.);
+           
+           eff_la1->SetPoint(bin, (bin_left+bin_right)/2., 0.);
+           eff_la2->SetPoint(bin, (bin_left+bin_right)/2., 0.);
+           eff_la3->SetPoint(bin, (bin_left+bin_right)/2., 0.);
+           eff_la4->SetPoint(bin, (bin_left+bin_right)/2., 0.);
 
-           eff_di1->SetBinContent(bin+1, 0.);
-           eff_di1->SetBinError(bin+1, 0.);
-           eff_di2->SetBinContent(bin+1, 0.);
-           eff_di2->SetBinError(bin+1, 0.);
-           eff_di3->SetBinContent(bin+1, 0.);
-           eff_di3->SetBinError(bin+1, 0.);
-           eff_di4->SetBinContent(bin+1, 0.);
-           eff_di4->SetBinError(bin+1, 0.);
-           eff_di5->SetBinContent(bin+1, 0.);
-           eff_di5->SetBinError(bin+1, 0.);
-           eff_di6->SetBinContent(bin+1, 0.);
-           eff_di6->SetBinError(bin+1, 0.);
+           //eff_di1->SetBinContent(bin+1, 0.);
+           //eff_di1->SetBinError(bin+1, 0.);
+           //eff_di2->SetBinContent(bin+1, 0.);
+           //eff_di2->SetBinError(bin+1, 0.);
+           //eff_di3->SetBinContent(bin+1, 0.);
+           //eff_di3->SetBinError(bin+1, 0.);
+           //eff_di4->SetBinContent(bin+1, 0.);
+           //eff_di4->SetBinError(bin+1, 0.);
+           //eff_di5->SetBinContent(bin+1, 0.);
+           //eff_di5->SetBinError(bin+1, 0.);
+           //eff_di6->SetBinContent(bin+1, 0.);
+           //eff_di6->SetBinError(bin+1, 0.);
+           
+           eff_di1->SetPoint(bin, (bin_left+bin_right)/2.,  0.);
+           eff_di2->SetPoint(bin, (bin_left+bin_right)/2.,  0.);
+           eff_di3->SetPoint(bin, (bin_left+bin_right)/2.,  0.);
+           eff_di4->SetPoint(bin, (bin_left+bin_right)/2.,  0.);
+           eff_di5->SetPoint(bin, (bin_left+bin_right)/2.,  0.);
+           eff_di6->SetPoint(bin, (bin_left+bin_right)/2.,  0.);
        }
        else {
-           eff_la1->SetBinContent(bin+1, ratio1);
-           eff_la1->SetBinError(bin+1, sqrt( ratio1 * (1-ratio1)/denominator));
-           eff_la2->SetBinContent(bin+1, ratio2);
-           eff_la2->SetBinError(bin+1, sqrt( ratio2 * (1-ratio2)/denominator));
-           eff_la3->SetBinContent(bin+1, ratio3);
-           eff_la3->SetBinError(bin+1, sqrt( ratio3 * (1-ratio3)/denominator));
-           eff_la4->SetBinContent(bin+1, ratio4);
-           eff_la4->SetBinError(bin+1, sqrt( ratio4 * (1-ratio4)/denominator));
+           //eff_la1->SetBinContent(bin+1, ratio1);
+           //eff_la1->SetBinError(bin+1, sqrt( ratio1 * (1-ratio1)/denominator));
+           //eff_la2->SetBinContent(bin+1, ratio2);
+           //eff_la2->SetBinError(bin+1, sqrt( ratio2 * (1-ratio2)/denominator));
+           //eff_la3->SetBinContent(bin+1, ratio3);
+           //eff_la3->SetBinError(bin+1, sqrt( ratio3 * (1-ratio3)/denominator));
+           //eff_la4->SetBinContent(bin+1, ratio4);
+           //eff_la4->SetBinError(bin+1, sqrt( ratio4 * (1-ratio4)/denominator));
            
-           eff_di1->SetBinContent(bin+1, fratio1);
-           eff_di1->SetBinError(bin+1, sqrt( fratio1 * (1-fratio1)/denominator));
-           eff_di2->SetBinContent(bin+1, fratio2);
-           eff_di2->SetBinError(bin+1, sqrt( fratio2 * (1-fratio2)/denominator));
-           eff_di3->SetBinContent(bin+1, fratio3);
-           eff_di3->SetBinError(bin+1, sqrt( fratio3 * (1-fratio3)/denominator));
-           eff_di4->SetBinContent(bin+1, fratio4);
-           eff_di4->SetBinError(bin+1, sqrt( fratio4 * (1-fratio4)/denominator));
-           eff_di5->SetBinContent(bin+1, fratio5);
-           eff_di5->SetBinError(bin+1, sqrt( fratio5 * (1-fratio4)/denominator));
-           eff_di6->SetBinContent(bin+1, fratio6);
-           eff_di6->SetBinError(bin+1, sqrt( fratio6 * (1-fratio4)/denominator));
+           eff_la1->SetPoint(bin, (bin_left+bin_right)/2., ratio1);
+           eff_la2->SetPoint(bin, (bin_left+bin_right)/2., ratio2);
+           eff_la3->SetPoint(bin, (bin_left+bin_right)/2., ratio3);
+           eff_la4->SetPoint(bin, (bin_left+bin_right)/2., ratio4);
+           
+           eff_di1->SetPoint(bin+1, (bin_left+bin_right)/2., fratio1);
+           eff_di2->SetPoint(bin+1, (bin_left+bin_right)/2., fratio2);
+           eff_di3->SetPoint(bin+1, (bin_left+bin_right)/2., fratio3);
+           eff_di4->SetPoint(bin+1, (bin_left+bin_right)/2., fratio4);
+           eff_di5->SetPoint(bin+1, (bin_left+bin_right)/2., fratio5);
+           eff_di6->SetPoint(bin+1, (bin_left+bin_right)/2., fratio6);
        }
 
        // Initialize for next eta bin
@@ -296,7 +320,7 @@ void sw_treeMaker::Loop()
   eff_la1->SetLineWidth(1);
   eff_la1->SetLineColor(2);
   //eff_la1->Draw("HIST PL same");
-  eff_la1->Write();
+  eff_la1->Write("Barrel1st");
   
   eff_la2->SetMarkerStyle(21);
   eff_la2->SetMarkerColor(3);
@@ -304,7 +328,7 @@ void sw_treeMaker::Loop()
   eff_la2->SetLineWidth(1);
   eff_la2->SetLineColor(3);
   //eff_la2->Draw("HIST PL same");
-  eff_la2->Write();
+  eff_la2->Write("Barrel2nd");
   
   eff_la3->SetMarkerStyle(22);
   eff_la3->SetMarkerColor(4);
@@ -312,7 +336,7 @@ void sw_treeMaker::Loop()
   eff_la3->SetLineWidth(1);
   eff_la3->SetLineColor(4);
   //eff_la3->Draw("HIST PL same");
-  eff_la3->Write();
+  eff_la3->Write("Barrel3rd");
   
   eff_la4->SetMarkerStyle(29);
   eff_la4->SetMarkerColor(kYellow-1);
@@ -320,7 +344,7 @@ void sw_treeMaker::Loop()
   eff_la4->SetLineWidth(1);
   eff_la4->SetLineColor(kYellow-1);
   //eff_la4->Draw("HIST PL same");
-  eff_la4->Write();
+  eff_la4->Write("Barrel4th");
   
   eff_di1->SetMarkerStyle(33);
   eff_di1->SetMarkerColor(kRed-2);
@@ -328,7 +352,7 @@ void sw_treeMaker::Loop()
   eff_di1->SetLineWidth(1);
   eff_di1->SetLineColor(kRed-2);
   //eff_di1->Draw("HIST PL same");
-  eff_di1->Write();
+  eff_di1->Write("Disk1st");
   
   eff_di2->SetMarkerStyle(34);
   eff_di2->SetMarkerColor(kBlue-2);
@@ -336,7 +360,7 @@ void sw_treeMaker::Loop()
   eff_di2->SetLineWidth(1);
   eff_di2->SetLineColor(kBlue-2);
   //eff_di2->Draw("HIST PL same");
-  eff_di2->Write();
+  eff_di2->Write("Disk2nd");
   
   eff_di3->SetMarkerStyle(29);
   eff_di3->SetMarkerColor(kGreen-2);
@@ -344,7 +368,7 @@ void sw_treeMaker::Loop()
   eff_di3->SetLineWidth(1);
   eff_di3->SetLineColor(kGreen-2);
   //eff_di3->Draw("HIST PL same");
-  eff_di3->Write();
+  eff_di3->Write("Disk3rd");
   
   eff_di4->SetMarkerStyle(22);
   eff_di4->SetMarkerColor(6);
@@ -352,7 +376,7 @@ void sw_treeMaker::Loop()
   eff_di4->SetLineWidth(1);
   eff_di4->SetLineColor(6);
   //eff_di4->Draw("HIST PL same");
-  eff_di4->Write();
+  eff_di4->Write("Disk4th");
   
   eff_di5->SetMarkerStyle(21);
   eff_di5->SetMarkerColor(kCyan+1);
@@ -360,7 +384,7 @@ void sw_treeMaker::Loop()
   eff_di5->SetLineWidth(1);
   eff_di5->SetLineColor(kCyan+1);
   //eff_di5->Draw("HIST PL same");
-  eff_di5->Write();
+  eff_di5->Write("Disk5th");
   
   eff_di6->SetMarkerStyle(20);
   eff_di6->SetMarkerColor(kOrange);
@@ -368,10 +392,10 @@ void sw_treeMaker::Loop()
   eff_di6->SetLineWidth(1);
   eff_di6->SetLineColor(kOrange);
   //eff_di6->Draw("HIST PL same");
-  eff_di6->Write();
+  eff_di6->Write("Disk6th");
 
   //gPad->BuildLegend();
-  gStyle->SetOptStat(0);
+  //gStyle->SetOptStat(0);
   
   //TLegend *lgd1 = new TLegend(0.2, 0.2, 0.55, 0.45);
   //lgd1->AddEntry(eff_la1, "1st Barrel" ,"lp");
