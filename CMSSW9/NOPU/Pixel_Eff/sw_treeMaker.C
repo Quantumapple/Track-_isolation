@@ -53,10 +53,10 @@ void sw_treeMaker::Loop()
            // ECAL loop
            Int_t closest_eg = -1;
            Float_t clo_dr = 9999.;
-           for(Int_t i = 0; i < egCrysN; i++)
+           for(Int_t i = 0; i < egCrysClusterN; i++)
            {
-               Float_t dPhi = deltaPhi(genPhi, egCrysPhi->at(i));
-               Float_t tmp_dr = sqrt(pow(dPhi,2)+pow(genEta - egCrysEta->at(i),2));
+               Float_t dPhi = deltaPhi(genPhi, egCrysClusterPhi->at(i));
+               Float_t tmp_dr = sqrt(pow(dPhi,2)+pow(genEta - egCrysClusterEta->at(i),2));
                if( egCrysClusterEt->at(i) < 10. ) continue;
                if( tmp_dr < clo_dr )
                {
@@ -77,7 +77,7 @@ void sw_treeMaker::Loop()
 
                Float_t dPhi = deltaPhi(genPhi, cl3d_phi->at(i));
 
-               Float_t tmp_dr = sqrt(pow(genPhi - cl3d_phi->at(i),2)+pow(genEta - cl3d_eta->at(i),2));
+               Float_t tmp_dr = sqrt(pow(dPhi,2)+pow(genEta - cl3d_eta->at(i),2));
                if( cl3d_pt->at(i) < 10. ) continue;
                if( tmp_dr < clo_cl3d_dr )
                {
@@ -262,9 +262,9 @@ void sw_treeMaker::Loop()
            eff_di4->SetBinContent(bin+1, fratio4);
            eff_di4->SetBinError(bin+1, sqrt( fratio4 * (1-fratio4)/denominator));
            eff_di5->SetBinContent(bin+1, fratio5);
-           eff_di5->SetBinError(bin+1, sqrt( fratio5 * (1-fratio5)/denominator));
+           eff_di5->SetBinError(bin+1, sqrt( fratio5 * (1-fratio4)/denominator));
            eff_di6->SetBinContent(bin+1, fratio6);
-           eff_di6->SetBinError(bin+1, sqrt( fratio6 * (1-fratio6)/denominator));
+           eff_di6->SetBinError(bin+1, sqrt( fratio6 * (1-fratio4)/denominator));
        }
 
        // Initialize for next eta bin
