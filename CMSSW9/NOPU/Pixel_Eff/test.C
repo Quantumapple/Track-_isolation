@@ -152,10 +152,10 @@ void test::Loop()
            //D3->SetBinContent(i+1, eff_di3);
            //D3->SetBinError(i+1, sqrt( eff_di3 * (1-eff_di3) / denominator) ); 
            
-           L1->SetBinContent(i, (nth_bin_left+nth_bin_right)/2., eff_la1);
-           D1->SetBinContent(i, (nth_bin_left+nth_bin_right)/2., eff_di1);
-           D2->SetBinContent(i, (nth_bin_left+nth_bin_right)/2., eff_di2);
-           D3->SetBinContent(i, (nth_bin_left+nth_bin_right)/2., eff_di3);
+           L1->SetPoint(i, (nth_bin_left+nth_bin_right)/2., eff_la1);
+           D1->SetPoint(i, (nth_bin_left+nth_bin_right)/2., eff_di1);
+           D2->SetPoint(i, (nth_bin_left+nth_bin_right)/2., eff_di2);
+           D3->SetPoint(i, (nth_bin_left+nth_bin_right)/2., eff_di3);
        }
 
        cout << "Eta bin from " << nth_bin_left << " to " << nth_bin_right << endl;
@@ -171,12 +171,6 @@ void test::Loop()
        nominator[0] = 0.; nominator[1] = 0.; nominator[2] = 0.; nominator[3] = 0.;
 
    } // eta bin loop
-
-  //TCanvas *c1 = new TCanvas("c1","",1366,768);
-  //c1->SetLeftMargin(0.12);
-  //c1->SetBottomMargin(0.12);
-
-
 
   bkg_plot->GetXaxis()->SetTitleSize(0.05);
   bkg_plot->GetXaxis()->CenterTitle(true);
