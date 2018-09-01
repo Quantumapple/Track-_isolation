@@ -40,7 +40,8 @@ void test::Loop()
    //TH1F *h_pT = new TH1F("h2"," ; Isolation; ",100,0.,1.);
    
    //nentries = 2000;
-   for (Long64_t jentry=0; jentry<nentries;jentry++) { //nentries
+   //for (Long64_t jentry=0; jentry<nentries;jentry++) { //nentries
+   for (Long64_t jentry=0; jentry<50;jentry++) { //nentries
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
