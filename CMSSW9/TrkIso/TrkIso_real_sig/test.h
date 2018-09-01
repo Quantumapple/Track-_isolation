@@ -503,6 +503,7 @@ public :
    vector<int> trigger_bit_width;
 
    vector<bool> ntCl_match; 
+   vector<bool> ntCl_iso_match; 
    vector<bool> isTrack_match; 
    vector<float> chi2; 
    vector<float> track_dr;
@@ -571,55 +572,31 @@ public :
                return( t1.pos_x1 == t2.pos_x1 );
            }
            
-           //static bool comp12(const track &t1, const track &t2)
-           //{
-           //    return ( t1.pos_x1 < t2.pos_x2 );
-           //}
            static bool uni12(const track &t1, const track &t2)
            {
                return( t1.pos_x1 == t2.pos_x2 );
            }
            
-           //static bool comp21(const track &t1, const track &t2)
-           //{
-           //    return ( t1.pos_x2 < t2.pos_x1 );
-           //}
            static bool uni21(const track &t1, const track &t2)
            {
                return( t1.pos_x2 == t2.pos_x1 );
            }
            
-           //static bool comp13(const track &t1, const track &t2)
-           //{
-           //    return ( t1.pos_x1 < t2.pos_x3 );
-           //}
            static bool uni13(const track &t1, const track &t2)
            {
                return( t1.pos_x1 == t2.pos_x3 );
            }
            
-           //static bool comp31(const track &t1, const track &t2)
-           //{
-           //    return ( t1.pos_x3 < t2.pos_x1 );
-           //}
            static bool uni31(const track &t1, const track &t2)
            {
                return( t1.pos_x3 == t2.pos_x1 );
            }
            
-           //static bool comp23(const track &t1, const track &t2)
-           //{
-           //    return ( t1.pos_x2 < t2.pos_x3 );
-           //}
            static bool uni23(const track &t1, const track &t2)
            {
                return( t1.pos_x2 == t2.pos_x3 );
            }
            
-           //static bool comp32(const track &t1, const track &t2)
-           //{
-           //    return ( t1.pos_x3 < t2.pos_x2 );
-           //}
            static bool uni32(const track &t1, const track &t2)
            {
                return( t1.pos_x3 == t2.pos_x2 );
@@ -697,6 +674,7 @@ test::test(TTree *tree) : fChain(0)
    pixtrk_tree->Branch("nPix234_segments",&nPix234_segments,"nPix234_segments/I");
 
    pixtrk_tree->Branch("ntCl_match",&ntCl_match);
+   pixtrk_tree->Branch("ntCl_iso_match",&ntCl_iso_match);
    pixtrk_tree->Branch("isTrack_match",&isTrack_match);
    pixtrk_tree->Branch("chi2",&chi2);
    pixtrk_tree->Branch("track_dr",&track_dr);
