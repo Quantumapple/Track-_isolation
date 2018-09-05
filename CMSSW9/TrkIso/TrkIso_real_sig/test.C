@@ -20,6 +20,7 @@ void test::Loop()
    float dr_cut = 0.1;
 
    bit1 = 0x1;
+   bit2 = 0x1;
 
    debug = false;
 
@@ -36,11 +37,7 @@ void test::Loop()
    const double PiX_PiX_dphi_width_[9] = {0.0025, 0.0035, 0.0031, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
    const double PiX_PiX_deta_width_[9] = {0.0045, 0.0055, 0.0031, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
 
-   // Histogram for number of tracks
-   //TH1F *h_track = new TH1F("h1"," ; Number of tracks; ",10,0,10);
-   //TH1F *h_pT = new TH1F("h2"," ; Isolation; ",100,0.,1.);
-
-  //nentries = 100;
+   //nentries = 100;
    for (Long64_t jentry=0; jentry<nentries;jentry++) { //nentries
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
@@ -62,10 +59,10 @@ void test::Loop()
 
       PiXTRKbit.clear();
       trigger_bit_width.clear();
+      trigger_bit_width_iso.clear();
       pix_comb.clear();
 
       ntCl_match.clear();
-      ntCl_iso_match.clear();
       isTrack_match.clear();
       chi2.clear();
       track_dr.clear();
@@ -607,9 +604,7 @@ void test::Loop()
       if( PixTrkPassed ){ 
           //trigger_bit_width_ = trigger_bit_width_| (bit1 << global_index_width);
           trigger_bit_width_ = trigger_bit_width_| (bit1 << nth_eg_pix_deta);
-          ntCl_match.push_back(true);
       }
-      else ntCl_match.push_back(false);
 
       /////////////////////////////////
 
@@ -620,8 +615,9 @@ void test::Loop()
      //trigger_bit_width.push_back(trigger_bit_width_);
 
      // Start track isolation algorithm
-     
-       
+                            
+     trigger_bit_width_iso_ = 0x0; 
+     Bool_t TrkIsoPassed = false;
      // Limited to barrel region
      
      if( flag123 == false && flag124 == false && flag134 == false && flag234 == false ) 
@@ -739,10 +735,10 @@ void test::Loop()
      all.erase(unique(all.begin(), all.end(), track::uni21),all.end());
      all.erase(unique(all.begin(), all.end(), track::uni31),all.end());
      all.erase(unique(all.begin(), all.end(), track::uni32),all.end());
-
+     
      vector<Float_t> pT_vector;
      Int_t all_size = all.size();
-     if( all.size() <= 1 ) ntCl_iso_match.push_back(true);
+     if( all.size() <= 1 ) { TrkIsoPassed = true; (bit2 << 1); }
      else {
          pT_vector.clear();
          for(Int_t cur = 0; cur < all_size; cur++)
@@ -838,13 +834,21 @@ void test::Loop()
          for(Int_t k = 0; k < vec_size-1; k++) nomi += pT_vector.at(k);
          //cout << "      ratio: " << nomi/denomi << endl;
          //cout << "---------------------------------" << endl;
-         if( nomi/denomi < 0.08 ) ntCl_iso_match.push_back(true);
-         else ntCl_iso_match.push_back(false);
+         if( nomi/denomi < 0.08 ) { TrkIsoPassed = true; (bit2 << 1); } 
+         else (false);
      }
+
+     if( PixTrkPassed && TrkIsoPassed) 
+     {
+         trigger_bit_width_iso_ = trigger_bit_width_iso_ | (bit2 << 0);
+     }
+
+     
   } // end of egamma loop    
    
 
   trigger_bit_width.push_back(trigger_bit_width_);
+  trigger_bit_width_iso.push_back(trigger_bit_width_iso_);
   pix_comb.push_back(pix_comb_);
 
   pixtrk_tree->Fill();
