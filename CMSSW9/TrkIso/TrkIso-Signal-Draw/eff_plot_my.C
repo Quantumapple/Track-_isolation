@@ -71,7 +71,7 @@ void eff_plot_my::Loop()
    TGraphAsymmErrors* hPix = new TGraphAsymmErrors(hPix_nom, hPix_denom,"B");
    TGraphAsymmErrors* hPixIso = new TGraphAsymmErrors(hPix_iso_nom, hPix_iso_denom,"B");
    
-   TCanvas *c1 = new TCanvas("c1","c1",1200,800);
+   TCanvas *c1 = new TCanvas("c1","c1",800,700);
    gStyle->SetOptStat(0);
    gStyle->SetLineWidth(1); // axis width, default is 1
    c1->SetTopMargin(0.05);
@@ -122,7 +122,7 @@ void eff_plot_my::Loop()
    Lgd-> SetNColumns(4);
    Lgd->SetFillColor(0);
    Lgd->SetTextFont(42);
-   Lgd->SetTextSize(0.035);
+   Lgd->SetTextSize(0.025);
    Lgd->SetBorderSize(0);
    Lgd->SetFillStyle(0);
    Lgd->AddEntry(hEG,"Phase-2 L1 EG","lp");
@@ -130,7 +130,7 @@ void eff_plot_my::Loop()
    Lgd->AddEntry(hPixIso,"Pixel matching + Isolation","lp");
    Lgd->Draw();
 
-   TLatex t(0.,1.11,"CMSSW_10_1_0_pre3, Phase 2, <PU>=200");
+   TLatex t(-0.5,1.11,"CMS Preliminary Simulation, Phase 2, <PU>=200");
    t.SetTextSize(0.035);
    t.Draw();
 
@@ -138,5 +138,6 @@ void eff_plot_my::Loop()
    pt_cut.SetTextSize(0.035);
    pt_cut.Draw();
 
-   c1->Print("Eff-iso.png");
+   //c1->Print("Eff-iso.png");
+   c1->Print("Eff-iso.pdf");
 }
