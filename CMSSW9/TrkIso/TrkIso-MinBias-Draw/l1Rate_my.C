@@ -156,7 +156,7 @@ void l1Rate_my::Loop()
    //if(eta_r == 1) eta_str = "#it{#lbar#bf{#eta}#lbar < 1.3}";
    if(eta_r == 1) eta_str = "#it{#lbar#bf{#eta}#lbar < 0.8}";
 
-   TLatex eta_range(43,4500,eta_str);
+   TLatex eta_range(65,4500,eta_str);
    eta_range.SetTextSize(0.05);
    eta_range.Draw();
 
@@ -164,7 +164,8 @@ void l1Rate_my::Loop()
    TString l1rate = "l1rate";
 
    if(eta_r == 0) l1rate = l1rate + "_all.png";
-   if(eta_r == 1) l1rate = l1rate + "_r1.png";
+   //if(eta_r == 1) l1rate = l1rate + "_r1.png";
+   if(eta_r == 1) l1rate = l1rate + "_r1.pdf";
    if(eta_r == 2) l1rate = l1rate + "_r2.png";
    if(eta_r == 3) l1rate = l1rate + "_r3.png";
    if(eta_r == 4) l1rate = l1rate + "_r4.png";
@@ -231,19 +232,21 @@ void l1Rate_my::Loop()
    eta_range1.Draw();
 
    //TLegend *Lgd1 = new TLegend(0.25, 0.15, 0.65, 0.3);
-   TLegend *Lgd1 = new TLegend(0.25, 0.7, 0.65, 0.85);
+   TLegend *Lgd1 = new TLegend(0.25, 0.17, 0.75, 0.33);
    Lgd1->SetFillColor(0);
    Lgd1->SetTextFont(42);
    Lgd1->SetTextSize(0.03);
    Lgd1->SetBorderSize(1);
    Lgd1->AddEntry(r_PXEG,"L1 Pixel Detector","lp");
+   Lgd1->AddEntry(r_PXIsoEG,"L1 Pixel Detector + isolation","lp");
 
    Lgd1->Draw();
 
    TString factor = "reduction_factor";
 
    if(eta_r == 0) factor = factor + "_all.png";
-   if(eta_r == 1) factor = factor + "_r1.png";
+   //if(eta_r == 1) factor = factor + "_r1.png";
+   if(eta_r == 1) factor = factor + "_r1.pdf";
    if(eta_r == 2) factor = factor + "_r2.png";
    if(eta_r == 3) factor = factor + "_r3.png";  
    if(eta_r == 4) factor = factor + "_r4.png";
