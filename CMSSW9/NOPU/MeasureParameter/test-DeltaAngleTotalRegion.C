@@ -76,8 +76,8 @@ void test::Loop()
    Bool_t eta_flag5 = false;
    Bool_t eta_flag6 = false;
 
-   //for (Long64_t jentry=0; jentry<nentries;jentry++) {
-   for (Long64_t jentry=0; jentry<1000;jentry++) {
+   for (Long64_t jentry=0; jentry<nentries;jentry++) {
+   //for (Long64_t jentry=0; jentry<1000;jentry++) {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
@@ -109,11 +109,11 @@ void test::Loop()
 
       Int_t eta_region = 0;
       //if( fabs(propGenEta) < 0.8  ) eta_region = 1;
-      if( fabs(propGenEta) > 0.8 && fabs(propGenEta) < 1.4 ) eta_region = 2;
+      //if( fabs(propGenEta) > 0.8 && fabs(propGenEta) < 1.4 ) eta_region = 2;
       //if( fabs(propGenEta) > 1.4 && fabs(propGenEta) < 1.8 ) eta_region = 3;
       //if( fabs(propGenEta) > 1.8 && fabs(propGenEta) < 2.7 ) eta_region = 4;
       //if( fabs(propGenEta) > 2.7 && fabs(propGenEta) < 2.9 ) eta_region = 5;
-      //if( fabs(propGenEta) > 2.9 && fabs(propGenEta) < 3.0 ) eta_region = 6;
+      if( fabs(propGenEta) > 2.9 && fabs(propGenEta) < 3.0 ) eta_region = 6;
       if( fabs(propGenEta) > 3.0 ) continue;
       
       //if( eta_region != 2 ) continue;
@@ -259,11 +259,11 @@ void test::Loop()
       b1->SetTitle("L_{1}D_{1}-L_{1}D_{2}");
       b2->SetTitle("L_{1}D_{1}-D_{1}D_{2}");
       b3->SetTitle("L_{1}D_{2}-D_{1}D_{2}");
-      bb1->SetTitle("PVD1-PVD1");
+      bb1->SetTitle("PVD2-PVD1");
       bbb1->SetTitle("#Delta#phi[#phi(PVL1)-#phi(L1D1)]-#Delta#phi[#phi(L1D1)-#phi(D1D2)]");
       
       c1->SetTitle("L_{2}D_{1}-L_{2}D_{2}");
-      c2->SetTitle("L_{2}D_{1}-D_{1}D_{1}");
+      c2->SetTitle("L_{2}D_{1}-D_{1}D_{2}");
       c3->SetTitle("L_{2}D_{2}-D_{1}D_{2}");
       ccc1->SetTitle("#Delta#phi[#phi(PVL2)-#phi(L2D1)]-#Delta#phi[#phi(L2D1)-#phi(D1D2)]");
    }
