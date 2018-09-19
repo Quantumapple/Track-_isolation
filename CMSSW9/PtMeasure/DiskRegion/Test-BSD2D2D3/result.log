@@ -1,0 +1,860 @@
+(gaussFit &) @0x7fc8e7eb3020
+Process: (1/66)
+Low pT bound: 2, high pT bound: 2.1
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=37.8958 FROM MIGRAD    STATUS=CONVERGED     184 CALLS         185 TOTAL
+                     EDM=8.13659e-10    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.47116e+00   1.08756e-01   9.34770e-05  -2.33195e-04
+   2  p1          -2.61864e-02   8.15789e-04   2.34617e-04   1.62197e-04
+   3  p2           1.00724e-02   4.87707e-04   4.58195e-05   2.64380e-03
+Fit parameters: Const: 1.47116, Mean: -0.0261864, sigma: 0.0100724
+Info in <TCanvas::Print>: pdf file ./Plots/phi_1th.pdf has been created
+
+Process: (2/66)
+Low pT bound: 2.1, high pT bound: 2.2
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=34.4949 FROM MIGRAD    STATUS=CONVERGED     119 CALLS         120 TOTAL
+                     EDM=2.65e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.39971e+00   1.07259e-01   8.96131e-05   2.17172e-02
+   2  p1          -2.27749e-02   7.72664e-04   2.24677e-04  -6.11175e-04
+   3  p2           9.57045e-03   5.82214e-04   5.73885e-05  -1.71057e-02
+Fit parameters: Const: 1.39971, Mean: -0.0227749, sigma: 0.00957045
+Info in <TCanvas::Print>: pdf file ./Plots/phi_2th.pdf has been created
+
+Process: (3/66)
+Low pT bound: 2.2, high pT bound: 2.3
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=14.7055 FROM MIGRAD    STATUS=CONVERGED     123 CALLS         124 TOTAL
+                     EDM=5.21466e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.82238e+00   1.40710e-01   6.34308e-05   1.65017e-02
+   2  p1          -1.99032e-02   1.28838e-03   1.92838e-04  -8.15735e-03
+   3  p2           1.19369e-02   8.50563e-04   3.80617e-05  -1.14528e-03
+Fit parameters: Const: 1.82238, Mean: -0.0199032, sigma: 0.0119369
+Info in <TCanvas::Print>: pdf file ./Plots/phi_3th.pdf has been created
+
+Process: (4/66)
+Low pT bound: 2.3, high pT bound: 2.4
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=9.34329 FROM MIGRAD    STATUS=CONVERGED      97 CALLS          98 TOTAL
+                     EDM=1.47567e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.60571e+00   1.18421e-01   4.99278e-05  -2.06595e-03
+   2  p1          -1.99756e-02   8.40269e-04   1.31492e-04   4.29477e-03
+   3  p2           1.02337e-02   6.04329e-04   3.07708e-05  -1.78861e-02
+Fit parameters: Const: 1.60571, Mean: -0.0199756, sigma: 0.0102337
+Info in <TCanvas::Print>: pdf file ./Plots/phi_4th.pdf has been created
+
+Process: (5/66)
+Low pT bound: 2.4, high pT bound: 2.5
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=12.2155 FROM MIGRAD    STATUS=CONVERGED     183 CALLS         184 TOTAL
+                     EDM=1.16834e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.61596e+00   1.20775e-01   5.68727e-05   2.63900e-03
+   2  p1          -2.04285e-02   9.36447e-04   1.66485e-04   1.18029e-04
+   3  p2           1.12250e-02   7.42737e-04   4.08871e-05   6.10744e-03
+Fit parameters: Const: 1.61596, Mean: -0.0204285, sigma: 0.011225
+Info in <TCanvas::Print>: pdf file ./Plots/phi_5th.pdf has been created
+
+Process: (6/66)
+Low pT bound: 2.5, high pT bound: 2.6
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=14.1156 FROM MIGRAD    STATUS=CONVERGED     103 CALLS         104 TOTAL
+                     EDM=9.64709e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.57272e+00   1.15315e-01   5.93150e-05  -8.30956e-04
+   2  p1          -1.87934e-02   7.72876e-04   1.21771e-04  -1.64351e-03
+   3  p2           8.21090e-03   4.53503e-04   2.58161e-05  -4.86849e-04
+Fit parameters: Const: 1.57272, Mean: -0.0187934, sigma: 0.0082109
+Info in <TCanvas::Print>: pdf file ./Plots/phi_6th.pdf has been created
+
+Process: (7/66)
+Low pT bound: 2.6, high pT bound: 2.7
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=2.40974 FROM MIGRAD    STATUS=CONVERGED     105 CALLS         106 TOTAL
+                     EDM=2.99217e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.05980e+00   1.42879e-01   3.01155e-05  -2.17318e-02
+   2  p1          -1.85787e-02   8.47329e-04   7.31453e-05   3.35528e-03
+   3  p2           1.00770e-02   6.97606e-04   1.89312e-05   1.87685e-02
+Fit parameters: Const: 2.0598, Mean: -0.0185787, sigma: 0.010077
+Info in <TCanvas::Print>: pdf file ./Plots/phi_7th.pdf has been created
+
+Process: (8/66)
+Low pT bound: 2.7, high pT bound: 2.8
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=19.9791 FROM MIGRAD    STATUS=CONVERGED     232 CALLS         233 TOTAL
+                     EDM=3.39633e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.43759e+00   1.13357e-01   7.04766e-05  -2.34201e-02
+   2  p1          -1.72807e-02   8.96889e-04   1.75251e-04   2.21737e-03
+   3  p2           9.09904e-03   4.45454e-04   2.99233e-05   2.06095e-02
+Fit parameters: Const: 1.43759, Mean: -0.0172807, sigma: 0.00909904
+Info in <TCanvas::Print>: pdf file ./Plots/phi_8th.pdf has been created
+
+Process: (9/66)
+Low pT bound: 2.8, high pT bound: 2.9
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=27.6386 FROM MIGRAD    STATUS=CONVERGED     116 CALLS         117 TOTAL
+                     EDM=3.53489e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.83705e+00   1.28906e-01   8.56397e-05  -7.22867e-03
+   2  p1          -1.66813e-02   8.40065e-04   1.99471e-04  -5.75824e-04
+   3  p2           9.45528e-03   4.55266e-04   3.66113e-05   7.02699e-03
+Fit parameters: Const: 1.83705, Mean: -0.0166813, sigma: 0.00945528
+Info in <TCanvas::Print>: pdf file ./Plots/phi_9th.pdf has been created
+
+Process: (10/66)
+Low pT bound: 2.9, high pT bound: 3
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=2.00167 FROM MIGRAD    STATUS=CONVERGED      96 CALLS          97 TOTAL
+                     EDM=2.65067e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.61723e+00   1.25432e-01   2.69422e-05  -2.78084e-03
+   2  p1          -1.56824e-02   7.40665e-04   5.46982e-05   7.42212e-04
+   3  p2           7.74831e-03   6.54339e-04   1.76438e-05  -8.34837e-03
+Fit parameters: Const: 1.61723, Mean: -0.0156824, sigma: 0.00774831
+Info in <TCanvas::Print>: pdf file ./Plots/phi_10th.pdf has been created
+
+Process: (11/66)
+Low pT bound: 3, high pT bound: 3.2
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=74.6141 FROM MIGRAD    STATUS=CONVERGED      89 CALLS          90 TOTAL
+                     EDM=1.73679e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.44749e+00   7.90826e-02   9.38652e-05  -8.36000e-03
+   2  p1          -1.60413e-02   4.36192e-04   1.77188e-04  -9.42491e-04
+   3  p2           7.01208e-03   2.67045e-04   4.23220e-05   2.68726e-03
+Fit parameters: Const: 1.44749, Mean: -0.0160413, sigma: 0.00701208
+Info in <TCanvas::Print>: pdf file ./Plots/phi_11th.pdf has been created
+
+Process: (12/66)
+Low pT bound: 3.2, high pT bound: 3.4
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=96.8274 FROM MIGRAD    STATUS=CONVERGED      91 CALLS          92 TOTAL
+                     EDM=6.18626e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.38936e+00   7.46975e-02   1.04279e-04  -1.27495e-02
+   2  p1          -1.63634e-02   3.97445e-04   1.55509e-04  -6.57649e-03
+   3  p2           5.84482e-03   2.03610e-04   3.36605e-05  -9.81854e-03
+Fit parameters: Const: 1.38936, Mean: -0.0163634, sigma: 0.00584482
+Info in <TCanvas::Print>: pdf file ./Plots/phi_12th.pdf has been created
+
+Process: (13/66)
+Low pT bound: 3.4, high pT bound: 3.6
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=69.5219 FROM MIGRAD    STATUS=CONVERGED      99 CALLS         100 TOTAL
+                     EDM=2.6815e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.54957e+00   7.98362e-02   9.00436e-05   4.38713e-03
+   2  p1          -1.56291e-02   4.09250e-04   1.36164e-04   4.98967e-03
+   3  p2           6.17551e-03   2.34736e-04   3.23489e-05   2.52328e-02
+Fit parameters: Const: 1.54957, Mean: -0.0156291, sigma: 0.00617551
+Info in <TCanvas::Print>: pdf file ./Plots/phi_13th.pdf has been created
+
+Process: (14/66)
+Low pT bound: 3.6, high pT bound: 3.8
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=98.6684 FROM MIGRAD    STATUS=CONVERGED      96 CALLS          97 TOTAL
+                     EDM=3.55474e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.36989e+00   7.41510e-02   1.05141e-04  -1.02460e-02
+   2  p1          -1.47634e-02   3.10049e-04   1.48322e-04   2.67869e-02
+   3  p2           5.47390e-03   1.56227e-04   3.25187e-05   2.89892e-02
+Fit parameters: Const: 1.36989, Mean: -0.0147634, sigma: 0.0054739
+Info in <TCanvas::Print>: pdf file ./Plots/phi_14th.pdf has been created
+
+Process: (15/66)
+Low pT bound: 3.8, high pT bound: 4
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=119.367 FROM MIGRAD    STATUS=CONVERGED     106 CALLS         107 TOTAL
+                     EDM=8.08043e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.41389e+00   7.52935e-02   1.15776e-04   1.66197e-02
+   2  p1          -1.40954e-02   3.08393e-04   1.38506e-04  -5.89733e-03
+   3  p2           4.75966e-03   1.43536e-04   3.00729e-05  -3.00833e-02
+Fit parameters: Const: 1.41389, Mean: -0.0140954, sigma: 0.00475966
+Info in <TCanvas::Print>: pdf file ./Plots/phi_15th.pdf has been created
+
+Process: (16/66)
+Low pT bound: 4, high pT bound: 4.2
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=69.3254 FROM MIGRAD    STATUS=CONVERGED      93 CALLS          94 TOTAL
+                     EDM=3.21452e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.41775e+00   7.66705e-02   8.93939e-05  -4.72967e-03
+   2  p1          -1.34110e-02   3.65292e-04   1.24446e-04   6.50379e-03
+   3  p2           5.27288e-03   2.17447e-04   3.28624e-05   2.68253e-02
+Fit parameters: Const: 1.41775, Mean: -0.013411, sigma: 0.00527288
+Info in <TCanvas::Print>: pdf file ./Plots/phi_16th.pdf has been created
+
+Process: (17/66)
+Low pT bound: 4.2, high pT bound: 4.4
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=94.3086 FROM MIGRAD    STATUS=CONVERGED     121 CALLS         122 TOTAL
+                     EDM=1.75577e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.32686e+00   7.28491e-02   1.02379e-04  -1.48628e-03
+   2  p1          -1.26262e-02   3.76824e-04   1.08629e-04   9.44705e-04
+   3  p2           4.12524e-03   1.87552e-04   2.70674e-05  -1.73706e-03
+Fit parameters: Const: 1.32686, Mean: -0.0126262, sigma: 0.00412524
+Info in <TCanvas::Print>: pdf file ./Plots/phi_17th.pdf has been created
+
+Process: (18/66)
+Low pT bound: 4.4, high pT bound: 4.6
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=59.1245 FROM MIGRAD    STATUS=CONVERGED      90 CALLS          91 TOTAL
+                     EDM=4.11606e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.58174e+00   7.95940e-02   8.26000e-05   1.30766e-02
+   2  p1          -1.13906e-02   2.16484e-04   7.63051e-05  -7.86779e-04
+   3  p2           3.97275e-03   1.17810e-04   2.12764e-05  -5.85786e-03
+Fit parameters: Const: 1.58174, Mean: -0.0113906, sigma: 0.00397275
+Info in <TCanvas::Print>: pdf file ./Plots/phi_18th.pdf has been created
+
+Process: (19/66)
+Low pT bound: 4.6, high pT bound: 4.8
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=54.2641 FROM MIGRAD    STATUS=CONVERGED      86 CALLS          87 TOTAL
+                     EDM=1.38165e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.53516e+00   7.83613e-02   7.89052e-05   7.44173e-03
+   2  p1          -1.13331e-02   2.21522e-04   7.97361e-05  -1.19517e-03
+   3  p2           4.29214e-03   1.27551e-04   2.26396e-05   3.78658e-03
+Fit parameters: Const: 1.53516, Mean: -0.0113331, sigma: 0.00429214
+Info in <TCanvas::Print>: pdf file ./Plots/phi_19th.pdf has been created
+
+Process: (20/66)
+Low pT bound: 4.8, high pT bound: 5
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=66.228 FROM MIGRAD    STATUS=CONVERGED      90 CALLS          91 TOTAL
+                     EDM=2.15003e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.54312e+00   7.85585e-02   8.70421e-05   2.78457e-02
+   2  p1          -1.02707e-02   2.12702e-04   8.47106e-05  -1.01364e-02
+   3  p2           4.15523e-03   1.07394e-04   2.14443e-05  -2.84453e-02
+Fit parameters: Const: 1.54312, Mean: -0.0102707, sigma: 0.00415523
+Info in <TCanvas::Print>: pdf file ./Plots/phi_20th.pdf has been created
+
+Process: (21/66)
+Low pT bound: 5, high pT bound: 5.2
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=55.1855 FROM MIGRAD    STATUS=CONVERGED      92 CALLS          93 TOTAL
+                     EDM=1.36055e-11    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.59756e+00   8.02362e-02   8.01159e-05  -2.17725e-04
+   2  p1          -9.92525e-03   2.27726e-04   7.86148e-05   1.02683e-04
+   3  p2           4.17247e-03   1.55043e-04   2.67534e-05   1.01256e-04
+Fit parameters: Const: 1.59756, Mean: -0.00992525, sigma: 0.00417247
+Info in <TCanvas::Print>: pdf file ./Plots/phi_21th.pdf has been created
+
+Process: (22/66)
+Low pT bound: 5.2, high pT bound: 5.4
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=57.5179 FROM MIGRAD    STATUS=CONVERGED      92 CALLS          93 TOTAL
+                     EDM=3.9584e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.45005e+00   7.61559e-02   8.07932e-05   3.91201e-03
+   2  p1          -1.00249e-02   2.24353e-04   7.61084e-05  -1.17907e-03
+   3  p2           3.87197e-03   1.36685e-04   2.40311e-05   3.07836e-04
+Fit parameters: Const: 1.45005, Mean: -0.0100249, sigma: 0.00387197
+Info in <TCanvas::Print>: pdf file ./Plots/phi_22th.pdf has been created
+
+Process: (23/66)
+Low pT bound: 5.4, high pT bound: 5.6
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=73.5997 FROM MIGRAD    STATUS=CONVERGED     101 CALLS         102 TOTAL
+                     EDM=1.22128e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.47419e+00   7.67999e-02   9.13735e-05   2.28258e-03
+   2  p1          -9.50741e-03   2.54405e-04   8.99994e-05   5.87541e-03
+   3  p2           4.07952e-03   1.41393e-04   2.52876e-05   3.38783e-04
+Fit parameters: Const: 1.47419, Mean: -0.00950741, sigma: 0.00407952
+Info in <TCanvas::Print>: pdf file ./Plots/phi_23th.pdf has been created
+
+Process: (24/66)
+Low pT bound: 5.6, high pT bound: 5.8
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=47.6433 FROM MIGRAD    STATUS=CONVERGED      91 CALLS          92 TOTAL
+                     EDM=1.60906e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.48196e+00   7.69997e-02   7.38246e-05   1.55498e-02
+   2  p1          -8.87150e-03   1.83767e-04   6.14372e-05   2.50974e-02
+   3  p2           3.46264e-03   1.01815e-04   1.86370e-05   4.68410e-03
+Fit parameters: Const: 1.48196, Mean: -0.0088715, sigma: 0.00346264
+Info in <TCanvas::Print>: pdf file ./Plots/phi_24th.pdf has been created
+
+Process: (25/66)
+Low pT bound: 5.8, high pT bound: 6
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=50.3696 FROM MIGRAD    STATUS=CONVERGED     111 CALLS         112 TOTAL
+                     EDM=1.90943e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.50715e+00   7.76561e-02   7.59714e-05  -2.75920e-02
+   2  p1          -8.58627e-03   1.83059e-04   6.40428e-05   5.30977e-03
+   3  p2           3.53643e-03   1.02119e-04   1.93487e-05   2.03930e-02
+Fit parameters: Const: 1.50715, Mean: -0.00858627, sigma: 0.00353643
+Info in <TCanvas::Print>: pdf file ./Plots/phi_25th.pdf has been created
+
+Process: (26/66)
+Low pT bound: 6, high pT bound: 6.5
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=152.329 FROM MIGRAD    STATUS=CONVERGED     389 CALLS         390 TOTAL
+                     EDM=4.44203e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.85078e+00   6.08643e-02   3.89824e-05   1.29645e-02
+   2  p1          -8.10256e-03   1.08728e-04   6.04687e-05   1.98464e-03
+   3  p2           3.02663e-03   5.46269e-05   1.77624e-05   1.46541e-02
+Fit parameters: Const: 1.85078, Mean: -0.00810256, sigma: 0.00302663
+Info in <TCanvas::Print>: pdf file ./Plots/phi_26th.pdf has been created
+
+Process: (27/66)
+Low pT bound: 6.5, high pT bound: 7
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=139.845 FROM MIGRAD    STATUS=CONVERGED     146 CALLS         147 TOTAL
+                     EDM=2.43713e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.85951e+00   6.10036e-02   3.73316e-05  -3.92003e-03
+   2  p1          -7.41836e-03   1.04731e-04   5.68390e-05  -2.08349e-02
+   3  p2           2.97921e-03   6.14313e-05   1.96301e-05  -4.29809e-02
+Fit parameters: Const: 1.85951, Mean: -0.00741836, sigma: 0.00297921
+Info in <TCanvas::Print>: pdf file ./Plots/phi_27th.pdf has been created
+
+Process: (28/66)
+Low pT bound: 7, high pT bound: 7.5
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=170.998 FROM MIGRAD    STATUS=CONVERGED     161 CALLS         162 TOTAL
+                     EDM=3.57688e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.76200e+00   5.93630e-02   4.12342e-05  -2.12226e-02
+   2  p1          -6.96868e-03   9.93814e-05   5.87097e-05   6.07786e-03
+   3  p2           2.72116e-03   4.79764e-05   1.74520e-05  -6.76176e-02
+Fit parameters: Const: 1.762, Mean: -0.00696868, sigma: 0.00272116
+Info in <TCanvas::Print>: pdf file ./Plots/phi_28th.pdf has been created
+
+Process: (29/66)
+Low pT bound: 7.5, high pT bound: 8
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=128 FROM MIGRAD    STATUS=CONVERGED     319 CALLS         320 TOTAL
+                     EDM=5.02304e-06    STRATEGY= 1  ERROR MATRIX UNCERTAINTY   7.3 per cent
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.90481e+00   3.35584e-02   0.00000e+00  -6.94921e-01
+   2  p1          -6.59452e-03   9.14267e-05  -0.00000e+00  -4.02330e-05
+   3  p2           2.59104e-03   5.74604e-05  -0.00000e+00   4.19219e-03
+Fit parameters: Const: 1.90481, Mean: -0.00659452, sigma: 0.00259104
+Info in <TCanvas::Print>: pdf file ./Plots/phi_29th.pdf has been created
+
+Process: (30/66)
+Low pT bound: 8, high pT bound: 9
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=257.751 FROM MIGRAD    STATUS=CONVERGED     183 CALLS         184 TOTAL
+                     EDM=9.20672e-11    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.86067e+00   4.31401e-02   3.58037e-05   9.89379e-04
+   2  p1          -6.00904e-03   6.12241e-05   4.18499e-05  -5.39318e-04
+   3  p2           2.29425e-03   3.11614e-05   1.42566e-05   5.19609e-03
+Fit parameters: Const: 1.86067, Mean: -0.00600904, sigma: 0.00229425
+Info in <TCanvas::Print>: pdf file ./Plots/phi_30th.pdf has been created
+
+Process: (31/66)
+Low pT bound: 9, high pT bound: 10
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=231.362 FROM MIGRAD    STATUS=CONVERGED     173 CALLS         174 TOTAL
+                     EDM=1.80784e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.01168e+00   4.48523e-02   3.39754e-05  -8.67460e-02
+   2  p1          -5.44547e-03   5.27937e-05   3.50107e-05  -8.53349e-03
+   3  p2           2.10904e-03   2.82983e-05   1.30914e-05   2.17956e-01
+Fit parameters: Const: 2.01168, Mean: -0.00544547, sigma: 0.00210904
+Info in <TCanvas::Print>: pdf file ./Plots/phi_31th.pdf has been created
+
+Process: (32/66)
+Low pT bound: 10, high pT bound: 11
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=227.806 FROM MIGRAD    STATUS=CONVERGED     180 CALLS         181 TOTAL
+                     EDM=7.51485e-11    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.02317e+00   4.50261e-02   3.37542e-05  -1.05910e-03
+   2  p1          -4.76823e-03   4.59079e-05   3.28550e-05  -1.64862e-03
+   3  p2           1.98010e-03   2.48223e-05   1.27831e-05  -5.80169e-03
+Fit parameters: Const: 2.02317, Mean: -0.00476823, sigma: 0.0019801
+Info in <TCanvas::Print>: pdf file ./Plots/phi_32th.pdf has been created
+
+Process: (33/66)
+Low pT bound: 11, high pT bound: 12
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=201.528 FROM MIGRAD    STATUS=CONVERGED     373 CALLS         374 TOTAL
+                     EDM=3.46849e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.97248e+00   4.44123e-02   3.17139e-05   1.02043e-01
+   2  p1          -4.33929e-03   4.19289e-05   2.74693e-05  -1.55059e-01
+   3  p2           1.75496e-03   2.29101e-05   1.14623e-05   5.77275e-02
+Fit parameters: Const: 1.97248, Mean: -0.00433929, sigma: 0.00175496
+Info in <TCanvas::Print>: pdf file ./Plots/phi_33th.pdf has been created
+
+Process: (34/66)
+Low pT bound: 12, high pT bound: 13
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=145.857 FROM MIGRAD    STATUS=CONVERGED     116 CALLS         117 TOTAL
+                     EDM=1.69322e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.07314e+00   4.55316e-02   2.70297e-05   2.10035e-03
+   2  p1          -3.92996e-03   3.51251e-05   2.07857e-05   1.58459e-02
+   3  p2           1.59926e-03   1.90381e-05   9.00810e-06   9.50113e-03
+Fit parameters: Const: 2.07314, Mean: -0.00392996, sigma: 0.00159926
+Info in <TCanvas::Print>: pdf file ./Plots/phi_34th.pdf has been created
+
+Process: (35/66)
+Low pT bound: 13, high pT bound: 14
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=129.109 FROM MIGRAD    STATUS=CONVERGED     127 CALLS         128 TOTAL
+                     EDM=6.48994e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.11689e+00   4.60096e-02   2.54533e-05  -2.41162e-02
+   2  p1          -3.64737e-03   3.55898e-05   1.95666e-05  -6.06792e-03
+   3  p2           1.61637e-03   2.05565e-05   8.98989e-06   9.79394e-03
+Fit parameters: Const: 2.11689, Mean: -0.00364737, sigma: 0.00161637
+Info in <TCanvas::Print>: pdf file ./Plots/phi_35th.pdf has been created
+
+Process: (36/66)
+Low pT bound: 14, high pT bound: 15
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=98.7091 FROM MIGRAD    STATUS=CONVERGED     118 CALLS         119 TOTAL
+                     EDM=8.22064e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.13944e+00   4.62548e-02   2.22881e-05   2.34500e-01
+   2  p1          -3.46701e-03   3.27316e-05   1.54514e-05  -2.21228e-01
+   3  p2           1.46471e-03   1.94881e-05   7.68444e-06  -1.47545e-01
+Fit parameters: Const: 2.13944, Mean: -0.00346701, sigma: 0.00146471
+Info in <TCanvas::Print>: pdf file ./Plots/phi_36th.pdf has been created
+
+Process: (37/66)
+Low pT bound: 15, high pT bound: 16
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=107.844 FROM MIGRAD    STATUS=CONVERGED     117 CALLS         118 TOTAL
+                     EDM=2.84486e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.12820e+00   4.61325e-02   2.32850e-05   5.17283e-02
+   2  p1          -3.12493e-03   3.08504e-05   1.56751e-05   7.76494e-05
+   3  p2           1.41915e-03   1.92139e-05   8.28287e-06  -1.93873e-02
+Fit parameters: Const: 2.1282, Mean: -0.00312493, sigma: 0.00141915
+Info in <TCanvas::Print>: pdf file ./Plots/phi_37th.pdf has been created
+
+Process: (38/66)
+Low pT bound: 16, high pT bound: 17
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=113.455 FROM MIGRAD    STATUS=CONVERGED     118 CALLS         119 TOTAL
+                     EDM=2.45025e-10    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.08138e+00   4.56430e-02   2.38743e-05   5.69574e-04
+   2  p1          -2.95960e-03   2.93331e-05   1.52987e-05  -3.15201e-03
+   3  p2           1.32924e-03   1.82265e-05   8.33161e-06   1.28013e-02
+Fit parameters: Const: 2.08138, Mean: -0.0029596, sigma: 0.00132924
+Info in <TCanvas::Print>: pdf file ./Plots/phi_38th.pdf has been created
+
+Process: (39/66)
+Low pT bound: 17, high pT bound: 18
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=57.3657 FROM MIGRAD    STATUS=CONVERGED     124 CALLS         125 TOTAL
+                     EDM=1.49184e-10    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.14363e+00   4.62992e-02   1.70527e-05  -2.25331e-03
+   2  p1          -2.81223e-03   2.71078e-05   1.00517e-05   5.09497e-03
+   3  p2           1.24754e-03   1.62271e-05   5.44289e-06   2.92911e-04
+Fit parameters: Const: 2.14363, Mean: -0.00281223, sigma: 0.00124754
+Info in <TCanvas::Print>: pdf file ./Plots/phi_39th.pdf has been created
+
+Process: (40/66)
+Low pT bound: 18, high pT bound: 19
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=53.7114 FROM MIGRAD    STATUS=CONVERGED     113 CALLS         114 TOTAL
+                     EDM=1.92796e-10    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.16029e+00   4.64787e-02   1.65129e-05   9.04217e-04
+   2  p1          -2.67650e-03   2.70486e-05   9.72097e-06  -4.71575e-03
+   3  p2           1.25099e-03   1.81181e-05   5.88199e-06  -8.02565e-03
+Fit parameters: Const: 2.16029, Mean: -0.0026765, sigma: 0.00125099
+Info in <TCanvas::Print>: pdf file ./Plots/phi_40th.pdf has been created
+
+Process: (41/66)
+Low pT bound: 19, high pT bound: 20
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=83.4609 FROM MIGRAD    STATUS=CONVERGED     101 CALLS         102 TOTAL
+                     EDM=5.632e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.26754e+00   4.76185e-02   2.05395e-05   3.74408e-02
+   2  p1          -2.50283e-03   2.52059e-05   1.12021e-05  -2.14170e-03
+   3  p2           1.18859e-03   1.58246e-05   6.51724e-06   1.97280e-01
+Fit parameters: Const: 2.26754, Mean: -0.00250283, sigma: 0.00118859
+Info in <TCanvas::Print>: pdf file ./Plots/phi_41th.pdf has been created
+
+Process: (42/66)
+Low pT bound: 20, high pT bound: 22
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=175.591 FROM MIGRAD    STATUS=CONVERGED     110 CALLS         111 TOTAL
+                     EDM=5.83361e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.11971e+00   3.25554e-02   2.09686e-05  -4.84105e-03
+   2  p1          -2.29372e-03   1.68059e-05   1.05956e-05   6.26814e-02
+   3  p2           1.06323e-03   1.01757e-05   6.28419e-06  -5.58004e-02
+Fit parameters: Const: 2.11971, Mean: -0.00229372, sigma: 0.00106323
+Info in <TCanvas::Print>: pdf file ./Plots/phi_42th.pdf has been created
+
+Process: (43/66)
+Low pT bound: 22, high pT bound: 24
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=138.299 FROM MIGRAD    STATUS=CONVERGED     109 CALLS         110 TOTAL
+                     EDM=1.0837e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.10586e+00   3.24487e-02   1.86195e-05   9.21481e-02
+   2  p1          -2.13705e-03   1.59298e-05   8.90245e-06   1.18222e-02
+   3  p2           1.00252e-03   1.04667e-05   5.90104e-06  -3.42829e-01
+Fit parameters: Const: 2.10586, Mean: -0.00213705, sigma: 0.00100252
+Info in <TCanvas::Print>: pdf file ./Plots/phi_43th.pdf has been created
+
+Process: (44/66)
+Low pT bound: 24, high pT bound: 26
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=180.498 FROM MIGRAD    STATUS=CONVERGED     117 CALLS         118 TOTAL
+                     EDM=1.75239e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.02625e+00   3.18296e-02   2.12372e-05   1.50637e-02
+   2  p1          -1.93408e-03   1.63827e-05   9.75343e-06   5.56775e-03
+   3  p2           9.43899e-04   1.04198e-05   6.44967e-06   2.66430e-02
+Fit parameters: Const: 2.02625, Mean: -0.00193408, sigma: 0.000943899
+Info in <TCanvas::Print>: pdf file ./Plots/phi_44th.pdf has been created
+
+Process: (45/66)
+Low pT bound: 26, high pT bound: 28
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=189.485 FROM MIGRAD    STATUS=CONVERGED     104 CALLS         105 TOTAL
+                     EDM=3.0156e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.11126e+00   3.24904e-02   2.17780e-05   2.24521e-02
+   2  p1          -1.85964e-03   1.47596e-05   9.19180e-06  -1.53043e-01
+   3  p2           8.86137e-04   9.56142e-06   6.38997e-06  -2.02323e-02
+Fit parameters: Const: 2.11126, Mean: -0.00185964, sigma: 0.000886137
+Info in <TCanvas::Print>: pdf file ./Plots/phi_45th.pdf has been created
+
+Process: (46/66)
+Low pT bound: 28, high pT bound: 30
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=229.881 FROM MIGRAD    STATUS=CONVERGED     127 CALLS         128 TOTAL
+                     EDM=4.40551e-10    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.08106e+00   3.22572e-02   2.39663e-05   8.36693e-03
+   2  p1          -1.70247e-03   1.40959e-05   9.43016e-06  -8.65210e-03
+   3  p2           8.20013e-04   9.17164e-06   6.84563e-06   1.04747e-02
+Fit parameters: Const: 2.08106, Mean: -0.00170247, sigma: 0.000820013
+Info in <TCanvas::Print>: pdf file ./Plots/phi_46th.pdf has been created
+
+Process: (47/66)
+Low pT bound: 30, high pT bound: 32
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=268.848 FROM MIGRAD    STATUS=CONVERGED     127 CALLS         128 TOTAL
+                     EDM=3.295e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.08757e+00   3.23077e-02   2.59160e-05  -5.30318e-02
+   2  p1          -1.58715e-03   1.40322e-05   9.57364e-06   3.97912e-01
+   3  p2           7.71033e-04   8.59566e-06   6.74859e-06  -9.39773e-01
+Fit parameters: Const: 2.08757, Mean: -0.00158715, sigma: 0.000771033
+Info in <TCanvas::Print>: pdf file ./Plots/phi_47th.pdf has been created
+
+Process: (48/66)
+Low pT bound: 32, high pT bound: 34
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=245.719 FROM MIGRAD    STATUS=CONVERGED     126 CALLS         127 TOTAL
+                     EDM=3.04807e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.10364e+00   3.24317e-02   2.47807e-05  -3.10207e-03
+   2  p1          -1.48139e-03   1.35631e-05   9.12298e-06  -5.25153e-02
+   3  p2           7.71608e-04   9.03879e-06   6.99366e-06   7.69066e-02
+Fit parameters: Const: 2.10364, Mean: -0.00148139, sigma: 0.000771608
+Info in <TCanvas::Print>: pdf file ./Plots/phi_48th.pdf has been created
+
+Process: (49/66)
+Low pT bound: 34, high pT bound: 36
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=308.637 FROM MIGRAD    STATUS=CONVERGED     129 CALLS         130 TOTAL
+                     EDM=3.0262e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.02668e+00   3.18330e-02   2.77387e-05   2.33121e-02
+   2  p1          -1.40183e-03   1.38473e-05   9.91702e-06   1.16040e-02
+   3  p2           7.34859e-04   9.01961e-06   7.61517e-06   5.26126e-03
+Fit parameters: Const: 2.02668, Mean: -0.00140183, sigma: 0.000734859
+Info in <TCanvas::Print>: pdf file ./Plots/phi_49th.pdf has been created
+
+Process: (50/66)
+Low pT bound: 36, high pT bound: 38
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=305.075 FROM MIGRAD    STATUS=CONVERGED     127 CALLS         128 TOTAL
+                     EDM=2.6737e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.05096e+00   3.20231e-02   2.75858e-05   1.74259e-02
+   2  p1          -1.34641e-03   1.29583e-05   9.53989e-06   4.18153e-02
+   3  p2           7.15253e-04   8.64113e-06   7.60241e-06  -2.57913e-02
+Fit parameters: Const: 2.05096, Mean: -0.00134641, sigma: 0.000715253
+Info in <TCanvas::Print>: pdf file ./Plots/phi_50th.pdf has been created
+
+Process: (51/66)
+Low pT bound: 38, high pT bound: 40
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=315.123 FROM MIGRAD    STATUS=CONVERGED     126 CALLS         127 TOTAL
+                     EDM=4.23659e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.07345e+00   3.21980e-02   2.80357e-05   1.97096e-01
+   2  p1          -1.28924e-03   1.31510e-05   9.40542e-06  -2.20764e-01
+   3  p2           6.97822e-04   8.98945e-06   7.77917e-06   7.21657e-01
+Fit parameters: Const: 2.07345, Mean: -0.00128924, sigma: 0.000697822
+Info in <TCanvas::Print>: pdf file ./Plots/phi_51th.pdf has been created
+
+Process: (52/66)
+Low pT bound: 40, high pT bound: 42
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=329.214 FROM MIGRAD    STATUS=CONVERGED     136 CALLS         137 TOTAL
+                     EDM=4.37112e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.05288e+00   3.20382e-02   2.86548e-05  -1.84672e-01
+   2  p1          -1.23602e-03   1.19673e-05   8.96629e-06   7.28514e-02
+   3  p2           6.47426e-04   8.40140e-06   7.90965e-06  -7.22919e-01
+Fit parameters: Const: 2.05288, Mean: -0.00123602, sigma: 0.000647426
+Info in <TCanvas::Print>: pdf file ./Plots/phi_52th.pdf has been created
+
+Process: (53/66)
+Low pT bound: 42, high pT bound: 44
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=302.025 FROM MIGRAD    STATUS=CONVERGED     127 CALLS         128 TOTAL
+                     EDM=4.08292e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.02950e+00   3.18549e-02   2.74374e-05   2.53535e-01
+   2  p1          -1.19534e-03   1.21026e-05   8.71195e-06  -1.64585e-01
+   3  p2           6.53118e-04   8.65728e-06   7.79631e-06   4.15184e-01
+Fit parameters: Const: 2.0295, Mean: -0.00119534, sigma: 0.000653118
+Info in <TCanvas::Print>: pdf file ./Plots/phi_53th.pdf has been created
+
+Process: (54/66)
+Low pT bound: 44, high pT bound: 46
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=289.859 FROM MIGRAD    STATUS=CONVERGED     141 CALLS         142 TOTAL
+                     EDM=1.31377e-11    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.04107e+00   3.19458e-02   2.68890e-05  -5.17719e-04
+   2  p1          -1.11119e-03   1.17943e-05   8.24682e-06   3.34454e-03
+   3  p2           6.32710e-04   8.06913e-06   7.17259e-06   1.35886e-03
+Fit parameters: Const: 2.04107, Mean: -0.00111119, sigma: 0.00063271
+Info in <TCanvas::Print>: pdf file ./Plots/phi_54th.pdf has been created
+
+Process: (55/66)
+Low pT bound: 46, high pT bound: 48
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=308.292 FROM MIGRAD    STATUS=CONVERGED     137 CALLS         138 TOTAL
+                     EDM=6.15277e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.04985e+00   3.20144e-02   2.77293e-05  -5.62322e-02
+   2  p1          -1.06826e-03   1.19191e-05   8.45826e-06   2.72287e-01
+   3  p2           6.30673e-04   8.19463e-06   7.40473e-06  -4.61175e-02
+Fit parameters: Const: 2.04985, Mean: -0.00106826, sigma: 0.000630673
+Info in <TCanvas::Print>: pdf file ./Plots/phi_55th.pdf has been created
+
+Process: (56/66)
+Low pT bound: 48, high pT bound: 50
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=373.204 FROM MIGRAD    STATUS=CONVERGED     117 CALLS         118 TOTAL
+                     EDM=9.96969e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.09290e+00   3.23488e-02   3.05190e-05   1.05529e-01
+   2  p1          -1.03891e-03   1.15118e-05   8.92458e-06   1.91006e-01
+   3  p2           6.11147e-04   8.63991e-06   8.66576e-06  -3.13642e-01
+Fit parameters: Const: 2.0929, Mean: -0.00103891, sigma: 0.000611147
+Info in <TCanvas::Print>: pdf file ./Plots/phi_56th.pdf has been created
+
+Process: (57/66)
+Low pT bound: 50, high pT bound: 55
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=842.039 FROM MIGRAD    STATUS=CONVERGED     132 CALLS         133 TOTAL
+                     EDM=2.06022e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.02319e+00   2.01156e-02   2.89469e-05  -4.55277e-02
+   2  p1          -9.76409e-04   7.23514e-06   8.24197e-06  -9.99602e-01
+   3  p2           5.84686e-04   5.44307e-06   8.20318e-06   9.53945e-01
+Fit parameters: Const: 2.02319, Mean: -0.000976409, sigma: 0.000584686
+Info in <TCanvas::Print>: pdf file ./Plots/phi_57th.pdf has been created
+
+Process: (58/66)
+Low pT bound: 55, high pT bound: 60
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=862.35 FROM MIGRAD    STATUS=CONVERGED     140 CALLS         141 TOTAL
+                     EDM=1.89437e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.98613e+00   1.99305e-02   2.92827e-05  -1.39533e-03
+   2  p1          -9.03220e-04   6.95404e-06   8.00394e-06   2.57810e-01
+   3  p2           5.55932e-04   5.22844e-06   8.16730e-06  -3.35627e-01
+Fit parameters: Const: 1.98613, Mean: -0.00090322, sigma: 0.000555932
+Info in <TCanvas::Print>: pdf file ./Plots/phi_58th.pdf has been created
+
+Process: (59/66)
+Low pT bound: 60, high pT bound: 65
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=894.694 FROM MIGRAD    STATUS=CONVERGED     132 CALLS         133 TOTAL
+                     EDM=8.02737e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.04166e+00   2.02072e-02   2.98437e-05  -3.56632e-02
+   2  p1          -8.28880e-04   6.76220e-06   7.97365e-06   1.66998e-01
+   3  p2           5.51287e-04   5.41909e-06   8.70932e-06  -2.33890e-02
+Fit parameters: Const: 2.04166, Mean: -0.00082888, sigma: 0.000551287
+Info in <TCanvas::Print>: pdf file ./Plots/phi_59th.pdf has been created
+
+Process: (60/66)
+Low pT bound: 65, high pT bound: 70
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=821.922 FROM MIGRAD    STATUS=CONVERGED     151 CALLS         152 TOTAL
+                     EDM=8.55221e-12    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.01702e+00   2.00849e-02   2.85976e-05  -1.23640e-03
+   2  p1          -7.73641e-04   6.50394e-06   7.45761e-06  -6.06385e-03
+   3  p2           5.34668e-04   5.09058e-06   8.07992e-06   2.42150e-03
+Fit parameters: Const: 2.01702, Mean: -0.000773641, sigma: 0.000534668
+Info in <TCanvas::Print>: pdf file ./Plots/phi_60th.pdf has been created
+
+Process: (61/66)
+Low pT bound: 70, high pT bound: 75
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=776.204 FROM MIGRAD    STATUS=CONVERGED     139 CALLS         140 TOTAL
+                     EDM=2.01742e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.03456e+00   2.01720e-02   2.77966e-05  -8.14076e-02
+   2  p1          -7.34700e-04   5.99822e-06   7.07263e-06   1.92219e-01
+   3  p2           5.24031e-04   5.04760e-06   8.32303e-06  -7.58689e-03
+Fit parameters: Const: 2.03456, Mean: -0.0007347, sigma: 0.000524031
+Info in <TCanvas::Print>: pdf file ./Plots/phi_61th.pdf has been created
+
+Process: (62/66)
+Low pT bound: 75, high pT bound: 80
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=869.376 FROM MIGRAD    STATUS=CONVERGED     134 CALLS         135 TOTAL
+                     EDM=1.90605e-09    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.01912e+00   2.00954e-02   2.94114e-05  -1.57218e-02
+   2  p1          -6.66382e-04   6.38678e-06   7.64455e-06   1.51672e-02
+   3  p2           5.33207e-04   5.49875e-06   9.12345e-06   6.13001e-02
+Fit parameters: Const: 2.01912, Mean: -0.000666382, sigma: 0.000533207
+Info in <TCanvas::Print>: pdf file ./Plots/phi_62th.pdf has been created
+
+Process: (63/66)
+Low pT bound: 80, high pT bound: 85
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=768.075 FROM MIGRAD    STATUS=CONVERGED     139 CALLS         140 TOTAL
+                     EDM=5.62583e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.06378e+00   2.03164e-02   2.76606e-05  -3.09798e-02
+   2  p1          -6.35242e-04   5.70814e-06   6.79288e-06   6.49628e-01
+   3  p2           5.09559e-04   5.09202e-06   8.59533e-06  -1.78413e-01
+Fit parameters: Const: 2.06378, Mean: -0.000635242, sigma: 0.000509559
+Info in <TCanvas::Print>: pdf file ./Plots/phi_63th.pdf has been created
+
+Process: (64/66)
+Low pT bound: 85, high pT bound: 90
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=805.58 FROM MIGRAD    STATUS=CONVERGED     124 CALLS         125 TOTAL
+                     EDM=1.88185e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           1.99928e+00   1.99964e-02   2.83049e-05  -2.48567e-01
+   2  p1          -5.93239e-04   6.03380e-06   7.18471e-06   6.58386e-01
+   3  p2           5.18010e-04   5.23143e-06   8.76196e-06  -2.08749e-01
+Fit parameters: Const: 1.99928, Mean: -0.000593239, sigma: 0.00051801
+Info in <TCanvas::Print>: pdf file ./Plots/phi_64th.pdf has been created
+
+Process: (65/66)
+Low pT bound: 90, high pT bound: 95
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=770.037 FROM MIGRAD    STATUS=CONVERGED     137 CALLS         138 TOTAL
+                     EDM=3.87997e-08    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.03019e+00   2.01504e-02   2.76838e-05  -6.50099e-02
+   2  p1          -5.83501e-04   5.64408e-06   6.78682e-06   4.46187e-01
+   3  p2           5.04348e-04   5.13245e-06   8.79976e-06  -2.17945e-02
+Fit parameters: Const: 2.03019, Mean: -0.000583501, sigma: 0.000504348
+Info in <TCanvas::Print>: pdf file ./Plots/phi_65th.pdf has been created
+
+Process: (66/66)
+Low pT bound: 95, high pT bound: 100
+Info in ROOT::Math::ParameterSettings>: lower/upper bounds outside current parameter value. The value will be set to (low+up)/2 
+ FCN=737.714 FROM MIGRAD    STATUS=CONVERGED     139 CALLS         140 TOTAL
+                     EDM=3.36267e-11    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  p0           2.04766e+00   2.02369e-02   2.71036e-05   2.10817e-03
+   2  p1          -5.51726e-04   5.38858e-06   6.45728e-06  -8.03692e-03
+   3  p2           4.92333e-04   4.96387e-06   8.58607e-06   1.06668e-02
+Fit parameters: Const: 2.04766, Mean: -0.000551726, sigma: 0.000492333
+Info in <TCanvas::Print>: pdf file ./Plots/phi_66th.pdf has been created
+
+Info in <TCanvas::Print>: pdf file Fit_points.pdf has been created
