@@ -12,24 +12,26 @@ def now():
     return str(datetime.now().month) + str(datetime.now().day)+ str(datetime.now().hour)+str(datetime.now().minute)
 
 #sample = "SE_PU140"
-sample = "SE_PU200"
+#sample = "SE_PU200"
+sample = "SingleNeutrino_PU200"
 #InputDir = "/data7/Users/jhkim/PhaseIIFall17D/SingleE_200PU/"
 #InputDir = "/data7/Users/jhkim/PhaseIISpring17D/Ntuple_140PU/PhaseIISpring17D_SingleE_FlatPt-8to100_140PU/"
 #InputDir = "/xrootd/store/user/jhkim/L1Pixel/SE_PU200"
-InputDir = "/xrootd/store/user/jhkim/L1Pixel/SE_PU200_HGCAL_EGID"
+#InputDir = "/xrootd/store/user/jhkim/L1Pixel/SE_PU200_HGCAL_EGID"
 
 #os.chdir("cd " + InputDir) #  
 #os.system("ls " + InputDir + "/*.root" + "> " + "./inputlist.txt") # read input root files 
 #os.chdir("cd " + CurrentDir)
 
-##txtfile = open("./inputlist.txt",'r')
-##lines = txtfile.readlines()
-##writefile = open("./inputlist_my.txt",'w')
-##for line in lines:
-##    writefile.write("root://cms-xrdr.sdfarm.kr:1094//xrd/store/user/jhkim/L1Pixel/SE_PU200_HGCAL_EGID/" + line)
-##
-##txtfile.close()
-##writefile.close()
+txtfile = open("./inputlist.txt",'r')
+lines = txtfile.readlines()
+writefile = open("./inputlist_my.txt",'w')
+for line in lines:
+    ##writefile.write("root://cms-xrdr.sdfarm.kr:1094//xrd/store/user/jhkim/L1Pixel/SE_PU200_HGCAL_EGID/" + line)
+    writefile.write("root://cluster142.knu.ac.kr//store/user/jhkim/SingleNeutrino/SingleNeutrino_200PU_PhaseIIFall17D/180829_180356/0000" + line)
+
+txtfile.close()
+writefile.close()
 
 if not os.path.exists("job_output"):
     os.system("mkdir job_output/")
@@ -44,13 +46,15 @@ if not os.path.exists(Finaloutputdir):
 
 isfile = os.path.isfile
 join = os.path.join
-number_of_files = sum(1 for item in os.listdir(InputDir) if isfile(join(InputDir, item))) # count total # of input files to processe
+#number_of_files = sum(1 for item in os.listdir(InputDir) if isfile(join(InputDir, item))) # count total # of input files to processe
+number_of_files = 611
 
 print "Job has " + str(number_of_files) + " files to process:"
 
 ##number_of_cores = 120 
 ##number_of_cores = 225
-number_of_cores = 269
+##number_of_cores = 269
+number_of_cores = 611
 
 # determine the # of files per job
 nfilesperjobs= 0
