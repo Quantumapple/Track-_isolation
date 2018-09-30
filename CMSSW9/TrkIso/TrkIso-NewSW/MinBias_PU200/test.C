@@ -173,7 +173,7 @@ void test::Loop()
 
       if( fabs(EgEta) > 3. ) continue;
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      //if( eta_region != 7 ) continue;
+      //if( eta_region != 6 ) continue;
       
       Bool_t flag123 = false;
       Bool_t flag124 = false;
@@ -995,7 +995,7 @@ void test::Loop()
 
       if( fabs(EgEta) > 3. ) continue;
       // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      //if( eta_region != 7 ) continue;
+      //if( eta_region != 6 ) continue;
       
       Bool_t flag123 = false;
       Bool_t flag124 = false;
