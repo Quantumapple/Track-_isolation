@@ -2497,7 +2497,8 @@ void test::IsoWith_1st2nd3rd(int region, float recoPV)
     
     // Since the 1st layer was taken out from combinations deltaZ cut becomes simply 0.2 (cm)
     if( region == 6 ) {
-        dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
+        //dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
+        dzCut1 = 0.195; dzCut2 = 0.146; dzCut3 = 0.195; 
         dEtappCut1 = 0.00632; dEtappCut2 = 0.00336; dEtappCut3 = 0.00633; 
         dEtaPvCut1 = 0.00131; dEtaPvCut2 = 0.00138;
         ddPhi_left = -0.0025; ddPhi_right = 0.0035;
@@ -2640,7 +2641,8 @@ void test::IsoWith_1st2nd4th(int region, float recoPV)
     
     // Since the 1st layer was taken out from combinations deltaZ cut becomes simply 0.2 (cm)
     if( region == 6 ) {
-        dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
+        //dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
+        dzCut1 = 0.189; dzCut2 = 0.097; dzCut3 = 0.116; 
         dEtappCut1 = 0.00633; dEtappCut2 = 0.00892; dEtappCut3 = 0.00222; 
         dEtaPvCut1 = 0.00110; dEtaPvCut2 = 0.00136;
         ddPhi_left = -0.003; ddPhi_right = 0.003;
@@ -2783,7 +2785,8 @@ void test::IsoWith_1st3rd4th(int region, float recoPV)
     
     // Since the 1st layer was taken out from combinations deltaZ cut becomes simply 0.2 (cm)
     if( region == 6 ) {
-        dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
+        //dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
+        dzCut1 = 0.116; dzCut2 = 0.097; dzCut3 = 0.190; 
         dEtappCut1 = 0.00271; dEtappCut2 = 0.00552; dEtappCut3 = 0.00358; 
         dEtaPvCut1 = 0.00092; dEtaPvCut2 = 0.00136;
         ddPhi_left = -0.0015; ddPhi_right = 0.0025;
@@ -2926,7 +2929,8 @@ void test::IsoWith_2nd3rd4th(int region, float recoPV)
 
     // Since the 1st layer was taken out from combinations deltaZ cut becomes simply 0.2 (cm)
     if( region == 6 ) {
-        dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
+        //dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
+        dzCut1 = 0.196; dzCut2 = 0.145; dzCut3 = 0.180; 
         dEtappCut1 = 0.00338; dEtappCut2 = 0.00905; dEtappCut3 = 0.00360; 
         dEtaPvCut1 = 0.00092; dEtaPvCut2 = 0.00110;
         ddPhi_left = -0.002; ddPhi_right = 0.0035;
