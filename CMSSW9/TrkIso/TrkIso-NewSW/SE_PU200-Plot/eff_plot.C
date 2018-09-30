@@ -128,7 +128,7 @@ void eff_plot::Loop()
    Lgd->AddEntry(hPixIso,"Pixel matching + Isolation","lp");
    Lgd->Draw();
 
-   TLatex t(-0.5,1.11,"CMS Preliminary Simulation, Phase 2, <PU>=200");
+   TLatex t(-1.8,1.11,"CMS Preliminary Simulation, Phase 2, <PU>=200");
    t.SetTextSize(0.035);
    t.Draw();
 
@@ -136,6 +136,6 @@ void eff_plot::Loop()
    pt_cut.SetTextSize(0.035);
    pt_cut.Draw();
 
-   c1->Print("Eff-iso.png");
-   c1->Print("Eff-iso.pdf");
+   c1->Print("Eff-iso-v2.png");
+   c1->Print("Eff-iso-v2.pdf");
 }
