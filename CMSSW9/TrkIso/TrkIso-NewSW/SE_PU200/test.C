@@ -195,7 +195,7 @@ void test::Loop()
       if( fabs(EgEta) <= 3.0 && fabs(EgEta) > 2.7 ) eta_region =7;
 
       if( fabs(EgEta) > 3.0 ) continue;
-      //if( eta_region != 7 ) continue;
+      if( eta_region != 6 ) continue;
 
       Bool_t flag123 = false;
       Bool_t flag124 = false;
@@ -623,17 +623,26 @@ void test::Loop()
      
      // Select which combination will be used to calculate reconstructed vertex
      if( eta_region <= 2 || eta_region >= 5 ) {
-         if( flag124 || flag134 ) recoPV = zp2;
+         if( flag124 || flag134 ) { 
+             if( zp2 != -99.) recoPV = zp2;
+             if( zp3 != -99.) recoPV = zp3;
+         }
          if( !flag124 && !flag134 && flag123 ) recoPV = zp1;
          if( !flag124 && !flag134 && !flag123 && flag234 ) recoPV = zp4;
      }
      if( eta_region == 3 ) {
-         if( flag234 || flag134 ) recoPV = zp4;
+         if( flag234 || flag134 ) { 
+             if( zp4 != -99. ) recoPV = zp4;
+             if( zp3 != -99. ) recoPV = zp3;
+         }
          if( !flag234 && !flag134 && flag123 ) recoPV = zp1;
          if( !flag234 && !flag134 && !flag123 && flag124 ) recoPV = zp2;
      }
      if( eta_region == 4 ) {
-         if( flag124 || flag234 ) recoPV = zp4;
+         if( flag124 || flag234 ) {
+             if( zp4 != -99. ) recoPV = zp4;
+             if( zp2 != -99. ) recoPV = zp2;
+         }
          if( !flag124 && !flag234 && flag123 ) recoPV = zp1;
          if( !flag124 && !flag234 && !flag123 && flag134 ) recoPV = zp3;
      }
@@ -751,7 +760,7 @@ void test::Loop()
      //cout << "Last vector size: " << all.size() << endl;
 
      // For distribution, we consider L1 e/gamma larger than 20 GeV
-     //if( EgEt < 20. ) continue;
+     if( EgEt < 20. ) continue;
 
      vector<Float_t> pT_vector;
      Int_t all_size = all.size();
