@@ -10,7 +10,7 @@ void l1Rate::Loop()
    Long64_t nentries = fChain->GetEntriesFast();
    Long64_t nbytes = 0, nb = 0;
    
-   float genN = 488700.0; 
+   float genN = 488600.0; 
    int eta_r = 1;
 
    int nbins = 151; float x1 = 9. ; float x2 = 160. ;
@@ -89,11 +89,11 @@ void l1Rate::Loop()
 
    cout << "0 bin: " << hEG->GetBinContent(0) << endl;
    cout << "1 bin: " << hEG->GetBinContent(1) << endl;
-   cout << "11 bin: " << hEG->GetBinContent(11) * 30000./genN<< endl;
+   cout << "11 bin: " << hEG->GetBinContent(12) * 30000./genN<< endl;
    //cout << "11tk bin: " << hTKEG->GetBinContent(16) * 30000./genN<< endl;
    //cout << "11tk iso bin: " << hTKIsoEG->GetBinContent(16) * 30000./genN<< endl;
-   cout << "11px bin: " << hPXEG->GetBinContent(11) * 30000./genN<< endl;
-   cout << "11px iso bin: " << hPXIsoEG->GetBinContent(11) * 30000./genN<< endl;
+   cout << "11px bin: " << hPXEG->GetBinContent(12) * 30000./genN<< endl;
+   cout << "11px iso bin: " << hPXIsoEG->GetBinContent(12) * 30000./genN<< endl;
    cout << "nbin bin: " << hEG->GetBinContent(nbins) << endl;
    cout << "nbin+1 bin: " << hEG->GetBinContent(nbins+1) << endl;
 
@@ -177,7 +177,7 @@ void l1Rate::Loop()
 
    if(eta_r == 0) l1rate = l1rate + "_all.png";
    //if(eta_r == 1) l1rate = l1rate + "_r1.png";
-   if(eta_r == 1) l1rate = l1rate + "_r1.png";
+   if(eta_r == 1) l1rate = l1rate + "_r1-v2.png";
    if(eta_r == 2) l1rate = l1rate + "_r2.png";
    if(eta_r == 3) l1rate = l1rate + "_r3.png";
    if(eta_r == 4) l1rate = l1rate + "_r4.png";
@@ -232,8 +232,8 @@ void l1Rate::Loop()
    r_PXEG->Draw("HIST e");
    r_PXIsoEG->Draw("HIST same e");
 
-   cout << "11px bin: " << r_PXEG->GetBinContent(11) << " error: " << r_PXEG->GetBinError(11) << endl;
-   cout << "11px bin: " << r_PXIsoEG->GetBinContent(11) << " error: " << r_PXIsoEG->GetBinError(11) << endl;
+   cout << "11px bin: " << r_PXEG->GetBinContent(12) << " error: " << r_PXEG->GetBinError(12) << endl;
+   cout << "11px bin: " << r_PXIsoEG->GetBinContent(12) << " error: " << r_PXIsoEG->GetBinError(12) << endl;
 
    TLatex t1(12,65,"CMS Preliminary Simulation, Phase 2, <PU>=200");
    t1.SetTextSize(0.035);
@@ -258,7 +258,7 @@ void l1Rate::Loop()
 
    if(eta_r == 0) factor = factor + "_all.png";
    //if(eta_r == 1) factor = factor + "_r1.png";
-   if(eta_r == 1) factor = factor + "_r1.png";
+   if(eta_r == 1) factor = factor + "_r1-v2.png";
    if(eta_r == 2) factor = factor + "_r2.png";
    if(eta_r == 3) factor = factor + "_r3.png";  
    if(eta_r == 4) factor = factor + "_r4.png";
