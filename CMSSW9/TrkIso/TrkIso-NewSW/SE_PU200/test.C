@@ -195,7 +195,7 @@ void test::Loop()
       if( fabs(EgEta) <= 3.0 && fabs(EgEta) > 2.7 ) eta_region =7;
 
       if( fabs(EgEta) > 3.0 ) continue;
-      if( eta_region != 6 ) continue;
+      //if( eta_region != 7 ) continue;
 
       Bool_t flag123 = false;
       Bool_t flag124 = false;
@@ -358,7 +358,7 @@ void test::Loop()
                                   i = layers[*second_hit];
                                   j = layers[*third_hit]; 
                                   fourth_layer_missing = 1;
-                   		 }
+                                }
                                }
                               }
                               if( *first_hit == 1 && *second_hit == 2 && *third_hit == 4 ){ // for efficiency counting  !!caution of the position of this codition
@@ -402,7 +402,7 @@ void test::Loop()
                                   i = layers[*second_hit];
                                   j = layers[*third_hit]; 
             	     	          third_layer_missing = 1;
-                   		 }
+                                }
                                }
                               }
                               if( *first_hit == 1 && *second_hit == 3 && *third_hit == 4 ){ // for efficiency counting  !!caution of the position of this codition
@@ -444,7 +444,7 @@ void test::Loop()
                                   i = layers[*second_hit];
                                   j = layers[*third_hit]; 
                                   second_layer_missing = 1; 
-                   		 }
+                                }
                                }
                               }
                               if( *first_hit == 2 && *second_hit == 3 && *third_hit == 4 ){ // for efficiency counting  !!caution of the position of this codition
@@ -486,7 +486,7 @@ void test::Loop()
                                   i = layers[*second_hit];
                                   j = layers[*third_hit]; 
                                   first_layer_missing = 1;
-                   		 } 
+                                } 
                                }
                               }
 
@@ -610,17 +610,17 @@ void test::Loop()
       }
      }*/
       
-      if( PixTrkPassed ){ 
+      if( PixTrkPassed ) { 
           trigger_bit_width_ = trigger_bit_width_| (bit1 << nth_eg_pix_deta);
       }
 
      global_index_width++;
+     
+     // %%%%%%%%%%%%%%%%%%%%% Track isolation algorithm %%%%%%%%%%%%%%%%%%%%%
+     if( !PixTrkPassed ) {
+         continue; // Skip when L1 Egamma doesn't pass PixTRK algorithm
      }
 
-     // %%%%%%%%%%%%%%%%%%%%% Track isolation algorithm %%%%%%%%%%%%%%%%%%%%%
-     
-     if( !PixTrkPassed ) continue; // Skip when L1 Egamma doesn't pass PixTRK algorithm
-     
      // Select which combination will be used to calculate reconstructed vertex
      if( eta_region <= 2 || eta_region >= 5 ) {
          if( flag124 || flag134 ) { 
@@ -647,8 +647,6 @@ void test::Loop()
          if( !flag124 && !flag234 && !flag123 && flag134 ) recoPV = zp3;
      }
      
-     if( recoPV == -99. ) continue;
-
      trigger_bit_width_iso_ = 0x0; 
      Bool_t TrkIsoPassed = false;
    
@@ -760,12 +758,12 @@ void test::Loop()
      //cout << "Last vector size: " << all.size() << endl;
 
      // For distribution, we consider L1 e/gamma larger than 20 GeV
-     if( EgEt < 20. ) continue;
+     //if( EgEt < 20. ) continue;
 
      vector<Float_t> pT_vector;
      Int_t all_size = all.size();
      cout << "Number of tracks: " << all_size << endl;
-     if( all.size() <= 1 ) { TrkIsoPassed = true; (bit2 << 1); h1->Fill(0); }
+     if( all.size() <= 1 ) { TrkIsoPassed = true; h1->Fill(0); }
      else {
          pT_vector.clear();
          for(Int_t cur = 0; cur < all_size; cur++)
@@ -821,40 +819,41 @@ void test::Loop()
          for(Int_t k = 0; k < vec_size-1; k++) nomi += pT_vector.at(k);
          //cout << "      ratio: " << nomi/denomi << endl;
          //cout << "---------------------------------" << endl;
-         if( all_size <= 1 ) cout << "Number of tracks : " << all_size << endl;
-         if( all_size >= 2 ) cout << "Ratio : " << nomi/denomi << endl;
+         //if( all_size <= 1 ) cout << "Number of tracks : " << all_size << endl;
+         //if( all_size >= 2 ) cout << "Ratio : " << nomi/denomi << endl;
          cout << endl;
          h1->Fill(nomi/denomi);
         
+         
          if( eta_region == 1 || eta_region == 3 ) {
-            if( nomi/denomi < 0.05 ) { TrkIsoPassed = true; (bit2 << 1); }
+            if( nomi/denomi < 0.05 ) { TrkIsoPassed = true;  }
          }
          if( eta_region == 2 || eta_region == 4 ) {
-            if( nomi/denomi < 0.02 ) { TrkIsoPassed = true; (bit2 << 1); }
+            if( nomi/denomi < 0.02 ) { TrkIsoPassed = true;  }
          }
          if( eta_region == 5 ) {
-            if( nomi/denomi < 0.07 ) { TrkIsoPassed = true; (bit2 << 1); }
+            if( nomi/denomi < 0.07 ) { TrkIsoPassed = true;  }
          }
          if( eta_region == 6 ) {
-            if( nomi/denomi < 0.3 ) { TrkIsoPassed = true; (bit2 << 1); }
+            if( nomi/denomi < 0.3 ) { TrkIsoPassed = true;   }
          }
          if( eta_region == 7 ) {
-            if( nomi/denomi < 0.25 ) { TrkIsoPassed = true; (bit2 << 1); }
+            if( nomi/denomi < 0.25 ) { TrkIsoPassed = true;  }
          }
+         
 
      }
-     
      
      if( PixTrkPassed && TrkIsoPassed ) 
      {
-         trigger_bit_width_iso_ = trigger_bit_width_iso_ | (bit2 << 0);
+         trigger_bit_width_iso_ = trigger_bit_width_iso_ | (bit2 << nth_eg_pix_deta);
      }
      
      
-
-  } // end of egamma loop    
+   } // nth_ex_pix_deta loop
+      
+  } // end of egamma loop (if function)   
    
-
   trigger_bit_width.push_back(trigger_bit_width_);
   trigger_bit_width_iso.push_back(trigger_bit_width_iso_);
   pix_comb.push_back(pix_comb_);
