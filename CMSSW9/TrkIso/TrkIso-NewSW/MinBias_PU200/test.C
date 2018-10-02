@@ -737,8 +737,6 @@ void test::Loop()
           continue; // Skip when L1 Egamma doesn't pass PixTRK algorithm
       }
 
-      cout << "Ecal pass" << endl;
-      
       // Select which combination will be used to calculate reconstructed vertex
       if( eta_region <= 2 || eta_region >= 5 ) {
           if( flag124 || flag134 ) { 
@@ -1568,9 +1566,9 @@ void test::Loop()
      }
      
      
-     if( recoPV == -99. ) continue;
+     //if( recoPV == -99. ) continue;
      
-     cout << "Checking pass" << endl;
+     //cout << "Checking pass" << endl;
 
      Bool_t TrkIsoPassed = false;
    
@@ -1774,18 +1772,18 @@ void test::Loop()
   
   } // end of egamma loop  
 
-  Int_t ntSize1 = ntCl_match.size();
-  Int_t ntSize2 = ntCl_iso_match.size();
+  //Int_t ntSize1 = ntCl_match.size();
+  //Int_t ntSize2 = ntCl_iso_match.size();
 
-  for(Int_t i = 0; i < ntSize1; i++) {
-    cout << ntCl_match.at(i) << ", ";
-  }
-  cout << endl;
-  
-  for(Int_t i = 0; i < ntSize2; i++) {
-    cout << ntCl_iso_match.at(i) << ", ";
-  }
-  cout << endl;
+  //for(Int_t i = 0; i < ntSize1; i++) {
+  //  cout << ntCl_match.at(i) << ", ";
+  //}
+  //cout << endl;
+  //
+  //for(Int_t i = 0; i < ntSize2; i++) {
+  //  cout << ntCl_iso_match.at(i) << ", ";
+  //}
+  //cout << endl;
 
   if(pass_egobjects_check){ event_denominator = 1; FillCutFlow("EvtCut", 1.);}
   if(all_cut_pass_eg) event_nominator = 1; 
