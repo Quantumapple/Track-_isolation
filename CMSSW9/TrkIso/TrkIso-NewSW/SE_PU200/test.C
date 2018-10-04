@@ -227,7 +227,7 @@ void test::Loop()
       if( fabs(EgEta) <= 3.0 && fabs(EgEta) > 2.7 ) eta_region =7;
 
       if( fabs(EgEta) > 3.0 ) continue;
-      if( eta_region != 7 ) continue;
+      //if( eta_region != 7 ) continue;
 
       Bool_t flag123 = false;
       Bool_t flag124 = false;
