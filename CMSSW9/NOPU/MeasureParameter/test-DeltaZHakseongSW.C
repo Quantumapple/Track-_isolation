@@ -19,8 +19,6 @@ void test::Loop()
    Bool_t eta_flag3 = false;
    Bool_t eta_flag4 = false;
    Bool_t eta_flag5 = false;
-   Bool_t eta_flag6 = false;
-   Bool_t eta_flag7 = false;
 
    TH1F *a1 = new TH1F("FiCombi_case1","; #Delta z; Number of combinations",400,-0.2,0.2);
    TH1F *a2 = new TH1F("FiCombi_case2","; #Delta z; Number of combinations",400,-0.2,0.2);
@@ -59,7 +57,6 @@ void test::Loop()
       fDisk3.clear(); 
       fDisk4.clear(); 
       fDisk5.clear(); 
-      fDisk6.clear();
 
       SaveFi_case1.clear();  
       SaveFi_case2.clear();  
@@ -81,18 +78,16 @@ void test::Loop()
       if( genPt < 10. ) continue;
       
       Int_t eta_region = 0;
-      //if( fabs(propGenEta) < 0.8  ) eta_region = 1;                              // L1234
-      //if( fabs(propGenEta) > 0.8 && fabs(propGenEta) < 1.15 ) eta_region = 2;    // L1234 
-      //if( fabs(propGenEta) > 1.15 && fabs(propGenEta) < 1.4 ) eta_region = 3;    // L123D1
-      //if( fabs(propGenEta) > 1.4 && fabs(propGenEta) < 1.7 ) eta_region = 4;     // L12D12
-      //if( fabs(propGenEta) > 1.7 && fabs(propGenEta) < 2.25 ) eta_region = 5;    // L1D123
-      //if( fabs(propGenEta) > 2.25 && fabs(propGenEta) < 2.7 ) eta_region = 6;    // D2345
-      if( fabs(propGenEta) > 2.7 && fabs(propGenEta) < 3.0 ) eta_region = 7;     // D3456
+      //if( fabs(propGenEta) < 0.8  ) eta_region = 1;                             // L1234
+      //if( fabs(propGenEta) > 0.8 && fabs(propGenEta) < 1.4 ) eta_region = 2;      // L123D1 
+      //if( fabs(propGenEta) > 1.4 && fabs(propGenEta) < 1.8 ) eta_region = 3;    // L12D12
+      //if( fabs(propGenEta) > 1.8 && fabs(propGenEta) < 2.4 ) eta_region = 4;    // L1D123
+      if( fabs(propGenEta) > 2.4 && fabs(propGenEta) < 3.0 ) eta_region = 5;    // D2345
       if( fabs(propGenEta) > 3.0 ) continue;
 
-      if( eta_region == 1 || eta_region == 2 ) if( bRecHitN == 0 ) continue;
-      if( eta_region == 3 || eta_region == 4 || eta_region == 5 ) if( bRecHitN == 0 || fRecHitN == 0 ) continue;
-      if( eta_region > 5 ) if( fRecHitN == 0 ) continue;
+      if( eta_region == 1 ) if( bRecHitN == 0 ) continue;
+      if( eta_region >= 2 && eta_region <= 4 ) if( bRecHitN == 0 || fRecHitN == 0 ) continue;
+      if( eta_region == 5 ) if( fRecHitN == 0 ) continue;
       
       cout << "Process: " << jentry+1 << endl;
       
@@ -101,11 +96,9 @@ void test::Loop()
       if( eta_region == 3 ) { file_name = "dZEtaRegion3.root"; eta_flag3 = true; }
       if( eta_region == 4 ) { file_name = "dZEtaRegion4.root"; eta_flag4 = true; }
       if( eta_region == 5 ) { file_name = "dZEtaRegion5.root"; eta_flag5 = true; }
-      if( eta_region == 6 ) { file_name = "dZEtaRegion6.root"; eta_flag6 = true; }
-      if( eta_region == 7 ) { file_name = "dZEtaRegion7.root"; eta_flag7 = true; }
       
       Float_t bR[4] = {}, bZ[4] = {};
-      Float_t fR[6] = {}, fZ[6] = {};
+      Float_t fR[5] = {}, fZ[5] = {};
 
       // Store pixel clusters w.r.t. eta range
       StorePixelHits(eta_region, propGenPhi, propGenEta); 
@@ -120,7 +113,6 @@ void test::Loop()
       sort(fDisk3.begin(), fDisk3.end(), track::comp);
       sort(fDisk4.begin(), fDisk4.end(), track::comp);
       sort(fDisk5.begin(), fDisk5.end(), track::comp);
-      sort(fDisk6.begin(), fDisk6.end(), track::comp);
 
       if( bLayer1.size() != 0 ) { bR[0] = sqrt(pow(bLayer1[0].pos_x,2)+pow(bLayer1[0].pos_y,2)); bZ[0] = bLayer1[0].pos_z; }
       if( bLayer2.size() != 0 ) { bR[1] = sqrt(pow(bLayer2[0].pos_x,2)+pow(bLayer2[0].pos_y,2)); bZ[1] = bLayer2[0].pos_z; }
@@ -132,58 +124,51 @@ void test::Loop()
       if( fDisk3.size() != 0 ) { fR[2] = sqrt(pow(fDisk3[0].pos_x,2)+pow(fDisk3[0].pos_y,2)); fZ[2] = fDisk3[0].pos_z; }
       if( fDisk4.size() != 0 ) { fR[3] = sqrt(pow(fDisk4[0].pos_x,2)+pow(fDisk4[0].pos_y,2)); fZ[3] = fDisk4[0].pos_z; }
       if( fDisk5.size() != 0 ) { fR[4] = sqrt(pow(fDisk5[0].pos_x,2)+pow(fDisk5[0].pos_y,2)); fZ[4] = fDisk5[0].pos_z; }
-      if( fDisk6.size() != 0 ) { fR[5] = sqrt(pow(fDisk6[0].pos_x,2)+pow(fDisk6[0].pos_y,2)); fZ[5] = fDisk6[0].pos_z; }
 
       if( (jentry+1) %2 != 0 )
       { 
-          if( eta_region == 1 || eta_region == 2 ) // 0 ~ 0.8, 0.8 ~ 1.15
+          if( eta_region == 1 ) // 0 ~ 0.8 
           {
               if( bR[0] && bZ[0] && bR[2] && bZ[2] ) std_Vz[0] = (bR[2]*bZ[0]-bR[0]*bZ[2])/(bR[2]-bR[0]); else std_Vz[0] = 0.; // L13
               if( bR[1] && bZ[1] && bR[3] && bZ[3] ) std_Vz[1] = (bR[3]*bZ[1]-bR[1]*bZ[3])/(bR[3]-bR[1]); else std_Vz[1] = 0.; // L24
               if( bR[0] && bZ[0] && bR[3] && bZ[3] ) std_Vz[2] = (bR[3]*bZ[0]-bR[0]*bZ[3])/(bR[3]-bR[0]); else std_Vz[2] = 0.; // L14
           }
           
-          if( eta_region == 3 ) // 1.15 ~ 1.4
+          if( eta_region == 2 ) // 0.8 ~ 1.4
           {
               if( bR[0] && bZ[0] && bR[2] && bZ[2] ) std_Vz[0] = (bR[2]*bZ[0]-bR[0]*bZ[2])/(bR[2]-bR[0]); else std_Vz[0] = 0.; // L1L3
               if( bR[1] && bZ[1] && fR[0] && fZ[0] ) std_Vz[1] = (fR[0]*bZ[1]-bR[1]*fZ[0])/(fR[0]-bR[1]); else std_Vz[1] = 0.; // L2D1
               if( bR[2] && bZ[2] && fR[0] && fZ[0] ) std_Vz[2] = (fR[0]*bZ[2]-bR[2]*fZ[0])/(fR[0]-bR[2]); else std_Vz[2] = 0.; // L3D1
           }
           
-          if( eta_region == 4 ) // 1.4 ~ 1.7
+          if( eta_region == 3 ) // 1.4 ~ 1.8
           {
               if( bR[1] && bZ[1] && fR[0] && fZ[0] ) std_Vz[1] = (fR[0]*bZ[1]-bR[1]*fZ[0])/(fR[0]-bR[1]); else std_Vz[0] = 0.;  // L2D1
               if( bR[0] && bZ[0] && fR[1] && fZ[1] ) std_Vz[0] = (fR[1]*bZ[0]-bR[0]*fZ[1])/(fR[1]-bR[0]); else std_Vz[1] = 0.;  // L1D2
               if( bR[1] && bZ[1] && fR[1] && fZ[1] ) std_Vz[2] = (fR[1]*bZ[1]-bR[1]*fZ[1])/(fR[1]-bR[1]); else std_Vz[2] = 0.;  // L2D2
           }
           
-          if( eta_region == 5 ) // 1.7 ~ 2.25
+          if( eta_region == 4 ) // 1.8 ~ 2.4
           {
-              if( bR[0] && bZ[0] && fR[1] && fZ[1] ) std_Vz[0] = (fR[1]*bZ[0]-bR[0]*fZ[1])/(fR[1]-bR[0]); else std_Vz[1] = 0.; // L1D2
-              if( fR[0] && fZ[0] && fR[2] && fZ[2] ) std_Vz[1] = (fR[2]*fZ[0]-fR[0]*fZ[2])/(fR[2]-fR[0]); else std_Vz[0] = 0.; // D1D3
+              if( bR[0] && bZ[0] && fR[1] && fZ[1] ) std_Vz[0] = (fR[1]*bZ[0]-bR[0]*fZ[1])/(fR[1]-bR[0]); else std_Vz[0] = 0.; // L1D2
+              if( fR[0] && fZ[0] && fR[2] && fZ[2] ) std_Vz[1] = (fR[2]*fZ[0]-fR[0]*fZ[2])/(fR[2]-fR[0]); else std_Vz[1] = 0.; // D1D3
               if( bR[0] && bZ[0] && fR[2] && fZ[2] ) std_Vz[2] = (fR[2]*bZ[0]-bR[0]*fZ[2])/(fR[2]-bR[0]); else std_Vz[2] = 0.; // L1D3
           }
           
-          if( eta_region == 6 ) // 2.25 ~ 2.7
+          if( eta_region == 5 ) // 2.4 ~ 3.0
           {
               if( fR[1] && fZ[1] && fR[3] && fZ[3] ) std_Vz[0] = (fR[3]*fZ[1]-fR[1]*fZ[3])/(fR[3]-fR[1]); else std_Vz[0] = 0.; // D2D4
               if( fR[2] && fZ[2] && fR[4] && fZ[4] ) std_Vz[1] = (fR[4]*fZ[2]-fR[2]*fZ[4])/(fR[4]-fR[2]); else std_Vz[1] = 0.; // D3D5
               if( fR[1] && fZ[1] && fR[4] && fZ[4] ) std_Vz[2] = (fR[4]*fZ[1]-fR[1]*fZ[4])/(fR[4]-fR[1]); else std_Vz[2] = 0.; // D2D5
           }
 
-          if( eta_region == 7 ) // 2.7 ~ 3.0
-          {
-              if( fR[2] && fZ[2] && fR[4] && fZ[4] ) std_Vz[0] = (fR[4]*fZ[2]-fR[2]*fZ[4])/(fR[4]-fR[2]); else std_Vz[0] = 0.; // D3D5
-              if( fR[3] && fZ[3] && fR[5] && fZ[5] ) std_Vz[1] = (fR[5]*fZ[3]-fR[3]*fZ[5])/(fR[5]-fR[3]); else std_Vz[1] = 0.; // D4D6
-              if( fR[2] && fZ[2] && fR[5] && fZ[5] ) std_Vz[2] = (fR[5]*fZ[2]-fR[2]*fZ[5])/(fR[5]-fR[2]); else std_Vz[2] = 0.; // D3D6
-          }
-          
-         
           for(Int_t i = 0; i < 3; i++)
           {
               //cout << "This event saves reco vertex and gen vertex" << endl;
               //cout << "   Reconstructed vertex: " << i+1 << "th " << std_Vz[i] << endl;
               //cout << "   Generator level vertex: " << simVz->at(0) << endl;
+              //cout << "Let's check L1D2 reco vertex" << endl;
+              //cout << "  Reco vertex: " << std_Vz[0] << endl;
               if( std_Vz[i] != 0. ) std_genVz = simVz->at(0);
           }
           //std_genVz = simVz->at(0);
@@ -225,7 +210,7 @@ void test::Loop()
  
    TFile *output = new TFile(file_name,"RECREATE");
    
-   if( eta_flag1 || eta_flag2 )
+   if( eta_flag1 )
    {
       a1->SetTitle("L_{1}L_{3}-L_{1}L_{2}");
       a2->SetTitle("L_{1}L_{3}-L_{1}L_{3}");
@@ -239,11 +224,11 @@ void test::Loop()
       c2->SetTitle("L_{1}L_{4}-L_{1}L_{4}");
       c3->SetTitle("L_{1}L_{4}-L_{2}L_{4}");
       
-      d1->SetTitle("L_{1}L_{4}-L_{1}L_{4}");
+      d1->SetTitle("L_{1}L_{4}-L_{1}L_{3}");
       d2->SetTitle("L_{1}L_{4}-L_{3}L_{4}");
    }
 
-   if( eta_flag3 )
+   if( eta_flag2 )
    {
       a1->SetTitle("L_{1}L_{3}-L_{1}L_{2}");
       a2->SetTitle("L_{1}L_{3}-L_{1}L_{3}");
@@ -261,7 +246,7 @@ void test::Loop()
       d2->SetTitle("L_{3}D_{1}-L_{2}D_{1}");
    }
    
-   if( eta_flag4 )
+   if( eta_flag3 )
    {
       a1->SetTitle("L_{1}D_{2}-L_{1}D_{1}");
       a2->SetTitle("L_{1}D_{2}-L_{1}D_{2}");
@@ -279,7 +264,7 @@ void test::Loop()
       d2->SetTitle("L_{2}D_{2}-D_{1}D_{2}");
    }
 
-   if( eta_flag5 )
+   if( eta_flag4 )
    {
       a1->SetTitle("L_{1}D_{2}-L_{1}D_{1}");
       a2->SetTitle("L_{1}D_{2}-L_{1}D_{2}");
@@ -297,7 +282,7 @@ void test::Loop()
       d2->SetTitle("L_{1}D_{3}-D_{2}D_{3}");
    }
    
-   if( eta_flag6 )
+   if( eta_flag5 )
    {
       a1->SetTitle("D_{2}D_{4}-D_{2}D_{3}");
       a2->SetTitle("D_{2}D_{4}-D_{2}D_{4}");
@@ -313,24 +298,6 @@ void test::Loop()
       
       d1->SetTitle("D_{2}D_{5}-D_{2}D_{4}");
       d2->SetTitle("D_{2}D_{5}-D_{4}D_{5}");
-   }
-   
-   if( eta_flag7 )
-   {
-      a1->SetTitle("D_{3}D_{5}-D_{3}D_{4}");
-      a2->SetTitle("D_{3}D_{5}-D_{3}D_{5}");
-      a3->SetTitle("D_{3}D_{5}-D_{4}D_{5}");
-      
-      b1->SetTitle("D_{4}D_{6}-D_{4}D_{5}");
-      b2->SetTitle("D_{4}D_{6}-D_{4}D_{6}");
-      b3->SetTitle("D_{4}D_{6}-D_{5}D_{6}");
-      
-      c1->SetTitle("D_{3}D_{6}-D_{3}D_{4}");
-      c2->SetTitle("D_{3}D_{6}-D_{3}D_{6}");
-      c3->SetTitle("D_{3}D_{6}-D_{4}D_{6}");
-      
-      d1->SetTitle("D_{3}D_{6}-D_{3}D_{5}");
-      d2->SetTitle("D_{3}D_{6}-D_{5}D_{6}");
    }
    
    a1->GetXaxis()->CenterTitle(true);

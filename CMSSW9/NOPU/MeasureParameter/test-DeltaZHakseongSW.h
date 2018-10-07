@@ -412,7 +412,6 @@ public :
    vector<track> fDisk3;
    vector<track> fDisk4;
    vector<track> fDisk5;
-   vector<track> fDisk6;
 
    vector<Float_t> SaveFi_case1;  
    vector<Float_t> SaveFi_case2;  
@@ -883,19 +882,19 @@ void test::StorePixelHits(Int_t eta_region, Float_t propGenPhi, Float_t propGenE
           Float_t deltaEta = pixelEta - propGenEta;
           Float_t deltaR = sqrt(pow(deltaPhi,2)+pow(deltaEta,2));
 
-          if( eta_region <= 5 )
+          if( eta_region <= 4 )
           {
               if( bRecHitLayer->at(i) == 1 )  bLayer1.push_back(track(deltaR, bRecHitGx->at(i),bRecHitGy->at(i),bRecHitGz->at(i)));
           }
-          if( eta_region <= 4 )
+          if( eta_region <= 3 )
           {
               if( bRecHitLayer->at(i) == 2 )  bLayer2.push_back(track(deltaR, bRecHitGx->at(i),bRecHitGy->at(i),bRecHitGz->at(i)));
           }
-          if( eta_region <= 3 )
+          if( eta_region <= 2 )
           {
               if( bRecHitLayer->at(i) == 3 )  bLayer3.push_back(track(deltaR, bRecHitGx->at(i),bRecHitGy->at(i),bRecHitGz->at(i)));
           }
-          if( eta_region <= 2 )
+          if( eta_region == 1 )
           {
               if( bRecHitLayer->at(i) == 4 )  bLayer4.push_back(track(deltaR, bRecHitGx->at(i),bRecHitGy->at(i),bRecHitGz->at(i)));
           }
@@ -913,33 +912,29 @@ void test::StorePixelHits(Int_t eta_region, Float_t propGenPhi, Float_t propGenE
           Float_t deltaEta = pixelEta - propGenEta;
           Float_t deltaR = sqrt(pow(deltaPhi,2)+pow(deltaEta,2));
 
-          if( eta_region >= 3 && eta_region <= 5 )
+          if( eta_region >= 2 && eta_region <= 4 )
           {
               if( fRecHitDisk->at(i) == 1 )  fDisk1.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
           }
-          if( eta_region >= 4 && eta_region <= 6 )
+          if( eta_region >= 3 && eta_region <= 5 )
           {
               if( fRecHitDisk->at(i) == 2 )  fDisk2.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
           }
-          if( eta_region >= 5 )
+          if( eta_region >= 4 )
           {
               if( fRecHitDisk->at(i) == 3 )  fDisk3.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
           }
-          if( eta_region >= 6 )
+          if( eta_region >= 5 )
           {
               if( fRecHitDisk->at(i) == 4 )  fDisk4.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
               if( fRecHitDisk->at(i) == 5 )  fDisk5.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
-          }
-          if( eta_region == 7 )
-          {
-              if( fRecHitDisk->at(i) == 6 )  fDisk6.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
           }
       }
 }
 
 void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
 {
-    if( eta_region == 1 || eta_region == 2 )
+    if( eta_region == 1 )
     {
         if( std_Vz[0] != 0 ) // L1L3
         { // {{{
@@ -1114,7 +1109,7 @@ void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
         } // }}}
     }
     
-    if( eta_region == 3 )
+    if( eta_region == 2 )
     {
         if( std_Vz[0] != 0 ) // L1L3
         { // {{{
@@ -1289,7 +1284,7 @@ void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
         } // }}}
     }
 
-    if( eta_region == 4 )
+    if( eta_region == 3 )
     {
         if( std_Vz[0] != 0 ) // L2D1
         { // {{{
@@ -1465,7 +1460,7 @@ void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
         } // }}}
     }
 
-    if( eta_region == 5 )
+    if( eta_region == 4 )
     {
         if( std_Vz[0] != 0 ) // L1D2
         { // {{{
@@ -1483,7 +1478,7 @@ void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
                 Float_t temp_Dz = std_zpL1D2 - temp_Vz;
                 Float_t gen_corr = std_genVz - simVz->at(0);
                 Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveSe_case1.push_back(fi_Dz); // L1D2 - L1D1
+                SaveFi_case1.push_back(fi_Dz); // L1D2 - L1D1
             }
 
             if( bLayer1.size() != 0 && fDisk2.size() != 0 )
@@ -1497,7 +1492,7 @@ void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
                 Float_t temp_Dz = std_zpL1D2 - temp_Vz;
                 Float_t gen_corr = std_genVz - simVz->at(0);
                 Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveSe_case2.push_back(fi_Dz); // L1D2 - L1D2
+                SaveFi_case2.push_back(fi_Dz); // L1D2 - L1D2
             }
 
             if( fDisk1.size() != 0 && fDisk2.size() != 0 )
@@ -1511,15 +1506,43 @@ void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
                 Float_t temp_Dz = std_zpL1D2 - temp_Vz;
                 Float_t gen_corr = std_genVz - simVz->at(0);
                 Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveSe_case3.push_back(fi_Dz); // L1D2 - D1D2
+                SaveFi_case3.push_back(fi_Dz); // L1D2 - D1D2
             }
         } // }}}
 
         if( std_Vz[1] != 0 ) // D1D3
         { // {{{
-            Float_t std_zpD2D4 = std_Vz[1];
+            Float_t std_zpD1D3 = std_Vz[1];
             
             // ############ D2D3D4 ############
+            if( fDisk1.size() != 0 && fDisk2.size() != 0 )
+            {
+                Float_t temp_R1 = sqrt(pow(fDisk1[0].pos_x,2)+pow(fDisk1[0].pos_y,2));
+                Float_t temp_R2 = sqrt(pow(fDisk2[0].pos_x,2)+pow(fDisk2[0].pos_y,2));
+                Float_t temp_Z1 = fDisk1[0].pos_z;
+                Float_t temp_Z2 = fDisk2[0].pos_z;
+
+                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
+                Float_t temp_Dz = std_zpD1D3 - temp_Vz;
+                Float_t gen_corr = std_genVz - simVz->at(0);
+                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
+                SaveSe_case1.push_back(fi_Dz); // D1D3 - D1D2
+            }
+
+            if( fDisk1.size() != 0 && fDisk3.size() != 0 )
+            {
+                Float_t temp_R1 = sqrt(pow(fDisk1[0].pos_x,2)+pow(fDisk1[0].pos_y,2));
+                Float_t temp_R2 = sqrt(pow(fDisk3[0].pos_x,2)+pow(fDisk3[0].pos_y,2));
+                Float_t temp_Z1 = fDisk1[0].pos_z;
+                Float_t temp_Z2 = fDisk3[0].pos_z;
+
+                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
+                Float_t temp_Dz = std_zpD1D3 - temp_Vz;
+                Float_t gen_corr = std_genVz - simVz->at(0);
+                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
+                SaveSe_case2.push_back(fi_Dz); // D1D3 - D1D3
+            }
+
             if( fDisk2.size() != 0 && fDisk3.size() != 0 )
             {
                 Float_t temp_R1 = sqrt(pow(fDisk2[0].pos_x,2)+pow(fDisk2[0].pos_y,2));
@@ -1528,38 +1551,10 @@ void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
                 Float_t temp_Z2 = fDisk3[0].pos_z;
 
                 Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD2D4 - temp_Vz;
+                Float_t temp_Dz = std_zpD1D3 - temp_Vz;
                 Float_t gen_corr = std_genVz - simVz->at(0);
                 Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveSe_case1.push_back(fi_Dz); // D2D4 - D2D3
-            }
-
-            if( fDisk2.size() != 0 && fDisk4.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk2[0].pos_x,2)+pow(fDisk2[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk4[0].pos_x,2)+pow(fDisk4[0].pos_y,2));
-                Float_t temp_Z1 = fDisk2[0].pos_z;
-                Float_t temp_Z2 = fDisk4[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD2D4 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveSe_case2.push_back(fi_Dz); // D2D4 - D2D4
-            }
-
-            if( fDisk3.size() != 0 && fDisk4.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk3[0].pos_x,2)+pow(fDisk3[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk4[0].pos_x,2)+pow(fDisk4[0].pos_y,2));
-                Float_t temp_Z1 = fDisk3[0].pos_z;
-                Float_t temp_Z2 = fDisk4[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD2D4 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveSe_case3.push_back(fi_Dz); // D2D4 - D3D4
+                SaveSe_case3.push_back(fi_Dz); // D1D3 - D2D3
             }
         } // }}}
 
@@ -1641,7 +1636,7 @@ void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
         } // }}}
     }
 
-    if( eta_region == 6 )
+    if( eta_region == 5 )
     {
         if( std_Vz[0] != 0 ) // D2D4
         { // {{{
@@ -1813,183 +1808,6 @@ void test::MeasureDeltaZ(Int_t eta_region, Float_t std_genVz, Float_t std_Vz[])
                 Float_t gen_corr = std_genVz - simVz->at(0);
                 Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
                 SaveFo_case2.push_back(fi_Dz); // D2D5 - D4D5
-            }
-        } // }}}
-    }
-    
-    
-    if( eta_region == 7 )
-    {
-        if( std_Vz[0] != 0 ) // D3D5
-        { // {{{
-            Float_t std_zpD3D5 = std_Vz[0];
-            
-            // ############ D3D4D5 ############
-            if( fDisk3.size() != 0 && fDisk4.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk3[0].pos_x,2)+pow(fDisk3[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk4[0].pos_x,2)+pow(fDisk4[0].pos_y,2));
-                Float_t temp_Z1 = fDisk3[0].pos_z;
-                Float_t temp_Z2 = fDisk4[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD3D5 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveFi_case1.push_back(fi_Dz); // D3D5 - D3D4
-            }
-
-            if( fDisk3.size() != 0 && fDisk5.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk3[0].pos_x,2)+pow(fDisk3[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk5[0].pos_x,2)+pow(fDisk5[0].pos_y,2));
-                Float_t temp_Z1 = fDisk3[0].pos_z;
-                Float_t temp_Z2 = fDisk5[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD3D5 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveFi_case2.push_back(fi_Dz); // D3D5 - D3D5
-            }
-
-            if( fDisk4.size() != 0 && fDisk5.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk4[0].pos_x,2)+pow(fDisk4[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk5[0].pos_x,2)+pow(fDisk5[0].pos_y,2));
-                Float_t temp_Z1 = fDisk4[0].pos_z;
-                Float_t temp_Z2 = fDisk5[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD3D5 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveFi_case3.push_back(fi_Dz); // D3D5 - D4D5
-            }
-        } // }}}
-
-        if( std_Vz[1] != 0 ) // D4D6
-        { // {{{
-            Float_t std_zpD4D6 = std_Vz[1];
-            
-            // ############ D4D5D6 ############
-            if( fDisk4.size() != 0 && fDisk5.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk4[0].pos_x,2)+pow(fDisk4[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk5[0].pos_x,2)+pow(fDisk5[0].pos_y,2));
-                Float_t temp_Z1 = fDisk4[0].pos_z;
-                Float_t temp_Z2 = fDisk5[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD4D6 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveSe_case1.push_back(fi_Dz); // D4D6 - D4D5
-            }
-
-            if( fDisk4.size() != 0 && fDisk6.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk4[0].pos_x,2)+pow(fDisk4[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk6[0].pos_x,2)+pow(fDisk6[0].pos_y,2));
-                Float_t temp_Z1 = fDisk4[0].pos_z;
-                Float_t temp_Z2 = fDisk6[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD4D6 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveSe_case2.push_back(fi_Dz); // D4D6 - D4D6
-            }
-
-            if( fDisk5.size() != 0 && fDisk6.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk5[0].pos_x,2)+pow(fDisk5[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk6[0].pos_x,2)+pow(fDisk6[0].pos_y,2));
-                Float_t temp_Z1 = fDisk5[0].pos_z;
-                Float_t temp_Z2 = fDisk6[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD4D6 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveSe_case3.push_back(fi_Dz); // D4D6 - D5D6
-            }
-        } // }}}
-
-        if( std_Vz[2] != 0 ) // D3D6
-        { // {{{
-            Float_t std_zpD3D6 = std_Vz[2];
-            
-            // ############ D3D4D6 ############
-            if( fDisk3.size() != 0 && fDisk4.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk3[0].pos_x,2)+pow(fDisk3[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk4[0].pos_x,2)+pow(fDisk4[0].pos_y,2));
-                Float_t temp_Z1 = fDisk3[0].pos_z;
-                Float_t temp_Z2 = fDisk4[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD3D6 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveTh_case1.push_back(fi_Dz); // D3D6 - D3D4
-            }
-
-            if( fDisk3.size() != 0 && fDisk6.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk3[0].pos_x,2)+pow(fDisk3[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk6[0].pos_x,2)+pow(fDisk6[0].pos_y,2));
-                Float_t temp_Z1 = fDisk3[0].pos_z;
-                Float_t temp_Z2 = fDisk6[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD3D6 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveTh_case2.push_back(fi_Dz); // D3D6 - D3D6
-            }
-
-            if( fDisk4.size() != 0 && fDisk6.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk4[0].pos_x,2)+pow(fDisk4[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk6[0].pos_x,2)+pow(fDisk6[0].pos_y,2));
-                Float_t temp_Z1 = fDisk4[0].pos_z;
-                Float_t temp_Z2 = fDisk6[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD3D6 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveTh_case3.push_back(fi_Dz); // D3D6 - D4D6
-            }
-            
-            // ############ D3D5D6 ############
-            if( fDisk3.size() != 0 && fDisk5.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk3[0].pos_x,2)+pow(fDisk3[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk5[0].pos_x,2)+pow(fDisk5[0].pos_y,2));
-                Float_t temp_Z1 = fDisk3[0].pos_z;
-                Float_t temp_Z2 = fDisk5[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD3D6 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveFo_case1.push_back(fi_Dz); // D3D6 - D3D5
-            }
-
-            if( fDisk5.size() != 0 && fDisk6.size() != 0 )
-            {
-                Float_t temp_R1 = sqrt(pow(fDisk5[0].pos_x,2)+pow(fDisk5[0].pos_y,2));
-                Float_t temp_R2 = sqrt(pow(fDisk6[0].pos_x,2)+pow(fDisk6[0].pos_y,2));
-                Float_t temp_Z1 = fDisk5[0].pos_z;
-                Float_t temp_Z2 = fDisk6[0].pos_z;
-
-                Float_t temp_Vz = (temp_R2*temp_Z1 - temp_R1*temp_Z2)/(temp_R2 - temp_R1);
-                Float_t temp_Dz = std_zpD3D6 - temp_Vz;
-                Float_t gen_corr = std_genVz - simVz->at(0);
-                Float_t fi_Dz = fabs(temp_Dz) - fabs(gen_corr);
-                SaveFo_case2.push_back(fi_Dz); // D3D6 - D5D6
             }
         } // }}}
     }
