@@ -871,19 +871,19 @@ void test::StorePixelHits(Int_t eta_region, Float_t propGenPhi, Float_t propGenE
           Float_t deltaEta = pixelEta - propGenEta;
           Float_t deltaR = sqrt(pow(deltaPhi,2)+pow(deltaEta,2));
 
-          if( eta_region <= 5 )
+          if( eta_region <= 4 )
           {
               if( bRecHitLayer->at(i) == 1 )  bLayer1.push_back(track(deltaR, bRecHitGx->at(i),bRecHitGy->at(i),bRecHitGz->at(i)));
           }
-          if( eta_region <= 4 )
+          if( eta_region <= 3 )
           {
               if( bRecHitLayer->at(i) == 2 )  bLayer2.push_back(track(deltaR, bRecHitGx->at(i),bRecHitGy->at(i),bRecHitGz->at(i)));
           }
-          if( eta_region <= 3 )
+          if( eta_region <= 2 )
           {
               if( bRecHitLayer->at(i) == 3 )  bLayer3.push_back(track(deltaR, bRecHitGx->at(i),bRecHitGy->at(i),bRecHitGz->at(i)));
           }
-          if( eta_region <= 2 )
+          if( eta_region == 1 )
           {
               if( bRecHitLayer->at(i) == 4 )  bLayer4.push_back(track(deltaR, bRecHitGx->at(i),bRecHitGy->at(i),bRecHitGz->at(i)));
           }
@@ -901,33 +901,29 @@ void test::StorePixelHits(Int_t eta_region, Float_t propGenPhi, Float_t propGenE
           Float_t deltaEta = pixelEta - propGenEta;
           Float_t deltaR = sqrt(pow(deltaPhi,2)+pow(deltaEta,2));
 
-          if( eta_region >= 3 && eta_region <= 5 )
+          if( eta_region >= 2 && eta_region <= 4 )
           {
               if( fRecHitDisk->at(i) == 1 )  fDisk1.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
           }
-          if( eta_region >= 4 && eta_region <= 6 )
+          if( eta_region >= 3 && eta_region <= 5 )
           {
               if( fRecHitDisk->at(i) == 2 )  fDisk2.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
           }
-          if( eta_region >= 5 )
+          if( eta_region >= 4 )
           {
               if( fRecHitDisk->at(i) == 3 )  fDisk3.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
           }
-          if( eta_region >= 6 )
+          if( eta_region >= 5 )
           {
               if( fRecHitDisk->at(i) == 4 )  fDisk4.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
               if( fRecHitDisk->at(i) == 5 )  fDisk5.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
-          }
-          if( eta_region == 7 )
-          {
-              if( fRecHitDisk->at(i) == 6 )  fDisk6.push_back(track(deltaR, fRecHitGx->at(i),fRecHitGy->at(i),fRecHitGz->at(i)));
           }
       }
 }
 
 void test::CalculateParameters(Int_t eta_region)
 {
-    if( eta_region == 1 || eta_region == 2 ) // L1234
+    if( eta_region == 1 ) // L1234
     { // {{{
         //// -------- L123 --------- //// 
         if( bLayer1.size() != 0 && bLayer2.size() != 0 && bLayer3.size() != 0 )
@@ -1164,1190 +1160,882 @@ void test::CalculateParameters(Int_t eta_region)
         }
     } // }}}
 
-    if( eta_region == 3 ) // L123D1
+    if( eta_region == 2 ) // L123D1
     { // {{{
         //// -------- L123 --------- //// 
         if( bLayer1.size() != 0 && bLayer2.size() != 0 && bLayer3.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer1.begin(); it1 != bLayer1.end(); ++it1)
-            {
-                TVector3 pv1; // PVL1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
+            std::vector<track>::iterator it1 = bLayer1.begin(); 
+            std::vector<track>::iterator it2 = bLayer2.begin(); 
+            std::vector<track>::iterator it3 = bLayer3.begin(); 
+            
+            TVector3 pv1; // PVL1
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                for(std::vector<track>::iterator it2 = bLayer2.begin(); it2 != bLayer2.end(); ++it2)
-                {
-                    TVector3 pp1; // L12
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pp1; // L12
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    TVector3 pv2; // PVL2
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pv2; // PVL2
+            pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                    for(std::vector<track>::iterator it3 = bLayer3.begin(); it3 != bLayer3.end(); ++it3 )
-                    {
-                        TVector3 pp2; // L23
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pp2; // L23
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pp3; // L13
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp3; // L13
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        TVector3 pv3; // PVL3
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pv3; // PVL3
+            pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t dEtaL1223 = pp1_eta - pp2_eta;
-                        Float_t dEtaL1213 = pp1_eta - pp3_eta;
-                        Float_t dEtaL1323 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVL13 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVL23 = pv3_eta - pv2_eta;
+            Float_t dEtaL1223 = pp1_eta - pp2_eta;
+            Float_t dEtaL1213 = pp1_eta - pp3_eta;
+            Float_t dEtaL1323 = pp3_eta - pp2_eta;
+            Float_t dEtaPVL13 = pv3_eta - pv1_eta;
+            Float_t dEtaPVL23 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L2
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L2
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L2 - L2L3
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L2 - L2L3
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
 
-                        saveParaCase1.push_back(dEtaL1213);
-                        saveParaCase1.push_back(dEtaL1223);
-                        saveParaCase1.push_back(dEtaL1323);
-                        saveParaCase1.push_back(dEtaPVL23);
-                        saveParaCase1.push_back(dEtaPVL13);
-                        saveParaCase1.push_back(ddPhi);
-                    }
-                }
-            }
+            saveParaCase1.push_back(dEtaL1213);
+            saveParaCase1.push_back(dEtaL1223);
+            saveParaCase1.push_back(dEtaL1323);
+            saveParaCase1.push_back(dEtaPVL23);
+            saveParaCase1.push_back(dEtaPVL13);
+            saveParaCase1.push_back(ddPhi);
         }
 
         //// -------- L12D1 --------- //// 
         if( bLayer1.size() != 0 && bLayer2.size() != 0 && fDisk1.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer1.begin(); it1 != bLayer1.end(); ++it1)
-            {
-                TVector3 pv1; // PVL1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
+            std::vector<track>::iterator it1 = bLayer1.begin(); 
+            std::vector<track>::iterator it2 = bLayer2.begin(); 
+            std::vector<track>::iterator it3 = fDisk1.begin(); 
 
-                for(std::vector<track>::iterator it2 = bLayer2.begin(); it2 != bLayer2.end(); ++it2)
-                {
-                    TVector3 pp1; // L12
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pv1; // PVL1
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                    TVector3 pv2; // PVL2
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pp1; // L12
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk1.begin(); it3 != fDisk1.end(); ++it3 )
-                    {
-                        TVector3 pp2; // L2D1
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pv2; // PVL2
+            pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                        TVector3 pp3; // L1D1
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp2; // L2D1
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pv3; // PVD1
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pp3; // L1D1
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t dEtaL12L2D1 = pp1_eta - pp2_eta;
-                        Float_t dEtaL12L1D1 = pp1_eta - pp3_eta;
-                        Float_t dEtaL1D1L2D1 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVL1D1 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVL2D1 = pv3_eta - pv2_eta;
+            TVector3 pv3; // PVD1
+            pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L2
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t dEtaL12L2D1 = pp1_eta - pp2_eta;
+            Float_t dEtaL12L1D1 = pp1_eta - pp3_eta;
+            Float_t dEtaL1D1L2D1 = pp3_eta - pp2_eta;
+            Float_t dEtaPVL1D1 = pv3_eta - pv1_eta;
+            Float_t dEtaPVL2D1 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L2 - L2D1
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L2
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L2 - L2D1
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        saveParaCase2.push_back(dEtaL12L1D1);
-                        saveParaCase2.push_back(dEtaL12L2D1);
-                        saveParaCase2.push_back(dEtaL1D1L2D1);
-                        saveParaCase2.push_back(dEtaPVL2D1);
-                        saveParaCase2.push_back(dEtaPVL1D1);
-                        saveParaCase2.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase2.push_back(dEtaL12L1D1);
+            saveParaCase2.push_back(dEtaL12L2D1);
+            saveParaCase2.push_back(dEtaL1D1L2D1);
+            saveParaCase2.push_back(dEtaPVL2D1);
+            saveParaCase2.push_back(dEtaPVL1D1);
+            saveParaCase2.push_back(ddPhi);
         }
 
         //// -------- L13D1 --------- //// 
         if( bLayer1.size() != 0 && bLayer3.size() != 0 && fDisk1.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer1.begin(); it1 != bLayer1.end(); ++it1)
-            {
-                TVector3 pv1; // PVL1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = bLayer3.begin(); it2 != bLayer3.end(); ++it2)
-                {
-                    TVector3 pp1; // L13
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            std::vector<track>::iterator it1 = bLayer1.begin(); 
+            std::vector<track>::iterator it2 = bLayer3.begin(); 
+            std::vector<track>::iterator it3 = fDisk1.begin(); 
+            
+            TVector3 pv1; // PVL1
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_phi = pv1.Phi();
 
-                    TVector3 pv2; // PVL3
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pp1; // L13
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk1.begin(); it3 != fDisk1.end(); ++it3 )
-                    {
-                        TVector3 pp2; // L3D1
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pv2; // PVL3
+            pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                        TVector3 pp3; // L1D1
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp2; // L3D1
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pv3; // PVD1
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pp3; // L1D1
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t dEtaL13L3D1 = pp1_eta - pp2_eta;
-                        Float_t dEtaL13L1D1 = pp1_eta - pp3_eta;
-                        Float_t dEtaL1D1L3D1 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVL3D1 = pv3_eta - pv2_eta;
+            TVector3 pv3; // PVD1
+            pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L3
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t dEtaL13L3D1 = pp1_eta - pp2_eta;
+            Float_t dEtaL13L1D1 = pp1_eta - pp3_eta;
+            Float_t dEtaL1D1L3D1 = pp3_eta - pp2_eta;
+            Float_t dEtaPVL3D1 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L3 - L3D1
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L3
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L3 - L3D1
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        saveParaCase3.push_back(dEtaL13L1D1);
-                        saveParaCase3.push_back(dEtaL13L3D1);
-                        saveParaCase3.push_back(dEtaL1D1L3D1);
-                        saveParaCase3.push_back(dEtaPVL3D1);
-                        saveParaCase3.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase3.push_back(dEtaL13L1D1);
+            saveParaCase3.push_back(dEtaL13L3D1);
+            saveParaCase3.push_back(dEtaL1D1L3D1);
+            saveParaCase3.push_back(dEtaPVL3D1);
+            saveParaCase3.push_back(ddPhi);
         }
 
         //// -------- L23D1 --------- //// 
         if( bLayer2.size() != 0 && bLayer3.size() != 0 && fDisk1.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer2.begin(); it1 != bLayer2.end(); ++it1)
-            {
-                TVector3 pv1; // PVL2
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = bLayer3.begin(); it2 != bLayer3.end(); ++it2)
-                {
-                    TVector3 pp1; // L23
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            std::vector<track>::iterator it1 = bLayer2.begin(); 
+            std::vector<track>::iterator it2 = bLayer3.begin(); 
+            std::vector<track>::iterator it3 = fDisk1.begin(); 
 
-                    for(std::vector<track>::iterator it3 = fDisk1.begin(); it3 != fDisk1.end(); ++it3 )
-                    {
-                        TVector3 pp2; // L3D1
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pv1; // PVL2
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_phi = pv1.Phi();
 
-                        TVector3 pp3; // L2D1
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp1; // L23
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                        Float_t dEtaL23L3D1 = pp1_eta - pp2_eta;
-                        Float_t dEtaL23L2D1 = pp1_eta - pp3_eta;
-                        Float_t dEtaL2D1L3D1 = pp3_eta - pp2_eta;
+            TVector3 pp2; // L3D1
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL2 - L2L3
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            TVector3 pp3; // L2D1
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L2L3 - L3D1
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t dEtaL23L3D1 = pp1_eta - pp2_eta;
+            Float_t dEtaL23L2D1 = pp1_eta - pp3_eta;
+            Float_t dEtaL2D1L3D1 = pp3_eta - pp2_eta;
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL2 - L2L3
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        saveParaCase4.push_back(dEtaL23L2D1);
-                        saveParaCase4.push_back(dEtaL23L3D1);
-                        saveParaCase4.push_back(dEtaL2D1L3D1);
-                        saveParaCase4.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L2L3 - L3D1
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase4.push_back(dEtaL23L2D1);
+            saveParaCase4.push_back(dEtaL23L3D1);
+            saveParaCase4.push_back(dEtaL2D1L3D1);
+            saveParaCase4.push_back(ddPhi);
         }
+    
     } // }}} 
 
-    if( eta_region == 4 ) // L12D12
+    if( eta_region == 3 ) // L12D12
     { // {{{ 
         //// -------- L12D1 --------- //// 
         if( bLayer1.size() != 0 && bLayer2.size() != 0 && fDisk1.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer1.begin(); it1 != bLayer1.end(); ++it1)
-            {
-                TVector3 pv1; // PVL1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
+            std::vector<track>::iterator it1 = bLayer1.begin(); 
+            std::vector<track>::iterator it2 = bLayer2.begin(); 
+            std::vector<track>::iterator it3 = fDisk1.begin(); 
+            
+            TVector3 pv1; // PVL1
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                for(std::vector<track>::iterator it2 = bLayer2.begin(); it2 != bLayer2.end(); ++it2)
-                {
-                    TVector3 pp1; // L12
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pp1; // L12
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    TVector3 pv2; // PVL2
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pv2; // PVL2
+            pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk1.begin(); it3 != fDisk1.end(); ++it3 )
-                    {
-                        TVector3 pp2; // L2D1
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pp2; // L2D1
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pp3; // L1D1
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp3; // L1D1
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        TVector3 pv3; // PVD1
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pv3; // PVD1
+            pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t dEtaL12L2D1 = pp1_eta - pp2_eta;
-                        Float_t dEtaL12L1D1 = pp1_eta - pp3_eta;
-                        Float_t dEtaL1D1L2D1 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVL1D1 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVL2D1 = pv3_eta - pv2_eta;
+            Float_t dEtaL12L2D1 = pp1_eta - pp2_eta;
+            Float_t dEtaL12L1D1 = pp1_eta - pp3_eta;
+            Float_t dEtaL1D1L2D1 = pp3_eta - pp2_eta;
+            Float_t dEtaPVL1D1 = pv3_eta - pv1_eta;
+            Float_t dEtaPVL2D1 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L2
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L2
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L2 - L2D1
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L2 - L2D1
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
 
-                        saveParaCase1.push_back(dEtaL12L1D1);
-                        saveParaCase1.push_back(dEtaL12L2D1);
-                        saveParaCase1.push_back(dEtaL1D1L2D1);
-                        saveParaCase1.push_back(dEtaPVL2D1);
-                        saveParaCase1.push_back(dEtaPVL1D1);
-                        saveParaCase1.push_back(ddPhi);
-                    }
-                }
-            }
+            saveParaCase1.push_back(dEtaL12L1D1);
+            saveParaCase1.push_back(dEtaL12L2D1);
+            saveParaCase1.push_back(dEtaL1D1L2D1);
+            saveParaCase1.push_back(dEtaPVL2D1);
+            saveParaCase1.push_back(dEtaPVL1D1);
+            saveParaCase1.push_back(ddPhi);
         }
 
         //// -------- L12D2 --------- //// 
         if( bLayer1.size() != 0 && bLayer2.size() != 0 && fDisk2.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer1.begin(); it1 != bLayer1.end(); ++it1)
-            {
-                TVector3 pv1; // PVL1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
+            std::vector<track>::iterator it1 = bLayer1.begin(); 
+            std::vector<track>::iterator it2 = bLayer2.begin();
+            std::vector<track>::iterator it3 = fDisk2.begin(); 
+            
+            TVector3 pv1; // PVL1
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                for(std::vector<track>::iterator it2 = bLayer2.begin(); it2 != bLayer2.end(); ++it2)
-                {
-                    TVector3 pp1; // L12
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pp1; // L12
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    TVector3 pv2; // PVL2
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pv2; // PVL2
+            pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk2.begin(); it3 != fDisk2.end(); ++it3 )
-                    {
-                        TVector3 pp2; // L2D2
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pp2; // L2D2
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pp3; // L1D2
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp3; // L1D2
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        TVector3 pv3; // PVD2
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pv3; // PVD2
+            pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t dEtaL12L2D2 = pp1_eta - pp2_eta;
-                        Float_t dEtaL12L1D2 = pp1_eta - pp3_eta;
-                        Float_t dEtaL1D1L2D2 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVL1D2 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVL2D2 = pv3_eta - pv2_eta;
+            Float_t dEtaL12L2D2 = pp1_eta - pp2_eta;
+            Float_t dEtaL12L1D2 = pp1_eta - pp3_eta;
+            Float_t dEtaL1D1L2D2 = pp3_eta - pp2_eta;
+            Float_t dEtaPVL1D2 = pv3_eta - pv1_eta;
+            Float_t dEtaPVL2D2 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L2
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1L2
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L2 - L2D2
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1L2 - L2D2
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
 
-                        saveParaCase2.push_back(dEtaL12L1D2);
-                        saveParaCase2.push_back(dEtaL12L2D2);
-                        saveParaCase2.push_back(dEtaL1D1L2D2);
-                        saveParaCase2.push_back(dEtaPVL2D2);
-                        saveParaCase2.push_back(dEtaPVL1D2);
-                        saveParaCase2.push_back(ddPhi);
-                    }
-                }
-            }
+            saveParaCase2.push_back(dEtaL12L1D2);
+            saveParaCase2.push_back(dEtaL12L2D2);
+            saveParaCase2.push_back(dEtaL1D1L2D2);
+            saveParaCase2.push_back(dEtaPVL2D2);
+            saveParaCase2.push_back(dEtaPVL1D2);
+            saveParaCase2.push_back(ddPhi);
         }
 
         //// -------- L1D12 --------- //// 
         if( bLayer1.size() != 0 && fDisk1.size() != 0 && fDisk2.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer1.begin(); it1 != bLayer1.end(); ++it1)
-            {
-                TVector3 pv1; // PVL1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = fDisk1.begin(); it2 != fDisk1.end(); ++it2)
-                {
-                    TVector3 pp1; // L1D1
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            std::vector<track>::iterator it1 = bLayer1.begin(); 
+            std::vector<track>::iterator it2 = fDisk1.begin(); 
+            std::vector<track>::iterator it3 = fDisk2.begin(); 
+            
+            TVector3 pv1; // PVL1
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_phi = pv1.Phi();
 
-                    TVector3 pv2; // PVD1
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pp1; // L1D1
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk2.begin(); it3 != fDisk2.end(); ++it3 )
-                    {
-                        TVector3 pp2; // L3D2
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pv2; // PVD1
+            pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                        TVector3 pp3; // L1D2
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp2; // L3D2
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pv3; // PVD2
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pp3; // L1D2
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t dEtaL1D1D12 = pp1_eta - pp2_eta;
-                        Float_t dEtaL1D1L1D2 = pp1_eta - pp3_eta;
-                        Float_t dEtaL1D2D12 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD12 = pv3_eta - pv2_eta;
+            TVector3 pv3; // PVD2
+            pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1D1
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t dEtaL1D1D12 = pp1_eta - pp2_eta;
+            Float_t dEtaL1D1L1D2 = pp1_eta - pp3_eta;
+            Float_t dEtaL1D2D12 = pp3_eta - pp2_eta;
+            Float_t dEtaPVD12 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1D1 - D1D2
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1D1
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1D1 - D1D2
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        saveParaCase3.push_back(dEtaL1D1L1D2);
-                        saveParaCase3.push_back(dEtaL1D1D12);
-                        saveParaCase3.push_back(dEtaL1D2D12);
-                        saveParaCase3.push_back(dEtaPVD12);
-                        saveParaCase3.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase3.push_back(dEtaL1D1L1D2);
+            saveParaCase3.push_back(dEtaL1D1D12);
+            saveParaCase3.push_back(dEtaL1D2D12);
+            saveParaCase3.push_back(dEtaPVD12);
+            saveParaCase3.push_back(ddPhi);
         }
 
         //// -------- L2D12 --------- //// 
         if( bLayer2.size() != 0 && fDisk1.size() != 0 && fDisk2.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer2.begin(); it1 != bLayer2.end(); ++it1)
-            {
-                TVector3 pv1; // PVL2
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = fDisk1.begin(); it2 != fDisk1.end(); ++it2)
-                {
-                    TVector3 pp1; // L2D1
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            std::vector<track>::iterator it1 = bLayer2.begin(); 
+            std::vector<track>::iterator it2 = fDisk1.begin(); 
+            std::vector<track>::iterator it3 = fDisk2.begin(); 
+            
+            TVector3 pv1; // PVL2
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_phi = pv1.Phi();
 
-                    for(std::vector<track>::iterator it3 = fDisk2.begin(); it3 != fDisk2.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D1D2
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pp1; // L2D1
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                        TVector3 pp3; // L2D2
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp2; // D1D2
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        Float_t dEtaL2D1L2D2 = pp1_eta - pp2_eta;
-                        Float_t dEtaL2D1D12 = pp1_eta - pp3_eta;
-                        Float_t dEtaL2D2D12 = pp3_eta - pp2_eta;
+            TVector3 pp3; // L2D2
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL2 - L2D1
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t dEtaL2D1L2D2 = pp1_eta - pp2_eta;
+            Float_t dEtaL2D1D12 = pp1_eta - pp3_eta;
+            Float_t dEtaL2D2D12 = pp3_eta - pp2_eta;
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L2D1 - D1D2
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL2 - L2D1
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L2D1 - D1D2
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        saveParaCase4.push_back(dEtaL2D1L2D2);
-                        saveParaCase4.push_back(dEtaL2D1D12);
-                        saveParaCase4.push_back(dEtaL2D2D12);
-                        saveParaCase4.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase4.push_back(dEtaL2D1L2D2);
+            saveParaCase4.push_back(dEtaL2D1D12);
+            saveParaCase4.push_back(dEtaL2D2D12);
+            saveParaCase4.push_back(ddPhi);
         }
+
     } // }}} 
 
-    if( eta_region == 5 ) // L1D123
+    if( eta_region == 4 ) // L1D123
     { // {{{ 
         //// -------- L1D12 --------- //// 
         if( bLayer1.size() != 0 && fDisk1.size() != 0 && fDisk2.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer1.begin(); it1 != bLayer1.end(); ++it1)
-            {
-                TVector3 pv1; // PVL1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
+            TVector3 pv1; // PVL1
+            pv1.SetXYZ( bLayer1[0].pos_x - simVx->at(0), bLayer1[0].pos_y - simVy->at(0), bLayer1[0].pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                for(std::vector<track>::iterator it2 = fDisk1.begin(); it2 != fDisk1.end(); ++it2)
-                {
-                    TVector3 pp1; // L1D1
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pp1; // L1D1
+            pp1.SetXYZ( fDisk1[0].pos_x - bLayer1[0].pos_x, fDisk1[0].pos_y - bLayer1[0].pos_y, fDisk1[0].pos_z - bLayer1[0].pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    TVector3 pv2; // PVD1
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pv2; // PVD1
+            pv2.SetXYZ( fDisk1[0].pos_x - simVx->at(0), fDisk1[0].pos_y - simVy->at(0), fDisk1[0].pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk2.begin(); it3 != fDisk2.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D1D2
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pp2; // D1D2
+            pp2.SetXYZ( fDisk2[0].pos_x - fDisk1[0].pos_x, fDisk2[0].pos_y - fDisk1[0].pos_y, fDisk2[0].pos_z - fDisk1[0].pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pp3; // L1D2
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp3; // L1D2
+            pp3.SetXYZ( fDisk2[0].pos_x - bLayer1[0].pos_x, fDisk2[0].pos_y - bLayer1[0].pos_y, fDisk2[0].pos_z - bLayer1[0].pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        TVector3 pv3; // PVD2
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pv3; // PVD2
+            pv3.SetXYZ( fDisk2[0].pos_x - simVx->at(0), fDisk2[0].pos_y - simVy->at(0), fDisk2[0].pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t dEtaL1D1D12 = pp1_eta - pp2_eta;
-                        Float_t dEtaL1D1L1D2 = pp1_eta - pp3_eta;
-                        Float_t dEtaL1D2D12 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD2L1 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVD21 = pv3_eta - pv2_eta;
+            Float_t dEtaL1D1D12 = pp1_eta - pp2_eta;
+            Float_t dEtaL1D1L1D2 = pp1_eta - pp3_eta;
+            Float_t dEtaL1D2D12 = pp3_eta - pp2_eta;
+            Float_t dEtaPVD2L1 = pv3_eta - pv1_eta;
+            Float_t dEtaPVD21 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1D1
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1D1
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1D1 - D1D2
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1D1 - D1D2
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
 
-                        saveParaCase1.push_back(dEtaL1D1L1D2);
-                        saveParaCase1.push_back(dEtaL1D1D12);
-                        saveParaCase1.push_back(dEtaL1D2D12);
-                        saveParaCase1.push_back(dEtaPVD21);
-                        saveParaCase1.push_back(dEtaPVD2L1);
-                        saveParaCase1.push_back(ddPhi);
-                    }
-                }
-            }
+            saveParaCase1.push_back(dEtaL1D1L1D2);
+            saveParaCase1.push_back(dEtaL1D1D12);
+            saveParaCase1.push_back(dEtaL1D2D12);
+            saveParaCase1.push_back(dEtaPVD21);
+            saveParaCase1.push_back(dEtaPVD2L1);
+            saveParaCase1.push_back(ddPhi);
         }
 
         //// -------- L1D13 --------- //// 
         if( bLayer1.size() != 0 && fDisk1.size() != 0 && fDisk3.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer1.begin(); it1 != bLayer1.end(); ++it1)
-            {
-                TVector3 pv1; // PVL1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
+            TVector3 pv1; // PVL1
+            pv1.SetXYZ( bLayer1[0].pos_x - simVx->at(0), bLayer1[0].pos_y - simVy->at(0), bLayer1[0].pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                for(std::vector<track>::iterator it2 = fDisk1.begin(); it2 != fDisk1.end(); ++it2)
-                {
-                    TVector3 pp1; // L1D1
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pp1; // L1D1
+            pp1.SetXYZ( fDisk1[0].pos_x - bLayer1[0].pos_x, fDisk1[0].pos_y - bLayer1[0].pos_y, fDisk1[0].pos_z - bLayer1[0].pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    TVector3 pv2; // PVD1
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pv2; // PVD1
+            pv2.SetXYZ( fDisk1[0].pos_x - simVx->at(0), fDisk1[0].pos_y - simVy->at(0), fDisk1[0].pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk3.begin(); it3 != fDisk3.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D1D3
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pp2; // D1D3
+            pp2.SetXYZ( fDisk3[0].pos_x - fDisk1[0].pos_x, fDisk3[0].pos_y - fDisk1[0].pos_y, fDisk3[0].pos_z - fDisk1[0].pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pp3; // L1D3
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp3; // L1D3
+            pp3.SetXYZ( fDisk3[0].pos_x - bLayer1[0].pos_x, fDisk3[0].pos_y - bLayer1[0].pos_y, fDisk3[0].pos_z - bLayer1[0].pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        TVector3 pv3; // PVD3
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pv3; // PVD3
+            pv3.SetXYZ( fDisk3[0].pos_x - simVx->at(0), fDisk3[0].pos_y - simVy->at(0), fDisk3[0].pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t dEtaL1D1D13 = pp1_eta - pp2_eta;
-                        Float_t dEtaL1D1L1D3 = pp1_eta - pp3_eta;
-                        Float_t dEtaL1D3D13 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD3L1 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVD31 = pv3_eta - pv2_eta;
+            Float_t dEtaL1D1D13 = pp1_eta - pp2_eta;
+            Float_t dEtaL1D1L1D3 = pp1_eta - pp3_eta;
+            Float_t dEtaL1D3D13 = pp3_eta - pp2_eta;
+            Float_t dEtaPVD3L1 = pv3_eta - pv1_eta;
+            Float_t dEtaPVD31 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1D1
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1D1
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1D1 - D1D3
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1D1 - D1D3
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
 
-                        saveParaCase2.push_back(dEtaL1D1L1D3);
-                        saveParaCase2.push_back(dEtaL1D1D13);
-                        saveParaCase2.push_back(dEtaL1D3D13);
-                        saveParaCase2.push_back(dEtaPVD31);
-                        saveParaCase2.push_back(dEtaPVD3L1);
-                        saveParaCase2.push_back(ddPhi);
-                    }
-                }
-            }
+            saveParaCase2.push_back(dEtaL1D1L1D3);
+            saveParaCase2.push_back(dEtaL1D1D13);
+            saveParaCase2.push_back(dEtaL1D3D13);
+            saveParaCase2.push_back(dEtaPVD31);
+            saveParaCase2.push_back(dEtaPVD3L1);
+            saveParaCase2.push_back(ddPhi);
         }
 
         //// -------- L1D23 --------- //// 
         if( bLayer1.size() != 0 && fDisk2.size() != 0 && fDisk3.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = bLayer1.begin(); it1 != bLayer1.end(); ++it1)
-            {
-                TVector3 pv1; // PVL1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = fDisk2.begin(); it2 != fDisk2.end(); ++it2)
-                {
-                    TVector3 pp1; // L1D2
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pv1; // PVL1
+            pv1.SetXYZ( bLayer1[0].pos_x - simVx->at(0), bLayer1[0].pos_y - simVy->at(0), bLayer1[0].pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                    TVector3 pv2; // PVD2
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pp1; // L1D2
+            pp1.SetXYZ( fDisk2[0].pos_x - bLayer1[0].pos_x, fDisk2[0].pos_y - bLayer1[0].pos_y, fDisk2[0].pos_z - bLayer1[0].pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk3.begin(); it3 != fDisk3.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D2D3
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pv2; // PVD2
+            pv2.SetXYZ( fDisk2[0].pos_x - simVx->at(0), fDisk2[0].pos_y - simVy->at(0), fDisk2[0].pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                        TVector3 pp3; // L1D3
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp2; // D2D3
+            pp2.SetXYZ( fDisk3[0].pos_x - fDisk2[0].pos_x, fDisk3[0].pos_y - fDisk2[0].pos_y, fDisk3[0].pos_z - fDisk2[0].pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pv3; // PVD3
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pp3; // L1D3
+            pp3.SetXYZ( fDisk3[0].pos_x - bLayer1[0].pos_x, fDisk3[0].pos_y - bLayer1[0].pos_y, fDisk3[0].pos_z - bLayer1[0].pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t dEtaL1D2D23 = pp1_eta - pp2_eta;
-                        Float_t dEtaL1D2L1D3 = pp1_eta - pp3_eta;
-                        Float_t dEtaL1D3D23 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD32 = pv3_eta - pv2_eta;
+            TVector3 pv3; // PVD3
+            pv3.SetXYZ( fDisk3[0].pos_x - simVx->at(0), fDisk3[0].pos_y - simVy->at(0), fDisk3[0].pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1D2
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t dEtaL1D2D23 = pp1_eta - pp2_eta;
+            Float_t dEtaL1D2L1D3 = pp1_eta - pp3_eta;
+            Float_t dEtaL1D3D23 = pp3_eta - pp2_eta;
+            Float_t dEtaPVD32 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1D2 - D2D3
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVL1 - L1D2
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = L1D2 - D2D3
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        saveParaCase3.push_back(dEtaL1D2L1D3);
-                        saveParaCase3.push_back(dEtaL1D2D23);
-                        saveParaCase3.push_back(dEtaL1D3D23);
-                        saveParaCase3.push_back(dEtaPVD32);
-                        saveParaCase3.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase3.push_back(dEtaL1D2L1D3);
+            saveParaCase3.push_back(dEtaL1D2D23);
+            saveParaCase3.push_back(dEtaL1D3D23);
+            saveParaCase3.push_back(dEtaPVD32);
+            saveParaCase3.push_back(ddPhi);
         }
         
         //// -------- D123 --------- //// 
         if( fDisk1.size() != 0 && fDisk2.size() != 0 && fDisk3.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = fDisk1.begin(); it1 != fDisk1.end(); ++it1)
-            {
-                TVector3 pv1; // PVD1
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = fDisk2.begin(); it2 != fDisk2.end(); ++it2)
-                {
-                    TVector3 pp1; // D1D2
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pv1; // PVD1
+            pv1.SetXYZ( fDisk1[0].pos_x - simVx->at(0), fDisk1[0].pos_y - simVy->at(0), fDisk1[0].pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                    for(std::vector<track>::iterator it3 = fDisk3.begin(); it3 != fDisk3.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D2D3
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pp1; // D1D2
+            pp1.SetXYZ( fDisk2[0].pos_x - fDisk1[0].pos_x, fDisk2[0].pos_y - fDisk1[0].pos_y, fDisk2[0].pos_z - fDisk1[0].pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                        TVector3 pp3; // D1D3
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pv2; // PVD2
+            pv2.SetXYZ( fDisk2[0].pos_x - simVx->at(0), fDisk2[0].pos_y - simVy->at(0), fDisk2[0].pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                        Float_t dEtaD1223 = pp1_eta - pp2_eta;
-                        Float_t dEtaD1213 = pp1_eta - pp3_eta;
-                        Float_t dEtaD1323 = pp3_eta - pp2_eta;
+            TVector3 pp2; // D2D3
+            pp2.SetXYZ( fDisk3[0].pos_x - fDisk2[0].pos_x, fDisk3[0].pos_y - fDisk2[0].pos_y, fDisk3[0].pos_z - fDisk2[0].pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD1 - D1D2
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            TVector3 pp3; // D1D3
+            pp3.SetXYZ( fDisk3[0].pos_x - fDisk1[0].pos_x, fDisk3[0].pos_y - fDisk1[0].pos_y, fDisk3[0].pos_z - fDisk1[0].pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D1D2 - D2D3
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            TVector3 pv3; // PVD3
+            pv3.SetXYZ( fDisk3[0].pos_x - simVx->at(0), fDisk3[0].pos_y - simVy->at(0), fDisk3[0].pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t dEtaD1223 = pp1_eta - pp2_eta;
+            Float_t dEtaD1213 = pp1_eta - pp3_eta;
+            Float_t dEtaD1323 = pp3_eta - pp2_eta;
 
-                        saveParaCase4.push_back(dEtaD1213);
-                        saveParaCase4.push_back(dEtaD1223);
-                        saveParaCase4.push_back(dEtaD1323);
-                        saveParaCase4.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD1 - D1D2
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D1D2 - D2D3
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase4.push_back(dEtaD1213);
+            saveParaCase4.push_back(dEtaD1223);
+            saveParaCase4.push_back(dEtaD1323);
+            saveParaCase4.push_back(ddPhi);
         }
+    
     } // }}} 
 
-    if( eta_region == 6 ) // D2345
+    if( eta_region == 5 ) // D2345
     { // {{{ 
         //// -------- D234 --------- //// 
         if( fDisk2.size() != 0 && fDisk3.size() != 0 && fDisk4.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = fDisk2.begin(); it1 != fDisk2.end(); ++it1)
-            {
-                TVector3 pv1; // PVD2
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
+            std::vector<track>::iterator it1 = fDisk2.begin(); 
+            std::vector<track>::iterator it2 = fDisk3.begin(); 
+            std::vector<track>::iterator it3 = fDisk4.begin(); 
 
-                for(std::vector<track>::iterator it2 = fDisk3.begin(); it2 != fDisk3.end(); ++it2)
-                {
-                    TVector3 pp1; // D2D3
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pv1; // PVD2
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                    TVector3 pv2; // PVD3
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pp1; // D2D3
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk4.begin(); it3 != fDisk4.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D3D4
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pv2; // PVD3
+            pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                        TVector3 pp3; // D2D4
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp2; // D3D4
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pv3; // PVD4
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pp3; // D2D4
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t dEtaD2334 = pp1_eta - pp2_eta;
-                        Float_t dEtaD2324 = pp1_eta - pp3_eta;
-                        Float_t dEtaD2434 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD42 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVD43 = pv3_eta - pv2_eta;
+            TVector3 pv3; // PVD4
+            pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD2 - D2D3
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t dEtaD2334 = pp1_eta - pp2_eta;
+            Float_t dEtaD2324 = pp1_eta - pp3_eta;
+            Float_t dEtaD2434 = pp3_eta - pp2_eta;
+            Float_t dEtaPVD42 = pv3_eta - pv1_eta;
+            Float_t dEtaPVD43 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D2D3 - D3D4
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD2 - D2D3
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D2D3 - D3D4
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        saveParaCase1.push_back(dEtaD2324);
-                        saveParaCase1.push_back(dEtaD2334);
-                        saveParaCase1.push_back(dEtaD2434);
-                        saveParaCase1.push_back(dEtaPVD43);
-                        saveParaCase1.push_back(dEtaPVD42);
-                        saveParaCase1.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase1.push_back(dEtaD2324);
+            saveParaCase1.push_back(dEtaD2334);
+            saveParaCase1.push_back(dEtaD2434);
+            saveParaCase1.push_back(dEtaPVD43);
+            saveParaCase1.push_back(dEtaPVD42);
+            saveParaCase1.push_back(ddPhi);
         }
 
         //// -------- D235 --------- //// 
         if( fDisk2.size() != 0 && fDisk3.size() != 0 && fDisk5.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = fDisk2.begin(); it1 != fDisk2.end(); ++it1)
-            {
-                TVector3 pv1; // PVD2
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
+            std::vector<track>::iterator it1 = fDisk2.begin(); 
+            std::vector<track>::iterator it2 = fDisk3.begin(); 
+            std::vector<track>::iterator it3 = fDisk5.begin(); 
 
-                for(std::vector<track>::iterator it2 = fDisk3.begin(); it2 != fDisk3.end(); ++it2)
-                {
-                    TVector3 pp1; // D2D3
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            TVector3 pv1; // PVD2
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_eta = pv1.Eta();
+            Float_t pv1_phi = pv1.Phi();
 
-                    TVector3 pv2; // PVD3
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pp1; // D2D3
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                    for(std::vector<track>::iterator it3 = fDisk5.begin(); it3 != fDisk5.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D3D5
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pv2; // PVD3
+            pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                        TVector3 pp3; // D2D5
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp2; // D3D5
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        TVector3 pv3; // PVD5
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pp3; // D2D5
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t dEtaD2335 = pp1_eta - pp2_eta;
-                        Float_t dEtaD2325 = pp1_eta - pp3_eta;
-                        Float_t dEtaD2535 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD52 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVD53 = pv3_eta - pv2_eta;
+            TVector3 pv3; // PVD5
+            pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD2 - D2D3
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            Float_t dEtaD2335 = pp1_eta - pp2_eta;
+            Float_t dEtaD2325 = pp1_eta - pp3_eta;
+            Float_t dEtaD2535 = pp3_eta - pp2_eta;
+            Float_t dEtaPVD52 = pv3_eta - pv1_eta;
+            Float_t dEtaPVD53 = pv3_eta - pv2_eta;
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D2D3 - D3D5
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD2 - D2D3
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D2D3 - D3D5
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
 
-                        saveParaCase2.push_back(dEtaD2325);
-                        saveParaCase2.push_back(dEtaD2335);
-                        saveParaCase2.push_back(dEtaD2535);
-                        saveParaCase2.push_back(dEtaPVD53);
-                        saveParaCase2.push_back(dEtaPVD52);
-                        saveParaCase2.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase2.push_back(dEtaD2325);
+            saveParaCase2.push_back(dEtaD2335);
+            saveParaCase2.push_back(dEtaD2535);
+            saveParaCase2.push_back(dEtaPVD53);
+            saveParaCase2.push_back(dEtaPVD52);
+            saveParaCase2.push_back(ddPhi);
         }
 
         //// -------- D245 --------- //// 
         if( fDisk2.size() != 0 && fDisk4.size() != 0 && fDisk5.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = fDisk2.begin(); it1 != fDisk2.end(); ++it1)
-            {
-                TVector3 pv1; // PVD2
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = fDisk4.begin(); it2 != fDisk4.end(); ++it2)
-                {
-                    TVector3 pp1; // D2D4
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            std::vector<track>::iterator it1 = fDisk2.begin(); 
+            std::vector<track>::iterator it2 = fDisk4.begin(); 
+            std::vector<track>::iterator it3 = fDisk5.begin(); 
 
-                    TVector3 pv2; // PVD4
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
+            TVector3 pv1; // PVD2
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_phi = pv1.Phi();
 
-                    for(std::vector<track>::iterator it3 = fDisk5.begin(); it3 != fDisk5.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D4D5
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pp1; // D2D4
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                        TVector3 pp3; // D2D5
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pv2; // PVD4
+            pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
+            Float_t pv2_eta = pv2.Eta();
 
-                        TVector3 pv3; // PVD5
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
+            TVector3 pp2; // D4D5
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        Float_t dEtaD2445 = pp1_eta - pp2_eta;
-                        Float_t dEtaD2425 = pp1_eta - pp3_eta;
-                        Float_t dEtaD2545 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD54 = pv3_eta - pv2_eta;
+            TVector3 pp3; // D2D5
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD2 - D2D4
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            TVector3 pv3; // PVD5
+            pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
+            Float_t pv3_eta = pv3.Eta();
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D2D4 - D4D5
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t dEtaD2445 = pp1_eta - pp2_eta;
+            Float_t dEtaD2425 = pp1_eta - pp3_eta;
+            Float_t dEtaD2545 = pp3_eta - pp2_eta;
+            Float_t dEtaPVD54 = pv3_eta - pv2_eta;
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD2 - D2D4
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        saveParaCase3.push_back(dEtaD2425);
-                        saveParaCase3.push_back(dEtaD2445);
-                        saveParaCase3.push_back(dEtaD2545);
-                        saveParaCase3.push_back(dEtaPVD54);
-                        saveParaCase3.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D2D4 - D4D5
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase3.push_back(dEtaD2425);
+            saveParaCase3.push_back(dEtaD2445);
+            saveParaCase3.push_back(dEtaD2545);
+            saveParaCase3.push_back(dEtaPVD54);
+            saveParaCase3.push_back(ddPhi);
         }
 
         //// -------- D345 --------- //// 
         if( fDisk3.size() != 0 && fDisk4.size() != 0 && fDisk5.size() != 0 )
         {
-            for(std::vector<track>::iterator it1 = fDisk3.begin(); it1 != fDisk3.end(); ++it1)
-            {
-                TVector3 pv1; // PVD3
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = fDisk4.begin(); it2 != fDisk4.end(); ++it2)
-                {
-                    TVector3 pp1; // D3D4
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
+            std::vector<track>::iterator it1 = fDisk3.begin(); 
+            std::vector<track>::iterator it2 = fDisk4.begin(); 
+            std::vector<track>::iterator it3 = fDisk5.begin(); 
 
-                    for(std::vector<track>::iterator it3 = fDisk5.begin(); it3 != fDisk5.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D4D5
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
+            TVector3 pv1; // PVD3
+            pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
+            Float_t pv1_phi = pv1.Phi();
 
-                        TVector3 pp3; // D3D5
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
+            TVector3 pp1; // D3D4
+            pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
+            Float_t pp1_phi = pp1.Phi();
+            Float_t pp1_eta = pp1.Eta();
 
-                        Float_t dEtaD3445 = pp1_eta - pp2_eta;
-                        Float_t dEtaD3435 = pp1_eta - pp3_eta;
-                        Float_t dEtaD3545 = pp3_eta - pp2_eta;
+            TVector3 pp2; // D4D5
+            pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
+            Float_t pp2_phi = pp2.Phi();
+            Float_t pp2_eta = pp2.Eta();
 
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD3 - D3D4
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
+            TVector3 pp3; // D3D5
+            pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
+            Float_t pp3_eta = pp3.Eta();
 
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D3D4 - D4D5
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+            Float_t dEtaD3445 = pp1_eta - pp2_eta;
+            Float_t dEtaD3435 = pp1_eta - pp3_eta;
+            Float_t dEtaD3545 = pp3_eta - pp2_eta;
 
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+            Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD3 - D3D4
+            if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
+            if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
 
-                        saveParaCase4.push_back(dEtaD3435);
-                        saveParaCase4.push_back(dEtaD3445);
-                        saveParaCase4.push_back(dEtaD3545);
-                        saveParaCase4.push_back(ddPhi);
-                    }
-                }
-            }
+            Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D3D4 - D4D5
+            if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
+            if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
+
+            Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
+
+            saveParaCase4.push_back(dEtaD3435);
+            saveParaCase4.push_back(dEtaD3445);
+            saveParaCase4.push_back(dEtaD3545);
+            saveParaCase4.push_back(ddPhi);
         }
+    
     } // }}} 
 
-    if( eta_region == 7 ) // D3456
-    { // {{{ 
-        //// -------- D345 --------- //// 
-        if( fDisk3.size() != 0 && fDisk4.size() != 0 && fDisk5.size() != 0 )
-        {
-            for(std::vector<track>::iterator it1 = fDisk3.begin(); it1 != fDisk3.end(); ++it1)
-            {
-                TVector3 pv1; // PVD3
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
 
-                for(std::vector<track>::iterator it2 = fDisk4.begin(); it2 != fDisk4.end(); ++it2)
-                {
-                    TVector3 pp1; // D3D4
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
 
-                    TVector3 pv2; // PVD4
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
-
-                    for(std::vector<track>::iterator it3 = fDisk5.begin(); it3 != fDisk5.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D4D5
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
-
-                        TVector3 pp3; // D3D5
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
-
-                        TVector3 pv3; // PVD5
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
-
-                        Float_t dEtaD3445 = pp1_eta - pp2_eta;
-                        Float_t dEtaD3435 = pp1_eta - pp3_eta;
-                        Float_t dEtaD3545 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD53 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVD54 = pv3_eta - pv2_eta;
-
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD3 - D3D4
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
-
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D3D4 - D4D5
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
-
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
-
-                        saveParaCase1.push_back(dEtaD3435);
-                        saveParaCase1.push_back(dEtaD3445);
-                        saveParaCase1.push_back(dEtaD3545);
-                        saveParaCase1.push_back(dEtaPVD54);
-                        saveParaCase1.push_back(dEtaPVD53);
-                        saveParaCase1.push_back(ddPhi);
-                    }
-                }
-            }
-        }
-
-        //// -------- D346 --------- //// 
-        if( fDisk3.size() != 0 && fDisk4.size() != 0 && fDisk6.size() != 0 )
-        {
-            for(std::vector<track>::iterator it1 = fDisk3.begin(); it1 != fDisk3.end(); ++it1)
-            {
-                TVector3 pv1; // PVD3
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_eta = pv1.Eta();
-                Float_t pv1_phi = pv1.Phi();
-
-                for(std::vector<track>::iterator it2 = fDisk4.begin(); it2 != fDisk4.end(); ++it2)
-                {
-                    TVector3 pp1; // D3D4
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
-
-                    TVector3 pv2; // PVD4
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
-
-                    for(std::vector<track>::iterator it3 = fDisk6.begin(); it3 != fDisk6.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D4D6
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
-
-                        TVector3 pp3; // D3D6
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
-
-                        TVector3 pv3; // PVD6
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
-
-                        Float_t dEtaD3446 = pp1_eta - pp2_eta;
-                        Float_t dEtaD3436 = pp1_eta - pp3_eta;
-                        Float_t dEtaD3646 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD63 = pv3_eta - pv1_eta;
-                        Float_t dEtaPVD64 = pv3_eta - pv2_eta;
-
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD3 - D3D4
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
-
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D3D4 - D4D6
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
-
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
-
-                        saveParaCase2.push_back(dEtaD3436);
-                        saveParaCase2.push_back(dEtaD3446);
-                        saveParaCase2.push_back(dEtaD3646);
-                        saveParaCase2.push_back(dEtaPVD64);
-                        saveParaCase2.push_back(dEtaPVD63);
-                        saveParaCase2.push_back(ddPhi);
-                    }
-                }
-            }
-        }
-
-        //// -------- D356 --------- //// 
-        if( fDisk3.size() != 0 && fDisk5.size() != 0 && fDisk6.size() != 0 )
-        {
-            for(std::vector<track>::iterator it1 = fDisk3.begin(); it1 != fDisk3.end(); ++it1)
-            {
-                TVector3 pv1; // PVD3
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = fDisk5.begin(); it2 != fDisk5.end(); ++it2)
-                {
-                    TVector3 pp1; // D3D5
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
-
-                    TVector3 pv2; // PVD5
-                    pv2.SetXYZ( (*it2).pos_x - simVx->at(0), (*it2).pos_y - simVy->at(0), (*it2).pos_z - simVz->at(0) );
-                    Float_t pv2_eta = pv2.Eta();
-
-                    for(std::vector<track>::iterator it3 = fDisk6.begin(); it3 != fDisk6.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D5D6
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
-
-                        TVector3 pp3; // D3D6
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
-
-                        TVector3 pv3; // PVD6
-                        pv3.SetXYZ( (*it3).pos_x - simVx->at(0), (*it3).pos_y - simVy->at(0), (*it3).pos_z - simVz->at(0) );
-                        Float_t pv3_eta = pv3.Eta();
-
-                        Float_t dEtaD3556 = pp1_eta - pp2_eta;
-                        Float_t dEtaD3536 = pp1_eta - pp3_eta;
-                        Float_t dEtaD3656 = pp3_eta - pp2_eta;
-                        Float_t dEtaPVD65 = pv3_eta - pv2_eta;
-
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD3 - D3D5
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
-
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D3D5 - D5D6
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
-
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
-
-                        saveParaCase3.push_back(dEtaD3536);
-                        saveParaCase3.push_back(dEtaD3556);
-                        saveParaCase3.push_back(dEtaD3656);
-                        saveParaCase3.push_back(dEtaPVD65);
-                        saveParaCase3.push_back(ddPhi);
-                    }
-                }
-            }
-        }
-
-        //// -------- D456 --------- //// 
-        if( fDisk4.size() != 0 && fDisk5.size() != 0 && fDisk6.size() != 0 )
-        {
-            for(std::vector<track>::iterator it1 = fDisk4.begin(); it1 != fDisk4.end(); ++it1)
-            {
-                TVector3 pv1; // PVD4
-                pv1.SetXYZ( (*it1).pos_x - simVx->at(0), (*it1).pos_y - simVy->at(0), (*it1).pos_z - simVz->at(0) );
-                Float_t pv1_phi = pv1.Phi();
-                for(std::vector<track>::iterator it2 = fDisk5.begin(); it2 != fDisk5.end(); ++it2)
-                {
-                    TVector3 pp1; // D4D5
-                    pp1.SetXYZ( (*it2).pos_x - (*it1).pos_x, (*it2).pos_y - (*it1).pos_y, (*it2).pos_z - (*it1).pos_z );
-                    Float_t pp1_phi = pp1.Phi();
-                    Float_t pp1_eta = pp1.Eta();
-
-                    for(std::vector<track>::iterator it3 = fDisk6.begin(); it3 != fDisk6.end(); ++it3 )
-                    {
-                        TVector3 pp2; // D5D6
-                        pp2.SetXYZ( (*it3).pos_x - (*it2).pos_x, (*it3).pos_y - (*it2).pos_y, (*it3).pos_z - (*it2).pos_z );
-                        Float_t pp2_phi = pp2.Phi();
-                        Float_t pp2_eta = pp2.Eta();
-
-                        TVector3 pp3; // D4D6
-                        pp3.SetXYZ( (*it3).pos_x - (*it1).pos_x, (*it3).pos_y - (*it1).pos_y, (*it3).pos_z - (*it1).pos_z );
-                        Float_t pp3_eta = pp3.Eta();
-
-                        Float_t dEtaD4556 = pp1_eta - pp2_eta;
-                        Float_t dEtaD4546 = pp1_eta - pp3_eta;
-                        Float_t dEtaD4656 = pp3_eta - pp2_eta;
-
-                        Float_t deltaPhi1 = pv1_phi - pp1_phi; // dPhi = PVD4 - D4D5
-                        if( deltaPhi1 >= TMath::Pi() ) deltaPhi1 -= 2.*TMath::Pi();
-                        if( deltaPhi1 < -TMath::Pi() ) deltaPhi1 += 2.*TMath::Pi();
-
-                        Float_t deltaPhi2 = pp1_phi - pp2_phi; // dPhi = D4D5 - D5D6
-                        if( deltaPhi2 >= TMath::Pi() ) deltaPhi2 -= 2.*TMath::Pi();
-                        if( deltaPhi2 < -TMath::Pi() ) deltaPhi2 += 2.*TMath::Pi();
-
-                        Float_t ddPhi = fabs(deltaPhi1) - fabs(deltaPhi2);
-
-                        saveParaCase4.push_back(dEtaD4546);
-                        saveParaCase4.push_back(dEtaD4556);
-                        saveParaCase4.push_back(dEtaD4656);
-                        saveParaCase4.push_back(ddPhi);
-                    }
-                }
-            }
-        }
-    } // }}}
 }
 
 #endif // #ifdef test_cxx
