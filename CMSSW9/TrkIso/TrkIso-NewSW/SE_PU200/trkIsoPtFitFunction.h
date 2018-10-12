@@ -6,7 +6,7 @@ float pT_fit(int region, int combi, float dPhi)
     Float_t p[2] = {};
     Float_t x = fabs(dPhi);
 
-    if( region == 1 || region == 2 )
+    if( region == 1 )
     {
         if( combi == 1 ) {
             p[0] = 0.066493; p[1] = -0.608042;
@@ -19,7 +19,7 @@ float pT_fit(int region, int combi, float dPhi)
         }
     }
       
-    if( region == 3 )
+    if( region == 2 )
     {
         if( combi == 1 ) {
             p[0] = 0.066493; p[1] = -0.608042;
@@ -32,7 +32,7 @@ float pT_fit(int region, int combi, float dPhi)
         }
     }
     
-    if( region == 4 )
+    if( region == 3 )
     {
         if( combi == 1 ) {
             p[0] = 0.0717142; p[1] = -0.769743;
@@ -45,7 +45,7 @@ float pT_fit(int region, int combi, float dPhi)
         }
     }
     
-    if( region == 5 )
+    if( region == 4 )
     {
         if( combi == 1 ) {
             p[0] = 0.0491693; p[1] = -0.705809;
@@ -57,7 +57,16 @@ float pT_fit(int region, int combi, float dPhi)
             p[0] = 0.050818; p[1] = -0.583872;
         }
     }
-    
+   
+    if( region == 5 ) {
+        if( combi == 1 || combi == 3 ) {
+            p[0] = 0.0520133; p[1] = -0.1448;
+        }
+        if( combi == 2 || combi == 4 ) { 
+            p[0] = 0.0534344; p[1] = -0.0481642;
+        }
+    }
+
     if( region == 6 )
     {
         if( combi == 1 ) {
@@ -68,19 +77,6 @@ float pT_fit(int region, int combi, float dPhi)
         }
         if( combi == 4 ) {
             p[0] = 0.0568861; p[1] = 0.398326;
-        }
-    }
-    
-    if( region == 7 )
-    {
-        if( combi == 1 ) {
-            p[0] = 0.0568861; p[1] = 0.398326;
-        }
-        if( combi == 2 || combi == 3 ) {
-            p[0] = 0.0642195; p[1] = 0.262775;
-        }
-        if( combi == 4 ) {
-            p[0] = 0.0642301; p[1] = 0.0516492;
         }
     }
     
