@@ -26,11 +26,9 @@
 #include <TCanvas.h>
 #include <TLorentzVector.h>
 
-//#include "withEM_Tower.h"
-
-#include "../../../withEM_SingleCrys_900pre6_v2.h"
-#include "../../../withoutEM_SingleCrys_900pre6.h"
-#include "../../../RegionOfInterest.h"
+#include "../../../roi_v2.h"
+#include "../../../withEM_v2.h"
+#include "../../../withoutEM_v2.h"
 
 using namespace std;
 class test {
@@ -393,7 +391,7 @@ public :
    int eta_region;
 
    int withoutEM_count_Ele, withEM_count_Ele;
-   bool PixTrkPassed;
+   bool PixTrkPassed; bool TrkIsoPassed;
    int pass_count_wo4thPix, pass_count_wo3thPix, pass_count_wo2thPix, pass_count_wo1thPix;
    int woEM_pass_Ele_count_wo4thPix, woEM_pass_Ele_count_wo3thPix, woEM_pass_Ele_count_wo2thPix, woEM_pass_Ele_count_wo1thPix;
    int wEM_pass_Ele_count_wo4thPix, wEM_pass_Ele_count_wo3thPix, wEM_pass_Ele_count_wo2thPix, wEM_pass_Ele_count_wo1thPix;
@@ -629,7 +627,6 @@ public :
    std::vector<track> L134;
    std::vector<track> L234;
 
-
    inline float deltaPhi(float phi1, float phi2) { 
      float result = phi1 - phi2;
      while (result > float(M_PI)) result -= float(2*M_PI);
@@ -760,31 +757,14 @@ test::test(TTree *tree) : fChain(0)
    pixtrk_tree->Branch("trigger_bit_width_iso",&trigger_bit_width_iso);
    pixtrk_tree->Branch("pix_comb",&pix_comb);
 
-   pixtrk_tree->Branch("nPix123_segments",&nPix123_segments,"nPix123_segments/I");
-   pixtrk_tree->Branch("nPix124_segments",&nPix124_segments,"nPix124_segments/I");
-   pixtrk_tree->Branch("nPix134_segments",&nPix134_segments,"nPix134_segments/I");
-   pixtrk_tree->Branch("nPix234_segments",&nPix234_segments,"nPix234_segments/I");
-
    pixtrk_tree->Branch("ntCl_match",&ntCl_match);
    pixtrk_tree->Branch("ntCl_iso_match",&ntCl_iso_match);
-   pixtrk_tree->Branch("isTrack_match",&isTrack_match);
-   pixtrk_tree->Branch("chi2",&chi2);
-   pixtrk_tree->Branch("track_dr",&track_dr);
    pixtrk_tree->Branch("withoutEM_match",&withoutEM_match);
    pixtrk_tree->Branch("withEM_match",&withEM_match);
-
-   pixtrk_tree->Branch("ntfirstPix",&ntfirstPix);
-   pixtrk_tree->Branch("ntsecondPix",&ntsecondPix);
-   pixtrk_tree->Branch("ntthirdPix",&ntthirdPix);
-   pixtrk_tree->Branch("ntfourthPix",&ntfourthPix);
 
    pixtrk_tree->Branch("nt_genPhi",&nt_genPhi,"nt_genPhi/F");
    pixtrk_tree->Branch("nt_genEta",&nt_genEta,"nt_genEta/F");
    pixtrk_tree->Branch("nt_genPt",&nt_genPt,"nt_genPt/F");
-
-   pixtrk_tree->Branch("matchedEgEt",&matchedEgEt,"matchedEgEt/F");
-   pixtrk_tree->Branch("matchedEgEta",&matchedEgEta,"matchedEgEta/F");
-   pixtrk_tree->Branch("matchedEgPhi",&matchedEgPhi,"matchedEgPhi/F");
 
    pixtrk_tree->Branch("nt_lastSimtkpt",&nt_lastSimtkpt,"nt_lastSimtkpt/F");
    pixtrk_tree->Branch("nt_initialSimtkpt",&nt_initialSimtkpt,"nt_initialSimtkpt/F");
@@ -1333,7 +1313,8 @@ void test::StorePixelHit(int region){
            current_hit.SetXYZ( bRecHitGx->at(a), bRecHitGy->at(a), bRecHitGz->at(a) );
            Dphi = deltaPhi( current_hit.Phi(), EgPhi);
 
-           if( region >= 1 && region <= 5 ){
+
+           if( region < 5 ){
              if( bRecHitLayer->at(a) == 1 ){ // First layer
                if( Dphi < L1_Dphi_cut1 && Dphi > L1_Dphi_cut2 ){
                   Dphi_Ele_pass = 1; el_or_po = 1;
@@ -1348,8 +1329,7 @@ void test::StorePixelHit(int region){
                }
              }
            }
-
-           if( region == 1 || region == 2 || region == 3 || region == 4){
+           if( region == 1 || region == 2 || region == 3 ){
               if( bRecHitLayer->at(a) == 2 ){ // Second layer
                 if( Dphi < L2_Dphi_cut1 && Dphi > L2_Dphi_cut2){
                    Dphi_Ele_pass = 1; el_or_po = 1;
@@ -1364,7 +1344,7 @@ void test::StorePixelHit(int region){
                 }
               }
            }
-           if( region == 1 || region == 2 || region == 3){
+           if( region == 1 || region == 2 ){
              if( bRecHitLayer->at(a) == 3 ){ // Third layer 
                if( Dphi < L3_Dphi_cut1 && Dphi > L3_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
@@ -1379,7 +1359,7 @@ void test::StorePixelHit(int region){
                }
              }
            }
-           if( region == 1 || region == 2 ){
+           if( region == 1 ){
               if( bRecHitLayer->at(a) == 4 ){ // Fourth layer
                 if( Dphi < L4_Dphi_cut1 && Dphi > L4_Dphi_cut2){
                    Dphi_Ele_pass = 1; el_or_po = 1;
@@ -1404,9 +1384,9 @@ void test::StorePixelHit(int region){
            current_hit.SetXYZ( fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a) );
            Dphi = deltaPhi(current_hit.Phi(), EgPhi);
 
-           if( region == 7 ){
+           if( region == 5 ){
 
-             if( fRecHitDisk->at(a) == 3 ){ // first disk
+             if( fRecHitDisk->at(a) == 1 ){ // first disk
                if( Dphi < L1_Dphi_cut1 && Dphi > L1_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
                }
@@ -1420,7 +1400,7 @@ void test::StorePixelHit(int region){
                }
              }
 
-             if( fRecHitDisk->at(a) == 4 ){ // second disk
+             if( fRecHitDisk->at(a) == 2 ){ // second disk
                if( Dphi < L2_Dphi_cut1 && Dphi > L2_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
                }
@@ -1433,7 +1413,7 @@ void test::StorePixelHit(int region){
                  second_layer_hits_Ele_or_Pos.push_back(el_or_po);
                }
              }
-             if( fRecHitDisk->at(a) == 5 ){ // fourth disk
+             if( fRecHitDisk->at(a) == 3 ){ // third disk
                if( Dphi < L3_Dphi_cut1 && Dphi > L3_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
                }
@@ -1446,7 +1426,7 @@ void test::StorePixelHit(int region){
                  third_layer_hits_Ele_or_Pos.push_back(el_or_po);
                }
              }
-             if( fRecHitDisk->at(a) == 6 ){ // fifth disk
+             if( fRecHitDisk->at(a) == 4 ){ // fourth disk
                if( Dphi < L4_Dphi_cut1 && Dphi > L4_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
                }
@@ -1459,10 +1439,9 @@ void test::StorePixelHit(int region){
                  fourth_layer_hits_Ele_or_Pos.push_back(el_or_po);
                }
              }
-
            }
-	 if( region == 6 ){
 
+           if( region == 6 ){
              if( fRecHitDisk->at(a) == 2 ){ // second disk
                if( Dphi < L1_Dphi_cut1 && Dphi > L1_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
@@ -1490,7 +1469,6 @@ void test::StorePixelHit(int region){
                  second_layer_hits_Ele_or_Pos.push_back(el_or_po);
                }
              }
-
              if( fRecHitDisk->at(a) == 4 ){ // fourth disk
                if( Dphi < L3_Dphi_cut1 && Dphi > L3_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
@@ -1521,13 +1499,12 @@ void test::StorePixelHit(int region){
 
            }
 
-           if( region == 5 ){
-
-             if( fRecHitDisk->at(a) == 1 ){ // second disk
-               if( Dphi < L2_Dphi_cut1 && Dphi > L2_Dphi_cut2){
+           if( region == 4 ){
+             if( fRecHitDisk->at(a) == 1 ){ // first disk
+               if( Dphi < L1_Dphi_cut1 && Dphi > L1_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
                }
-               if( Dphi > -L2_Dphi_cut1 && Dphi < -L2_Dphi_cut2){
+               if( Dphi > -L1_Dphi_cut1 && Dphi < -L1_Dphi_cut2){
                   Dphi_Pos_pass = 1; el_or_po = el_or_po + 2;
                }
                if( Dphi_Ele_pass || Dphi_Pos_pass ){
@@ -1536,12 +1513,11 @@ void test::StorePixelHit(int region){
                  second_layer_hits_Ele_or_Pos.push_back(el_or_po);
                }
              }
-
-             if( fRecHitDisk->at(a) == 2 ){ // third disk
-               if( Dphi < L3_Dphi_cut1 && Dphi > L3_Dphi_cut2){
+             if( fRecHitDisk->at(a) == 2 ){ // second disk
+               if( Dphi < L2_Dphi_cut1 && Dphi > L2_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
                }
-               if( Dphi > -L3_Dphi_cut1 && Dphi < -L3_Dphi_cut2){
+               if( Dphi > -L2_Dphi_cut1 && Dphi < -L2_Dphi_cut2){
                   Dphi_Pos_pass = 1; el_or_po = el_or_po + 2;
                }
                if( Dphi_Ele_pass || Dphi_Pos_pass ){
@@ -1550,12 +1526,11 @@ void test::StorePixelHit(int region){
                  third_layer_hits_Ele_or_Pos.push_back(el_or_po);
                }
              }
-
-             if( fRecHitDisk->at(a) == 3 ){ // fourth disk
-               if( Dphi < L4_Dphi_cut1 && Dphi > L4_Dphi_cut2){
+             if( fRecHitDisk->at(a) == 3 ){ // third disk
+               if( Dphi < L3_Dphi_cut1 && Dphi > L3_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
                }
-               if( Dphi > -L4_Dphi_cut1 && Dphi < -L4_Dphi_cut2){
+               if( Dphi > -L3_Dphi_cut1 && Dphi < -L3_Dphi_cut2){
                   Dphi_Pos_pass = 1; el_or_po = el_or_po + 2;
                }
                if( Dphi_Ele_pass || Dphi_Pos_pass ){
@@ -1564,11 +1539,9 @@ void test::StorePixelHit(int region){
                  fourth_layer_hits_Ele_or_Pos.push_back(el_or_po);
                }
              }
-
-
            }
 
-           if( region == 4 ){
+           if( region == 3 ){
              if( fRecHitDisk->at(a) == 1 ){ // first disk
                if( Dphi < L3_Dphi_cut1 && Dphi > L3_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
@@ -1582,7 +1555,6 @@ void test::StorePixelHit(int region){
                  third_layer_hits_Ele_or_Pos.push_back(el_or_po);
                }
              }
-
              if( fRecHitDisk->at(a) == 2 ){ // second disk
                if( Dphi < L4_Dphi_cut1 && Dphi > L4_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
@@ -1597,9 +1569,8 @@ void test::StorePixelHit(int region){
                }
              }
            }
-
-           if( region == 3 ){
-             if( fRecHitDisk->at(a) == 1 ){ // second disk
+           if( region == 2 ){
+             if( fRecHitDisk->at(a) == 1 ){ // first disk
                if( Dphi < L4_Dphi_cut1 && Dphi > L4_Dphi_cut2){
                   Dphi_Ele_pass = 1; el_or_po = 1;
                }
@@ -1615,11 +1586,6 @@ void test::StorePixelHit(int region){
            }
 
         }
-
-      ntfirstPix.push_back(layers[1]);
-      ntsecondPix.push_back(layers[2]);
-      ntthirdPix.push_back(layers[3]);
-      ntfourthPix.push_back(layers[4]);
 }
 
 void test::SetROI(int region){
@@ -1628,27 +1594,26 @@ void test::SetROI(int region){
   float upper_width = 0.055;
   float lower_width = 0.055;
 
-
-  L1_Dphi_cut1 = ROI_func(region, EgEt);
-  L1_Dphi_cut2 = ROI_func(region, EgEt);
+  L1_Dphi_cut1 = ROI_func(region, 0, EgEt);
+  L1_Dphi_cut2 = ROI_func(region, 0, EgEt);
 
   L1_Dphi_cut1 = L1_Dphi_cut1 + upper_width;
   L1_Dphi_cut2 = L1_Dphi_cut2 - lower_width;
 
-  L2_Dphi_cut1 = ROI_func(region, EgEt);
-  L2_Dphi_cut2 = ROI_func(region, EgEt);
+  L2_Dphi_cut1 = ROI_func(region, 1, EgEt);
+  L2_Dphi_cut2 = ROI_func(region, 1, EgEt);
 
   L2_Dphi_cut1 = L2_Dphi_cut1 + upper_width;
   L2_Dphi_cut2 = L2_Dphi_cut2 - lower_width;
 
-  L3_Dphi_cut1 = ROI_func(region, EgEt);
-  L3_Dphi_cut2 = ROI_func(region, EgEt);
+  L3_Dphi_cut1 = ROI_func(region, 2, EgEt);
+  L3_Dphi_cut2 = ROI_func(region, 2, EgEt);
 
   L3_Dphi_cut1 = L3_Dphi_cut1 + upper_width;
   L3_Dphi_cut2 = L3_Dphi_cut2 - lower_width;
 
-  L4_Dphi_cut1 = ROI_func(region, EgEt);
-  L4_Dphi_cut2 = ROI_func(region, EgEt);
+  L4_Dphi_cut1 = ROI_func(region, 3, EgEt);
+  L4_Dphi_cut2 = ROI_func(region, 3, EgEt);
 
   L4_Dphi_cut1 = L4_Dphi_cut1 + upper_width;
   L4_Dphi_cut2 = L4_Dphi_cut2 - lower_width;
@@ -1661,38 +1626,38 @@ void test::SetSingalBoundary(int region, double eg_dphi, double eg_deta, double 
       float EG_pixel_dphi_lower_width = eg_dphi;
 
       // pixel-EG 
-      L12_phi_upper =  SW_func2_dphi_v2(region, EgEt);
-      L12_phi_bellow = SW_func2_dphi_v2(region, EgEt);
+      L12_phi_upper =  SW_func2_dphi_v2(region, 0, EgEt);
+      L12_phi_bellow = SW_func2_dphi_v2(region, 0, EgEt);
  
       L12_phi_upper = L12_phi_upper   + EG_pixel_dphi_upper_width;
       L12_phi_bellow = L12_phi_bellow - EG_pixel_dphi_lower_width;
 
-      L13_phi_upper =  SW_func2_dphi_v2(region, EgEt);
-      L13_phi_bellow = SW_func2_dphi_v2(region, EgEt);
+      L13_phi_upper =  SW_func2_dphi_v2(region, 1, EgEt);
+      L13_phi_bellow = SW_func2_dphi_v2(region, 1, EgEt);
 
       L13_phi_upper =  L13_phi_upper  + EG_pixel_dphi_upper_width;
       L13_phi_bellow = L13_phi_bellow - EG_pixel_dphi_lower_width;
 
-      L14_phi_upper =  SW_func2_dphi_v2(region, EgEt);
-      L14_phi_bellow = SW_func2_dphi_v2(region, EgEt);
+      L14_phi_upper =  SW_func2_dphi_v2(region, 2, EgEt);
+      L14_phi_bellow = SW_func2_dphi_v2(region, 2, EgEt);
 
       L14_phi_upper =  L14_phi_upper  + EG_pixel_dphi_upper_width;
       L14_phi_bellow = L14_phi_bellow - EG_pixel_dphi_lower_width;
 
-      L23_phi_upper =  SW_func2_dphi_v2(region, EgEt);
-      L23_phi_bellow = SW_func2_dphi_v2(region, EgEt);
+      L23_phi_upper =  SW_func2_dphi_v2(region, 3, EgEt);
+      L23_phi_bellow = SW_func2_dphi_v2(region, 3, EgEt);
 
       L23_phi_upper =  L23_phi_upper  + EG_pixel_dphi_upper_width;
       L23_phi_bellow = L23_phi_bellow - EG_pixel_dphi_lower_width;
 
-      L24_phi_upper =  SW_func2_dphi_v2(region, EgEt);
-      L24_phi_bellow = SW_func2_dphi_v2(region, EgEt);
+      L24_phi_upper =  SW_func2_dphi_v2(region, 4, EgEt);
+      L24_phi_bellow = SW_func2_dphi_v2(region, 4, EgEt);
 
       L24_phi_upper =  L24_phi_upper  + EG_pixel_dphi_upper_width;
       L24_phi_bellow = L24_phi_bellow - EG_pixel_dphi_lower_width;
 
-      L34_phi_upper =  SW_func2_dphi_v2(region, EgEt);
-      L34_phi_bellow = SW_func2_dphi_v2(region, EgEt);
+      L34_phi_upper =  SW_func2_dphi_v2(region, 5, EgEt);
+      L34_phi_bellow = SW_func2_dphi_v2(region, 5, EgEt);
 
       L34_phi_upper = L34_phi_upper   + EG_pixel_dphi_upper_width;
       L34_phi_bellow = L34_phi_bellow - EG_pixel_dphi_lower_width;
@@ -1803,26 +1768,26 @@ void test::SetSingalBoundary(int region, double eg_dphi, double eg_deta, double 
       float pixel_pixel_deta_upper_width = sa_deta;
       float pixel_pixel_deta_lower_width = sa_deta;
 
-      L123_DEta_cut1 = SW_func1_deta_v2(0, EgEt);
-      L123_DEta_cut2 = SW_func1_deta_v2(0, EgEt);
+      L123_DEta_cut1 = SW_func1_deta_v2(EgEt);
+      L123_DEta_cut2 = SW_func1_deta_v2(EgEt);
 
       L123_DEta_cut1 = L123_DEta_cut1 + pixel_pixel_deta_upper_width;
       L123_DEta_cut2 = L123_DEta_cut2 - pixel_pixel_deta_lower_width;
 
-      L124_DEta_cut1 = SW_func1_deta_v2(1, EgEt);
-      L124_DEta_cut2 = SW_func1_deta_v2(1 ,EgEt);
+      L124_DEta_cut1 = SW_func1_deta_v2(EgEt);
+      L124_DEta_cut2 = SW_func1_deta_v2(EgEt);
 
       L124_DEta_cut1 = L124_DEta_cut1 + pixel_pixel_deta_upper_width;
       L124_DEta_cut2 = L124_DEta_cut2 - pixel_pixel_deta_lower_width;
 
-      L134_DEta_cut1 = SW_func1_deta_v2(2, EgEt);
-      L134_DEta_cut2 = SW_func1_deta_v2(2, EgEt);
+      L134_DEta_cut1 = SW_func1_deta_v2(EgEt);
+      L134_DEta_cut2 = SW_func1_deta_v2(EgEt);
 
       L134_DEta_cut1 = L134_DEta_cut1 + pixel_pixel_deta_upper_width;
       L134_DEta_cut2 = L134_DEta_cut2 - pixel_pixel_deta_lower_width;
 
-      L234_DEta_cut1 = SW_func1_deta_v2(3, EgEt);
-      L234_DEta_cut2 = SW_func1_deta_v2(3, EgEt);
+      L234_DEta_cut1 = SW_func1_deta_v2(EgEt);
+      L234_DEta_cut2 = SW_func1_deta_v2(EgEt);
 
       L234_DEta_cut1 = L234_DEta_cut1 + pixel_pixel_deta_upper_width;
       L234_DEta_cut2 = L234_DEta_cut2 - pixel_pixel_deta_lower_width;
@@ -2169,13 +2134,12 @@ if( L034_pass_Pos && L34_EM_Pos &&
 void test::StorePixelHitForIso(int region, float recoPV){
 
    // Store pixel clusters in vectors based on eta region
-   // 0 < eta < 0.8 : region = 1
-   // 0.8 < eta < 1.15 : region = 2
-   // 1.15 < eta < 1.4 : region = 3
-   // 1.4 < eta < 1.7 : region = 4
-   // 1.7 < eta < 2.25 : region = 5
-   // 2.25 < eta < 2.7 : region = 6
-   // 2.7 < eta < 3.0 : region = 7
+   // 0.0 < eta < 0.8 : region = 1  L1234
+   // 0.8 < eta < 1.4 : region = 2  L123D1
+   // 1.4 < eta < 1.7 : region = 3  L12D12
+   // 1.7 < eta < 2.1 : region = 4  L1D123
+   // 2.1 < eta < 2.7 : region = 5  D1234
+   // 2.7 < eta < 3.0 : region = 6  D2345
 
         for(int a=0; a<bRecHitN; a++){
            TVector3 current_hit;
@@ -2187,25 +2151,25 @@ void test::StorePixelHitForIso(int region, float recoPV){
            if( fabs(Dphi) > 0.3 ) continue;
            if( DR > 0.3 ) continue;
 
-           if( region >= 1 && region <= 5 ){
+           if( region <= 4 ){
                if( bRecHitLayer->at(a) == 1 ){ // First layer
                    first_hits.push_back( TVector3(bRecHitGx->at(a), bRecHitGy->at(a), bRecHitGz->at(a)));
                }
            }
            
-           if( region >= 1 && region <= 4 ) {
+           if( region >= 1 && region <= 3 ) {
                if( bRecHitLayer->at(a) == 2 ){ // Second layer
                    second_hits.push_back( TVector3(bRecHitGx->at(a), bRecHitGy->at(a), bRecHitGz->at(a)));
                }
            }
            
-           if( region >= 1 && region <= 3){
+           if( region >= 1 && region <= 2 ){
                if( bRecHitLayer->at(a) == 3 ){ // Third layer 
                    third_hits.push_back( TVector3(bRecHitGx->at(a), bRecHitGy->at(a), bRecHitGz->at(a)));
                }
            }
            
-           if( region == 1 || region == 2 ){
+           if( region == 1 ){
                if( bRecHitLayer->at(a) == 4 ){ // Fourth layer
                    fourth_hits.push_back( TVector3(bRecHitGx->at(a), bRecHitGy->at(a), bRecHitGz->at(a)));
                }
@@ -2221,21 +2185,6 @@ void test::StorePixelHitForIso(int region, float recoPV){
            Float_t Deta = current_hit.Eta() - EgEta;
            Float_t DR = sqrt(pow(Dphi,2)+pow(Deta,2));
            if( DR > 0.3 ) continue;
-
-           if( region == 7 ){
-               if( fRecHitDisk->at(a) == 3 ){ // third disk
-                   first_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
-               }
-               if( fRecHitDisk->at(a) == 4 ){ // fourth disk
-                   second_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
-               }
-               if( fRecHitDisk->at(a) == 5 ){ // fifth disk
-                   third_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
-               }
-               if( fRecHitDisk->at(a) == 6 ){ // sixth disk
-                   fourth_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
-               }
-           }
 
            if( region == 6 ){
                if( fRecHitDisk->at(a) == 2 ){ // second disk
@@ -2254,6 +2203,20 @@ void test::StorePixelHitForIso(int region, float recoPV){
 
            if( region == 5 ){
                if( fRecHitDisk->at(a) == 1 ){ // first disk
+                   first_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
+               }
+               if( fRecHitDisk->at(a) == 2 ){ // second disk
+                   second_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
+               }
+               if( fRecHitDisk->at(a) == 3 ){ // third disk
+                   third_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
+               }
+               if( fRecHitDisk->at(a) == 4 ){ // fourth disk
+                   fourth_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
+               }
+           }
+           if( region == 4 ){
+               if( fRecHitDisk->at(a) == 1 ){ // first disk
                    second_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
                }
 
@@ -2266,7 +2229,7 @@ void test::StorePixelHitForIso(int region, float recoPV){
                }
            }
 
-           if( region == 4 ){
+           if( region == 3 ){
                if( fRecHitDisk->at(a) == 1 ){ // first disk
                    third_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
                }
@@ -2275,12 +2238,11 @@ void test::StorePixelHitForIso(int region, float recoPV){
                }
            }
 
-           if( region == 3 ){
+           if( region == 2 ){
                if( fRecHitDisk->at(a) == 1 ){ // first disk
                    fourth_hits.push_back( TVector3(fRecHitGx->at(a), fRecHitGy->at(a), fRecHitGz->at(a)));
                }
            }
-
 
         } // pixel disk loop
 }
@@ -2299,45 +2261,36 @@ void test::IsoWith_1st2nd3rd(int region, float recoPV)
         ddPhi_left = -0.0025; ddPhi_right = 0.0025;
     }
     if( region == 2 ) {
-        dzCut1 = 0.0345; dzCut2 = 0.0345; dzCut3 = 0.0335; 
-        dEtappCut1 = 0.00136; dEtappCut2 = 0.00228; dEtappCut3 = 0.00137; 
-        dEtaPvCut1 = 0.00086; dEtaPvCut2 = 0.00136;
-        ddPhi_left = -0.003; ddPhi_right = 0.002;
+        dzCut1 = 0.0205; dzCut2 = 0.0185; dzCut3 = 0.0205; 
+        dEtappCut1 = 0.00136; dEtappCut2 = 0.00226; dEtappCut3 = 0.00110; 
+        dEtaPvCut1 = 0.00070; dEtaPvCut2 = 0.00136;
+        ddPhi_left = -0.0025; ddPhi_right = 0.002;
     }
     if( region == 3 ) {
-        dzCut1 = 0.0385; dzCut2 = 0.0375; dzCut3 = 0.0365; 
-        dEtappCut1 = 0.00096; dEtappCut2 = 0.00188; dEtappCut3 = 0.00096; 
-        dEtaPvCut1 = 0.00046; dEtaPvCut2 = 0.00096;
-        ddPhi_left = -0.0025; ddPhi_right = 0.0015;
+        dzCut1 = 0.0290; dzCut2 = 0.0280; dzCut3 = 0.0570; 
+        dEtappCut1 = 0.00138; dEtappCut2 = 0.00230; dEtappCut3 = 0.00112; 
+        dEtaPvCut1 = 0.00070; dEtaPvCut2 = 0.00092;
+        ddPhi_left = -0.0035; ddPhi_right = 0.002;
     }
     if( region == 4 ) {
-        dzCut1 = 0.0355; dzCut2 = 0.0355; dzCut3 = 0.0405; 
-        dEtappCut1 = 0.00141; dEtappCut2 = 0.00232; dEtappCut3 = 0.00141; 
-        dEtaPvCut1 = 0.00088; dEtaPvCut2 = 0.00092;
-        ddPhi_left = -0.003; ddPhi_right = 0.0015;
-    }
-    if( region == 5 ) {
-        dzCut1 = 0.0365; dzCut2 = 0.0365; dzCut3 = 0.1215; 
-        dEtappCut1 = 0.00285; dEtappCut2 = 0.00572; dEtappCut3 = 0.00383; 
-        dEtaPvCut1 = 0.00108; dEtaPvCut2 = 0.00092;
+        dzCut1 = 0.0360; dzCut2 = 0.0280; dzCut3 = 0.0940; 
+        dEtappCut1 = 0.00280; dEtappCut2 = 0.00560; dEtappCut3 = 0.00374; 
+        dEtaPvCut1 = 0.00102; dEtaPvCut2 = 0.00092;
         ddPhi_left = -0.002; ddPhi_right = 0.0025;
     }
-    
-    // Since the 1st layer was taken out from combinations deltaZ cut becomes simply 0.2 (cm)
+    if( region == 5 ) {
+        dzCut1 = 0.184; dzCut2 = 0.163; dzCut3 = 0.189; 
+        dEtappCut1 = 0.00702; dEtappCut2 = 0.01; dEtappCut3 = 0.00530; 
+        dEtaPvCut1 = 0.00138; dEtaPvCut2 = 0.00168;
+        ddPhi_left = -0.003; ddPhi_right = 0.003;
+    }
     if( region == 6 ) {
-        //dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
-        dzCut1 = 0.195; dzCut2 = 0.146; dzCut3 = 0.195; 
-        dEtappCut1 = 0.00632; dEtappCut2 = 0.00336; dEtappCut3 = 0.00633; 
-        dEtaPvCut1 = 0.00131; dEtaPvCut2 = 0.00138;
-        ddPhi_left = -0.0025; ddPhi_right = 0.0035;
-    }
-    if( region == 7 ) {
         dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
-        dEtappCut1 = 0.00652; dEtappCut2 = 0.00928; dEtappCut3 = 0.00544; 
-        dEtaPvCut1 = 0.00136; dEtaPvCut2 = 0.00174;
-        ddPhi_left = -0.0025; ddPhi_right = 0.0035;
+        dEtappCut1 = 0.00898; dEtappCut2 = 0.01; dEtappCut3 = 0.00720; 
+        dEtaPvCut1 = 0.00176; dEtaPvCut2 = 0.00256;
+        ddPhi_left = -0.004; ddPhi_right = 0.003;
     }
-
+    
     for(std::vector<TVector3>::iterator a = first_hits.begin(); a != first_hits.end(); ++a)
     {
         TVector3 PVL1;
@@ -2443,43 +2396,34 @@ void test::IsoWith_1st2nd4th(int region, float recoPV)
         ddPhi_left = -0.004; ddPhi_right = 0.0015;
     }
     if( region == 2 ) {
-        dzCut1 = 0.0345; dzCut2 = 0.0335; dzCut3 = 0.0325; 
-        dEtappCut1 = 0.00136; dEtappCut2 = 0.00184; dEtappCut3 = 0.00091; 
-        dEtaPvCut1 = 0.00086; dEtaPvCut2 = 0.00138;
-        ddPhi_left = -0.004; ddPhi_right = 0.0015;
+        dzCut1 = 0.0185; dzCut2 = 0.0185; dzCut3 = 0.0185; 
+        dEtappCut1 = 0.00110; dEtappCut2 = 0.00184; dEtappCut3 = 0.00108; 
+        dEtaPvCut1 = 0.00068; dEtaPvCut2 = 0.00110;
+        ddPhi_left = -0.004; ddPhi_right = 0.002;
     }
     if( region == 3 ) {
-        dzCut1 = 0.0335; dzCut2 = 0.0305; dzCut3 = 0.0325; 
-        dEtappCut1 = 0.00136; dEtappCut2 = 0.00186; dEtappCut3 = 0.00092; 
-        dEtaPvCut1 = 0.00046; dEtaPvCut2 = 0.00094;
-        ddPhi_left = -0.003; ddPhi_right = 0.0015;
+        dzCut1 = 0.0190; dzCut2 = 0.0180; dzCut3 = 0.0190; 
+        dEtappCut1 = 0.00112; dEtappCut2 = 0.00230; dEtappCut3 = 0.00074; 
+        dEtaPvCut1 = 0.00072; dEtaPvCut2 = 0.00092;
+        ddPhi_left = -0.004; ddPhi_right = 0.002;
     }
     if( region == 4 ) {
-        dzCut1 = 0.0345; dzCut2 = 0.0345; dzCut3 = 0.0375; 
-        dEtappCut1 = 0.00141; dEtappCut2 = 0.00186; dEtappCut3 = 0.00093; 
-        dEtaPvCut1 = 0.00046; dEtaPvCut2 = 0.00092;
-        ddPhi_left = -0.0035; ddPhi_right = 0.0015;
-    }
-    if( region == 5 ) {
-        dzCut1 = 0.0375; dzCut2 = 0.0355; dzCut3 = 0.0630; 
-        dEtappCut1 = 0.00236; dEtappCut2 = 0.00376; dEtappCut3 = 0.00186; 
-        dEtaPvCut1 = 0.00094; dEtaPvCut2 = 0.00092;
+        dzCut1 = 0.0360; dzCut2 = 0.0270; dzCut3 = 0.0560; 
+        dEtappCut1 = 0.00232; dEtappCut2 = 0.00326; dEtappCut3 = 0.00138; 
+        dEtaPvCut1 = 0.00088; dEtaPvCut2 = 0.00092;
         ddPhi_left = -0.0025; ddPhi_right = 0.0025;
     }
-    
-    // Since the 1st layer was taken out from combinations deltaZ cut becomes simply 0.2 (cm)
-    if( region == 6 ) {
-        //dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
-        dzCut1 = 0.189; dzCut2 = 0.097; dzCut3 = 0.116; 
-        dEtappCut1 = 0.00633; dEtappCut2 = 0.00892; dEtappCut3 = 0.00222; 
-        dEtaPvCut1 = 0.00110; dEtaPvCut2 = 0.00136;
+    if( region == 5 ) {
+        dzCut1 = 0.190; dzCut2 = 0.111; dzCut3 = 0.138; 
+        dEtappCut1 = 0.00698; dEtappCut2 = 0.00900; dEtappCut3 = 0.00248; 
+        dEtaPvCut1 = 0.00130; dEtaPvCut2 = 0.00152;
         ddPhi_left = -0.003; ddPhi_right = 0.003;
     }
-    if( region == 7 ) {
-        dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
-        dEtappCut1 = 0.00652; dEtappCut2 = 0.00912; dEtappCut3 = 0.00226; 
-        dEtaPvCut1 = 0.00131; dEtaPvCut2 = 0.00172;
-        ddPhi_left = -0.003; ddPhi_right = 0.003;
+    if( region == 6 ) {
+        dzCut1 = 0.2; dzCut2 = 0.149; dzCut3 = 0.189; 
+        dEtappCut1 = 0.00894; dEtappCut2 = 0.01; dEtappCut3 = 0.00276; 
+        dEtaPvCut1 = 0.00154; dEtaPvCut2 = 0.00182;
+        ddPhi_left = -0.004; ddPhi_right = 0.004;
     }
     
     for(std::vector<TVector3>::iterator a = first_hits.begin(); a != first_hits.end(); ++a)
@@ -2587,43 +2531,34 @@ void test::IsoWith_1st3rd4th(int region, float recoPV)
         ddPhi_left = -0.0025; ddPhi_right = 0.0025;
     }
     if( region == 2 ) {
-        dzCut1 = 0.0345; dzCut2 = 0.0335; dzCut3 = 0.0355; 
-        dEtappCut1 = 0.00091; dEtappCut2 = 0.00183; dEtappCut3 = 0.00137; 
-        dEtaPvCut1 = 0.00044; dEtaPvCut2 = 0.00138;
+        dzCut1 = 0.0305; dzCut2 = 0.0315; dzCut3 = 0.0315; 
+        dEtappCut1 = 0.00066; dEtappCut2 = 0.00186; dEtappCut3 = 0.00112; 
+        dEtaPvCut1 = 0.00044; dEtaPvCut2 = 0.00110;
         ddPhi_left = -0.002; ddPhi_right = 0.002;
     }
     if( region == 3 ) {
-        dzCut1 = 0.0370; dzCut2 = 0.0360; dzCut3 = 0.0405; 
-        dEtappCut1 = 0.00048; dEtappCut2 = 0.00142; dEtappCut3 = 0.00141; 
-        dEtaPvCut1 = 0.00044; dEtaPvCut2 = 0.00094;
+        dzCut1 = 0.0185; dzCut2 = 0.0180; dzCut3 = 0.0285; 
+        dEtappCut1 = 0.00110; dEtappCut2 = 0.00278; dEtappCut3 = 0.00274; 
+        dEtaPvCut1 = 0.00052; dEtaPvCut2 = 0.00092;
         ddPhi_left = -0.002; ddPhi_right = 0.002;
     }
     if( region == 4 ) {
-        dzCut1 = 0.0345; dzCut2 = 0.0335; dzCut3 = 0.0355; 
-        dEtappCut1 = 0.00138; dEtappCut2 = 0.00278; dEtappCut3 = 0.00231; 
-        dEtaPvCut1 = 0.00047; dEtaPvCut2 = 0.00095;
-        ddPhi_left = -0.0025; ddPhi_right = 0.0025;
-    }
-    if( region == 5 ) {
-        dzCut1 = 0.0360; dzCut2 = 0.0355; dzCut3 = 0.1205; 
-        dEtappCut1 = 0.00188; dEtappCut2 = 0.00348; dEtappCut3 = 0.00376; 
-        dEtaPvCut1 = 0.00088; dEtaPvCut2 = 0.00092;
+        dzCut1 = 0.0280; dzCut2 = 0.0270; dzCut3 = 0.0970; 
+        dEtappCut1 = 0.00186; dEtappCut2 = 0.00376; dEtappCut3 = 0.00328; 
+        dEtaPvCut1 = 0.00072; dEtaPvCut2 = 0.00092;
         ddPhi_left = -0.002; ddPhi_right = 0.0025;
     }
-    
-    // Since the 1st layer was taken out from combinations deltaZ cut becomes simply 0.2 (cm)
-    if( region == 6 ) {
-        //dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
-        dzCut1 = 0.116; dzCut2 = 0.097; dzCut3 = 0.190; 
-        dEtappCut1 = 0.00271; dEtappCut2 = 0.00552; dEtappCut3 = 0.00358; 
-        dEtaPvCut1 = 0.00092; dEtaPvCut2 = 0.00136;
-        ddPhi_left = -0.0015; ddPhi_right = 0.0025;
-    }
-    if( region == 7 ) {
-        dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
-        dEtappCut1 = 0.00278; dEtappCut2 = 0.00718; dEtappCut3 = 0.00331; 
-        dEtaPvCut1 = 0.00108; dEtaPvCut2 = 0.00172;
+    if( region == 5 ) {
+        dzCut1 = 0.157; dzCut2 = 0.111; dzCut3 = 0.192; 
+        dEtappCut1 = 0.00300; dEtappCut2 = 0.00698; dEtappCut3 = 0.00330; 
+        dEtaPvCut1 = 0.00110; dEtaPvCut2 = 0.00152;
         ddPhi_left = -0.002; ddPhi_right = 0.003;
+    }
+    if( region == 6 ) {
+        dzCut1 = 0.189; dzCut2 = 0.149; dzCut3 = 0.2; 
+        dEtappCut1 = 0.00332; dEtappCut2 = 0.00904; dEtappCut3 = 0.00538; 
+        dEtaPvCut1 = 0.00136; dEtaPvCut2 = 0.00182;
+        ddPhi_left = -0.0025; ddPhi_right = 0.0035;
     }
     
     for(std::vector<TVector3>::iterator a = first_hits.begin(); a != first_hits.end(); ++a)
@@ -2731,45 +2666,36 @@ void test::IsoWith_2nd3rd4th(int region, float recoPV)
         ddPhi_left = -0.0015; ddPhi_right = 0.003;
     }
     if( region == 2 ) {
-        dzCut1 = 0.0345; dzCut2 = 0.0345; dzCut3 = 0.0375; 
-        dEtappCut1 = 0.00092; dEtappCut2 = 0.00226; dEtappCut3 = 0.00136; 
-        dEtaPvCut1 = 0.00044; dEtaPvCut2 = 0.00086;
-        ddPhi_left = -0.0015; ddPhi_right = 0.003;
-    }
-    if( region == 3 ) {
-        dzCut1 = 0.0405; dzCut2 = 0.0375; dzCut3 = 0.0405; 
-        dEtappCut1 = 0.00091; dEtappCut2 = 0.00186; dEtappCut3 = 0.00138; 
-        dEtaPvCut1 = 0.00044; dEtaPvCut2 = 0.00046;
-        ddPhi_left = -0.0015; ddPhi_right = 0.0025;
-    }
-    if( region == 4 ) {
-        dzCut1 = 0.0365; dzCut2 = 0.0375; dzCut3 = 0.0395; 
-        dEtappCut1 = 0.00364; dEtappCut2 = 0.00185; dEtappCut3 = 0.00185; 
-        dEtaPvCut1 = 0.00103; dEtaPvCut2 = 0.00217;
-        ddPhi_left = -0.0025; ddPhi_right = 0.0025;
-    }
-    if( region == 5 ) {
-        dzCut1 = 0.1225; dzCut2 = 0.0765; dzCut3 = 0.1245; 
-        dEtappCut1 = 0.00336; dEtappCut2 = 0.00652; dEtappCut3 = 0.00316; 
-        dEtaPvCut1 = 0.00088; dEtaPvCut2 = 0.00094;
+        dzCut1 = 0.0315; dzCut2 = 0.0305; dzCut3 = 0.0315; 
+        dEtappCut1 = 0.00090; dEtappCut2 = 0.00186; dEtappCut3 = 0.00138; 
+        dEtaPvCut1 = 0.00044; dEtaPvCut2 = 0.00068;
         ddPhi_left = -0.002; ddPhi_right = 0.003;
     }
-
-    // Since the 1st layer was taken out from combinations deltaZ cut becomes simply 0.2 (cm)
+    if( region == 3 ) {
+        dzCut1 = 0.0280; dzCut2 = 0.0190; dzCut3 = 0.0490; 
+        dEtappCut1 = 0.00322; dEtappCut2 = 0.00184; dEtappCut3 = 0.00226; 
+        dEtaPvCut1 = 0.00052; dEtaPvCut2 = 0.00072;
+        ddPhi_left = -0.002; ddPhi_right = 0.003;
+    }
+    if( region == 4 ) {
+        dzCut1 = 0.104; dzCut2 = 0.0730; dzCut3 = 0.106; 
+        dEtappCut1 = 0.00318; dEtappCut2 = 0.00550; dEtappCut3 = 0.00268; 
+        dEtaPvCut1 = 0.00072; dEtaPvCut2 = 0.00088;
+        ddPhi_left = -0.002; ddPhi_right = 0.004;
+    }
+    if( region == 5 ) {
+        dzCut1 = 0.189; dzCut2 = 0.165; dzCut3 = 0.169; 
+        dEtappCut1 = 0.00530; dEtappCut2 = 0.00898; dEtappCut3 = 0.00330; 
+        dEtaPvCut1 = 0.00110; dEtaPvCut2 = 0.00130;
+        ddPhi_left = -0.003; ddPhi_right = 0.004;
+    }
     if( region == 6 ) {
-        //dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
-        dzCut1 = 0.196; dzCut2 = 0.145; dzCut3 = 0.180; 
-        dEtappCut1 = 0.00338; dEtappCut2 = 0.00905; dEtappCut3 = 0.00360; 
-        dEtaPvCut1 = 0.00092; dEtaPvCut2 = 0.00110;
-        ddPhi_left = -0.002; ddPhi_right = 0.0035;
+        dzCut1 = 0.2; dzCut2 = 0.190; dzCut3 = 0.2; 
+        dEtappCut1 = 0.00724; dEtappCut2 = 0.01; dEtappCut3 = 0.00542; 
+        dEtaPvCut1 = 0.00136; dEtaPvCut2 = 0.00154;
+        ddPhi_left = -0.003; ddPhi_right = 0.004;
     }
-    if( region == 7 ) {
-        dzCut1 = 0.2; dzCut2 = 0.2; dzCut3 = 0.2; 
-        dEtappCut1 = 0.00544; dEtappCut2 = 0.00918; dEtappCut3 = 0.00332; 
-        dEtaPvCut1 = 0.00108; dEtaPvCut2 = 0.00131;
-        ddPhi_left = -0.0025; ddPhi_right = 0.0035;
-    }
-    
+
     for(std::vector<TVector3>::iterator a = second_hits.begin(); a != second_hits.end(); ++a)
     {
         TVector3 PVL2;

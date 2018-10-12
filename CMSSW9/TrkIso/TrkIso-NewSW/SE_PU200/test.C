@@ -25,22 +25,18 @@ void test::Loop()
 
    debug = false;
 
-   //const double EM_PiX_dphi_width_[9] = {0.025, 0.04, 0.031, 0.033, 0.035, 0.037, 0.039, 0.04, 0.05};
-   //const double EM_PiX_deta_width_[9] = {0.015, 0.03, 0.031, 0.033, 0.035, 0.037, 0.039, 0.04, 0.05};
+   const double EM_PiX_dphi_width_[9] = {0.02, 0.03, 0.01, 0.033, 0.035, 0.037, 0.039, 0.04, 0.05}; // 
+   const double EM_PiX_deta_width_[9] = {0.01, 0.015, 0.01, 0.033, 0.035, 0.037, 0.039, 0.04, 0.05}; // 
 
-   //const double PiX_PiX_dphi_width_[9] = {0.0025, 0.0035, 0.0031, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
-   //const double PiX_PiX_deta_width_[9] = {0.0045, 0.0055, 0.0031, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
+   const double PiX_PiX_dphi_width_[9] = {0.0017, 0.003, 0.0015, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
+   const double PiX_PiX_deta_width_[9] = {0.0017, 0.003, 0.0015, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
 
-   const double EM_PiX_dphi_width_[9] = {0.02, 0.04, 0.031, 0.033, 0.035, 0.037, 0.039, 0.04, 0.05}; // 
-   const double EM_PiX_deta_width_[9] = {0.01, 0.03, 0.031, 0.033, 0.035, 0.037, 0.039, 0.04, 0.05}; // 
-
-   const double PiX_PiX_dphi_width_[9] = {0.002, 0.0035, 0.0031, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
-   const double PiX_PiX_deta_width_[9] = {0.004, 0.0055, 0.0031, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
+   TH1F *h1 = new TH1F("h1","Pt ratio distribution; Isolation; ",100,0,1);
+   TH1F *h2 = new TH1F("h2","Number of tracks",100,0,100);
+   TH1F *h3 = new TH1F("h3","#Delta z distribution",1000,-0.2,0.2);
    
-   TH1F *h1 = new TH1F("h1","Pt ratio distribution",100,0,1);
-
-  //nentries = 100;
    for (Long64_t jentry=0; jentry<nentries;jentry++) { //nentries
+   //for (Long64_t jentry=0; jentry<10;jentry++) { //nentries
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
@@ -73,10 +69,6 @@ void test::Loop()
       pix_comb.clear();
 
       ntCl_match.clear();
-      ntCl_iso_match.clear();
-      isTrack_match.clear();
-      chi2.clear();
-      track_dr.clear();
       withoutEM_match.clear();
       withEM_match.clear();
 
@@ -126,12 +118,6 @@ void test::Loop()
 
       for(int i=0; i < cl3d_N_;i++){
 
-         // simplge Egamma ID for HGCAL
-         //if(cl3d_coreshowerlength->at(i) < 3 || cl3d_coreshowerlength->at(i) > 18) continue;
-         //if(cl3d_srrtot->at(i) < 0.002 || cl3d_srrtot->at(i) > 0.005) continue;
-         //if(cl3d_maxlayer->at(i) < 8 || cl3d_maxlayer->at(i) > 20) continue;
-         //if(cl3d_firstlayer->at(i) > 5) continue;
-
          if(cl3d_egid->at(i) != 1) continue;
 
          float dPhi = deltaPhi(propgenElPartPhi->at(0), cl3d_phi->at(i));
@@ -179,10 +165,6 @@ void test::Loop()
         EgEta=egCrysClusterEta->at(closest_eg);
         EgPhi=egCrysClusterPhi->at(closest_eg);
 
-        isTrack_match.push_back(isTrackMatched->at(closest_eg));
-        chi2.push_back(trackHighestPtCutChi2Chi2->at(closest_eg));
-        track_dr.push_back(trackmatchingdR->at(closest_eg));
-
         float EgGx = egCrysClusterGx->at(closest_eg);
         float EgGy = egCrysClusterGy->at(closest_eg);
         float EgGz = egCrysClusterGz->at(closest_eg);
@@ -200,10 +182,6 @@ void test::Loop()
           EgEta=cl3d_eta->at(closest_cl3d);
           EgPhi=cl3d_phi->at(closest_cl3d);
 
-          isTrack_match.push_back(hgcal_isTrackMatched->at(closest_cl3d));
-          chi2.push_back(hgcal_trackHighestPtCutChi2Chi2->at(closest_cl3d));
-          track_dr.push_back(hgcal_trackmatchingdR->at(closest_cl3d));
-
           float EgGx = cl3d_x->at(closest_cl3d);
           float EgGy = cl3d_y->at(closest_cl3d);
           float EgGz = (float)cl3d_z->at(closest_cl3d);
@@ -219,16 +197,15 @@ void test::Loop()
 
       eta_region = 0; // intialize
       if( fabs(EgEta) <= 0.8 ) eta_region =1;
-      if( fabs(EgEta) <= 1.15 && fabs(EgEta) > 0.8 ) eta_region =2;
-      if( fabs(EgEta) <= 1.4 && fabs(EgEta) > 1.15 ) eta_region =3;
-      if( fabs(EgEta) <= 1.7 && fabs(EgEta) > 1.4 ) eta_region =4;
-      if( fabs(EgEta) <= 2.25 && fabs(EgEta) > 1.7 ) eta_region =5;
-      if( fabs(EgEta) <= 2.7 && fabs(EgEta) > 2.25 ) eta_region =6;
-      if( fabs(EgEta) <= 3.0 && fabs(EgEta) > 2.7 ) eta_region =7;
+      if( fabs(EgEta) <= 1.4 && fabs(EgEta) > 0.8 ) eta_region =2;
+      if( fabs(EgEta) <= 1.7 && fabs(EgEta) > 1.4 ) eta_region =3;
+      if( fabs(EgEta) <= 2.1 && fabs(EgEta) > 1.7 ) eta_region =4;
+      if( fabs(EgEta) <= 2.7 && fabs(EgEta) > 2.1 ) eta_region =5;
+      if( fabs(EgEta) <= 3.0 && fabs(EgEta) > 2.7 ) eta_region =6;
 
       if( fabs(EgEta) > 3.0 ) continue;
-      //if( eta_region != 7 ) continue;
-
+      //if( eta_region != 6 ) continue;
+      
       Bool_t flag123 = false;
       Bool_t flag124 = false;
       Bool_t flag134 = false;
@@ -275,27 +252,23 @@ void test::Loop()
           }
        }
 
-       int global_index_width = 0;
        trigger_bit_width_ = 0x0;
+       trigger_bit_width_iso_ = 0x0;
+
        // set pixtrk signal boundary
        for(int nth_eg_pix_deta = 0; nth_eg_pix_deta < 9; nth_eg_pix_deta++){
        if( nth_eg_pix_deta != 0) continue;
-       
-       //if(eta_region == 1) SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta], EM_PiX_deta_width_[nth_eg_pix_deta], PiX_PiX_dphi_width_[nth_eg_pix_deta], PiX_PiX_deta_width_[nth_eg_pix_deta]);
-       //else if(eta_region == 2) SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta+1], EM_PiX_deta_width_[nth_eg_pix_deta+1], PiX_PiX_dphi_width_[nth_eg_pix_deta+1], PiX_PiX_deta_width_[nth_eg_pix_deta+1]);
-       //else if(eta_region == 6) SetSingalBoundary(5, EM_PiX_dphi_width_[nth_eg_pix_deta+1], EM_PiX_deta_width_[nth_eg_pix_deta+1], PiX_PiX_dphi_width_[nth_eg_pix_deta+1], PiX_PiX_deta_width_[nth_eg_pix_deta+1]);
-       //else SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta], EM_PiX_deta_width_[nth_eg_pix_deta], PiX_PiX_dphi_width_[nth_eg_pix_deta], PiX_PiX_deta_width_[nth_eg_pix_deta]);
-       
        if(eta_region == 1) SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta], EM_PiX_deta_width_[nth_eg_pix_deta], PiX_PiX_dphi_width_[nth_eg_pix_deta], PiX_PiX_deta_width_[nth_eg_pix_deta]);
-       else if(eta_region == 2 || eta_region == 3 || eta_region == 7) SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta+1], EM_PiX_deta_width_[nth_eg_pix_deta+1], PiX_PiX_dphi_width_[nth_eg_pix_deta+1], PiX_PiX_deta_width_[nth_eg_pix_deta+1]);
+       else if(eta_region == 2) SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta+1], EM_PiX_deta_width_[nth_eg_pix_deta+1], PiX_PiX_dphi_width_[nth_eg_pix_deta+1], PiX_PiX_deta_width_[nth_eg_pix_deta+1]);
+       else if(eta_region == 3) SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta+1], EM_PiX_deta_width_[nth_eg_pix_deta+1], PiX_PiX_dphi_width_[nth_eg_pix_deta+1], PiX_PiX_deta_width_[nth_eg_pix_deta+1]);
+       else if(eta_region == 4) SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta+1], EM_PiX_deta_width_[nth_eg_pix_deta+1], PiX_PiX_dphi_width_[nth_eg_pix_deta+1], PiX_PiX_deta_width_[nth_eg_pix_deta+1]);
+       else if(eta_region == 5) SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta+1], EM_PiX_deta_width_[nth_eg_pix_deta+1], PiX_PiX_dphi_width_[nth_eg_pix_deta+1], PiX_PiX_deta_width_[nth_eg_pix_deta+1]);
+       else if(eta_region == 6) SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta+1], EM_PiX_deta_width_[nth_eg_pix_deta+1], PiX_PiX_dphi_width_[nth_eg_pix_deta+1], PiX_PiX_deta_width_[nth_eg_pix_deta+1]);
        else SetSingalBoundary(eta_region, EM_PiX_dphi_width_[nth_eg_pix_deta], EM_PiX_deta_width_[nth_eg_pix_deta], PiX_PiX_dphi_width_[nth_eg_pix_deta], PiX_PiX_deta_width_[nth_eg_pix_deta]);
-
-       //SetSingalBoundary(1);
 
        // PixTRK algorithm 
        PixTrkPassed = false;
        withoutEM_count_Ele = 0, withEM_count_Ele = 0;
-
 
        fourth_layer_missing = 0;
        third_layer_missing = 0;
@@ -386,12 +359,12 @@ void test::Loop()
                                     Float_t Z1 = first_layer_hits[k].Z();
                                     Float_t Z2 = second_layer_hits[i].Z();
                                     Float_t Z3 = third_layer_hits[j].Z();
-                                    if( eta_region <= 3 || eta_region >= 5 ) zp1 = (R3*Z1 - R1*Z3)/(R3-R1);
-                                    if( eta_region == 4 ) zp1 = (R3*Z2 - R2*Z3)/(R3-R2);
+                                    if( eta_region <= 2 || eta_region >= 4 ) zp1 = (R3*Z1 - R1*Z3)/(R3-R1);
+                                    if( eta_region == 3 ) zp1 = (R3*Z2 - R2*Z3)/(R3-R2);
                                 }
 
                                 if(skip){
-                                if( all_cut_pass_Ele == 1 ){ // if pass exit loop
+                                if( all_cut_pass_Ele == 1 || all_cut_pass_Pos == 1 ){ // if pass exit loop
             		          k = layers[*first_hit];
                                   i = layers[*second_hit];
                                   j = layers[*third_hit]; 
@@ -430,12 +403,12 @@ void test::Loop()
                                     Float_t Z1 = first_layer_hits[k].Z();
                                     Float_t Z2 = second_layer_hits[i].Z();
                                     Float_t Z4 = fourth_layer_hits[j].Z();
-                                    if( eta_region <= 2 || eta_region >= 5 ) zp2 = (R4*Z1 - R1*Z4)/(R4-R1);
-                                    if( eta_region == 3 || eta_region == 4 ) zp2 = (R4*Z2 - R2*Z4)/(R4-R2);
+                                    if( eta_region == 1 || eta_region >= 4 ) zp2 = (R4*Z1 - R1*Z4)/(R4-R1);
+                                    if( eta_region == 2 || eta_region == 3 ) zp2 = (R4*Z2 - R2*Z4)/(R4-R2);
                                 }
 
                                 if(skip){
-                                if( all_cut_pass_Ele == 1 ){ // if pass exit the for loops
+                                if( all_cut_pass_Ele == 1 || all_cut_pass_Pos == 1 ){ // if pass exit the for loops
             		          k = layers[*first_hit];
                                   i = layers[*second_hit];
                                   j = layers[*third_hit]; 
@@ -472,12 +445,12 @@ void test::Loop()
                                     Float_t Z1 = first_layer_hits[k].Z();
                                     Float_t Z3 = third_layer_hits[i].Z();
                                     Float_t Z4 = fourth_layer_hits[j].Z();
-                                    if( eta_region <= 2 || eta_region >= 4 ) zp3 = (R4*Z1 - R1*Z4)/(R4-R1);
-                                    if( eta_region == 3 ) zp3 = (R4*Z3 - R3*Z4)/(R4-R3);
+                                    if( eta_region == 1 || eta_region >= 3 ) zp3 = (R4*Z1 - R1*Z4)/(R4-R1);
+                                    if( eta_region == 2 ) zp3 = (R4*Z3 - R3*Z4)/(R4-R3);
                                 }
 
                                 if(skip){
-                                if( all_cut_pass_Ele == 1 ){ // if pass exit the for loops
+                                if( all_cut_pass_Ele == 1 || all_cut_pass_Pos == 1 ){ // if pass exit the for loops
             		          k = layers[*first_hit];
                                   i = layers[*second_hit];
                                   j = layers[*third_hit]; 
@@ -514,12 +487,12 @@ void test::Loop()
                                     Float_t Z2 = second_layer_hits[k].Z();
                                     Float_t Z3 = third_layer_hits[i].Z();
                                     Float_t Z4 = fourth_layer_hits[j].Z();
-                                    if( eta_region <= 2 || eta_region >= 4 ) zp4 = (R4*Z2 - R2*Z4)/(R4-R2);
-                                    if( eta_region == 3 ) zp4 = (R4*Z3 - R3*Z4)/(R4-R3);
+                                    if( eta_region == 1 || eta_region >= 3 ) zp4 = (R4*Z2 - R2*Z4)/(R4-R2);
+                                    if( eta_region == 2 ) zp4 = (R4*Z3 - R3*Z4)/(R4-R3);
                                 }
 
                                 if(skip){
-                                if( all_cut_pass_Ele == 1 ){ // if pass exit the for loops
+                                if( all_cut_pass_Ele == 1 || all_cut_pass_Pos == 1 ){ // if pass exit the for loops
             		          k = layers[*first_hit];
                                   i = layers[*second_hit];
                                   j = layers[*third_hit]; 
@@ -528,7 +501,7 @@ void test::Loop()
                                }
                               }
 
-                         if( all_cut_pass_Ele == 1 ) { PixTrkPassed = true;}
+                         if( all_cut_pass_Ele == 1 || all_cut_pass_Pos == 1 ) { PixTrkPassed = true;}
                          if( withoutEM_pass_Ele == 1 ) withoutEM_count_Ele = 1;
                          if( withEM_pass_Ele == 1 ) withEM_count_Ele = 1;
                        } // loop for third layer hits
@@ -538,130 +511,21 @@ void test::Loop()
           }          
         }
       }
-/*
-     if( fabs(EgEta) <= 1.4 && fabs(EgEta) > 1.3 && PixTrkPassed == false) {
-       for( std::vector<int>::iterator first_hit = hitted_layers.begin(); first_hit != hitted_layers.end(); first_hit++){
-          for ( std::vector<int>::iterator second_hit = first_hit+1; second_hit != hitted_layers.end(); second_hit++){
-                 
-                 // loop over every pixel hits in the given pixel combination
-                 for( int k=0; k < layers[*first_hit]; k++){
-                    for( int i=0; i < layers[*second_hit]; i++){
-                        _pass_Ele = 0, _pass_Pos = 0;
 
-                        L012_pass_Ele = 0, L012_pass_Pos = 0;
-                        L013_pass_Ele = 0, L013_pass_Pos = 0;
-                        L014_pass_Ele = 0, L014_pass_Pos = 0;
-                        L023_pass_Ele = 0, L023_pass_Pos = 0;
-                        L024_pass_Ele = 0, L024_pass_Pos = 0;
-                        L034_pass_Ele = 0, L034_pass_Pos = 0;
-                        L123_pass_Ele = 0, L123_pass_Pos = 0;
-                        L124_pass_Ele = 0, L124_pass_Pos = 0;
-                        L134_pass_Ele = 0, L134_pass_Pos = 0;
-                        L234_pass_Ele = 0, L234_pass_Pos = 0;
-
-                        L12_EM_Ele = 0, L12_EM_Pos = 0;
-                        L13_EM_Ele = 0, L13_EM_Pos = 0;
-                        L14_EM_Ele = 0, L14_EM_Pos = 0;
-                        L23_EM_Ele = 0, L23_EM_Pos = 0;
-                        L24_EM_Ele = 0, L24_EM_Pos = 0;
-                        L34_EM_Ele = 0, L34_EM_Pos = 0;
-
-                        // skip only if both _pass_Ele and _pass_Pos are 0 i.e., both electron and positron signal window are not satisfied
-
-                        if( *first_hit == 1 && *second_hit == 2 ){ // for efficiency counting  !!caution of the position of this codition
-
-                          TriggeringWith_1st2ndPixel_v2(k,i); 
-
-                          if(skip){
-                          if( _pass_Ele == 1 || _pass_Pos == 1 ){ // if pass exit loop
-            		    k = layers[*first_hit];
-                            i = layers[*second_hit];
-                   	   }
-                         }
-                        }
-
-                        if( *first_hit == 1 && *second_hit == 3 ){ // for efficiency counting  !!caution of the position of this codition
-                        
-                          TriggeringWith_1st3rdPixel_v2(k,i);
-                          
-                          if(skip){
-                          if( _pass_Ele == 1 || _pass_Pos == 1 ){ // if pass exit loop
-                            k = layers[*first_hit];
-                            i = layers[*second_hit];
-                           }
-                         } 
-                        }
-
-                        if( *first_hit == 1 && *second_hit == 4 ){ // for efficiency counting  !!caution of the position of this codition
-                        
-                          TriggeringWith_1st4thPixel_v2(k,i);
-                          
-                          if(skip){
-                          if( _pass_Ele == 1 || _pass_Pos == 1 ){ // if pass exit loop
-                            k = layers[*first_hit];
-                            i = layers[*second_hit];
-                           }
-                         } 
-                        }
-
-                        if( *first_hit == 2 && *second_hit == 3 ){ // for efficiency counting  !!caution of the position of this codition
-                        
-                          TriggeringWith_2nd3rdPixel_v2(k,i);
-                          
-                          if(skip){
-                          if( _pass_Ele == 1 || _pass_Pos == 1 ){ // if pass exit loop
-                            k = layers[*first_hit];
-                            i = layers[*second_hit];
-                           }
-                         } 
-                        }
-
-                        if( *first_hit == 2 && *second_hit == 4 ){ // for efficiency counting  !!caution of the position of this codition
-
-                          TriggeringWith_2nd4thPixel_v2(k,i);
-
-                          if(skip){
-                          if( _pass_Ele == 1 || _pass_Pos == 1 ){ // if pass exit loop
-                            k = layers[*first_hit];
-                            i = layers[*second_hit];
-                           }
-                         }
-                        }
-
-                        if( *first_hit == 3 && *second_hit == 4 ){ // for efficiency counting  !!caution of the position of this codition
-                        
-                          TriggeringWith_3rd4thPixel_v2(k,i);
-                          
-                          if(skip){
-                          if( _pass_Ele == 1 || _pass_Pos == 1 ){ // if pass exit loop
-                            k = layers[*first_hit];
-                            i = layers[*second_hit];
-                           }
-                         } 
-                        }
-
-                       if( _pass_Ele == 1 ) { PixTrkPassed = true;}
-                   } // loop for second layer hits       
-                 } // loop for first layer hits
-
-        }
-      }
-     }
-*/
-      if( PixTrkPassed ){ 
+      if( PixTrkPassed ) { 
           trigger_bit_width_ = trigger_bit_width_| (bit1 << nth_eg_pix_deta);
       }
 
-     global_index_width++;
-     
      // %%%%%%%%%%%%%%%%%%%%% Track isolation algorithm %%%%%%%%%%%%%%%%%%%%%
+     
+     TrkIsoPassed = false;
      if( !PixTrkPassed ) {
          ntCl_iso_match.push_back(false);
          continue; // Skip when L1 Egamma doesn't pass PixTRK algorithm
      }
 
      // Select which combination will be used to calculate reconstructed vertex
-     if( eta_region <= 2 || eta_region >= 5 ) {
+     if( eta_region == 1 || eta_region >= 4 ) {
          if( flag124 || flag134 ) { 
              if( zp2 != -99.) recoPV = zp2;
              if( zp3 != -99.) recoPV = zp3;
@@ -669,7 +533,7 @@ void test::Loop()
          if( !flag124 && !flag134 && flag123 ) recoPV = zp1;
          if( !flag124 && !flag134 && !flag123 && flag234 ) recoPV = zp4;
      }
-     if( eta_region == 3 ) {
+     if( eta_region == 2 ) {
          if( flag234 || flag134 ) { 
              if( zp4 != -99. ) recoPV = zp4;
              if( zp3 != -99. ) recoPV = zp3;
@@ -677,7 +541,7 @@ void test::Loop()
          if( !flag234 && !flag134 && flag123 ) recoPV = zp1;
          if( !flag234 && !flag134 && !flag123 && flag124 ) recoPV = zp2;
      }
-     if( eta_region == 4 ) {
+     if( eta_region == 3 ) {
          if( flag124 || flag234 ) {
              if( zp4 != -99. ) recoPV = zp4;
              if( zp2 != -99. ) recoPV = zp2;
@@ -685,10 +549,11 @@ void test::Loop()
          if( !flag124 && !flag234 && flag123 ) recoPV = zp1;
          if( !flag124 && !flag234 && !flag123 && flag134 ) recoPV = zp3;
      }
-     
-     trigger_bit_width_iso_ = 0x0; 
-     Bool_t TrkIsoPassed = false;
    
+     Float_t z0 = recoPV - simVz->at(0);
+     h3->Fill(z0);
+  
+     
      // initialize pixel hit variables to use in track isolation algorithm
      first_hits.clear();
      second_hits.clear();
@@ -703,22 +568,11 @@ void test::Loop()
      L134.clear();
      L234.clear();
      
-     //cout << "1st hit size: " << first_hits.size() << endl;
-     //cout << "2nd hit size: " << second_hits.size() << endl;
-     //cout << "3rd hit size: " << third_hits.size() << endl;
-     //cout << "4th hit size: " << fourth_hits.size() << endl;
-
      // 1st step of the track isolation - filter out with kinematic parameters
      IsoWith_1st2nd3rd(eta_region, recoPV);
      IsoWith_1st2nd4th(eta_region, recoPV);
      IsoWith_1st3rd4th(eta_region, recoPV);
      IsoWith_2nd3rd4th(eta_region, recoPV);
-
-     //cout << "Reconstructed vertex: " << recoPV << endl;
-     //cout << "1st size: " << L123.size() << endl;
-     //cout << "2nd size: " << L124.size() << endl;
-     //cout << "3rd size: " << L134.size() << endl;
-     //cout << "4th size: " << L234.size() << endl;
 
      // Erase duplication in each combination
      if( L123.size() >= 2 ) 
@@ -787,14 +641,18 @@ void test::Loop()
      all.erase(unique(all.begin(), all.end(), track::uni32),all.end());
      
      // For distribution, we consider L1 e/gamma larger than 20 GeV
-     //if( EgEt < 20. ) continue;
+     if( EgEt < 20. ) continue;
 
      vector<Float_t> pT_vector;
      Int_t all_size = all.size();
+     h2->Fill(all_size);
+     
      cout << "Number of tracks: " << all_size << endl;
+     
      if( all.size() <= 1 ) { 
-        TrkIsoPassed = true; 
+        TrkIsoPassed = true;
         ntCl_iso_match.push_back(true);
+        h1->Fill(0);
      } // When the last vector size <= 1
      
      else {
@@ -858,50 +716,49 @@ void test::Loop()
          cout << endl;
          Float_t ratio = nomi/denomi;
          h1->Fill(ratio);
-        
-         if( eta_region == 1 || eta_region == 3 ) {
+
+         if( eta_region == 1 || eta_region == 2 ) {
             if( ratio < 0.05 ) { 
+                ntCl_iso_match.push_back(true);
                 TrkIsoPassed = true;
-                ntCl_iso_match.push_back(true);
             }
             else ntCl_iso_match.push_back(false);
          }
-         if( eta_region == 2 || eta_region == 4 ) {
-            if( ratio < 0.02 ) { 
-                TrkIsoPassed = true;  
+         if( eta_region == 3 ) {
+            if( ratio < 0.03 ) { 
                 ntCl_iso_match.push_back(true);
+                TrkIsoPassed = true;
             }
             else ntCl_iso_match.push_back(false);
          }
-         if( eta_region == 5 ) {
+         if( eta_region == 4 ) {
             if( ratio < 0.07 ) { 
-                TrkIsoPassed = true;  
                 ntCl_iso_match.push_back(true);
+                TrkIsoPassed = true;
             }
             else ntCl_iso_match.push_back(false);
          }
-         if( eta_region == 6 ) {
+         if( eta_region == 5 || eta_region == 6 ) {
             if( ratio < 0.3 ) { 
-                TrkIsoPassed = true;   
                 ntCl_iso_match.push_back(true);
-            }
-            else ntCl_iso_match.push_back(false);
-         }
-         if( eta_region == 7 ) {
-            if( ratio < 0.25 ) { 
-                TrkIsoPassed = true;  
-                ntCl_iso_match.push_back(true);
+                TrkIsoPassed = true;
             }
             else ntCl_iso_match.push_back(false);
          }
          
      }
+
+     if( PixTrkPassed && TrkIsoPassed ) {
+          trigger_bit_width_iso_ = trigger_bit_width_iso_| (bit2 << nth_eg_pix_deta);
+     }
+     
      
    } // nth_eg_pix_deta loop
   
   } // end of egamma loop (if function)   
 
   trigger_bit_width.push_back(trigger_bit_width_);
+  trigger_bit_width_iso.push_back(trigger_bit_width_iso_);
   pix_comb.push_back(pix_comb_);
 
   pixtrk_tree->Fill();
