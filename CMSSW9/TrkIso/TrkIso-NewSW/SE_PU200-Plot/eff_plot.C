@@ -96,7 +96,8 @@ void eff_plot::Loop()
         }
         if((trigger_bit_width->at(gen_matched_eg)&width_bit[0])==width_bit[0]) hPix_nom->Fill(nt_genEta, 1.);
         if((trigger_bit_width->at(gen_matched_eg)&width_bit[0])==width_bit[0]) hpixmatching_nom->Fill(nt_genEta, 1.);
-        if( ntCl_iso_match->at(gen_matched_eg) ) hPix_iso_nom->Fill(nt_genEta, 1.);
+        //if( ntCl_iso_match->at(gen_matched_eg) ) hPix_iso_nom->Fill(nt_genEta, 1.);
+        if((trigger_bit_width_iso->at(gen_matched_eg)&width_bit[0])==width_bit[0]) hPix_iso_nom->Fill(nt_genEta, 1.);
 
         hEG_nom->Fill(nt_genEta, 1.);
         hpixmatching_denom->Fill(nt_genEta, 1.);
@@ -119,6 +120,8 @@ void eff_plot::Loop()
 
    TGraphAsymmErrors* hPixEff = new TGraphAsymmErrors(hPix_nom, hEG_nom,"B");
    TGraphAsymmErrors* hPixEffIso = new TGraphAsymmErrors(hPix_iso_nom, hEG_nom,"B");
+   TGraphAsymmErrors* hTrkEff = new TGraphAsymmErrors(hTrack_nom, hEG_nom,"B");
+   TGraphAsymmErrors* hTrklooseEff = new TGraphAsymmErrors(hTrackLoose_nom, hEG_nom,"B");
    
    for(int pointNr=0;pointNr<hPixMatching->GetN();pointNr++){
      hPixMatching->SetPointEXhigh(pointNr,0);
@@ -128,7 +131,8 @@ void eff_plot::Loop()
      hPixMatching->SetPointEYlow(pointNr,0);
    }
 
-   TCanvas *c1 = new TCanvas("c1","c1",800,700);
+   //TCanvas *c1 = new TCanvas("c1","c1",800,700);
+   TCanvas *c1 = new TCanvas("c1","c1",1200,800);
    gStyle->SetOptStat(0);
    gStyle->SetLineWidth(1); // axis width, default is 1
    c1->SetTopMargin(0.05);
@@ -149,9 +153,10 @@ void eff_plot::Loop()
    hPix->GetXaxis()->SetLabelSize(0.05);
    hPix->GetYaxis()->SetLabelSize(0.05);
    //hPix->GetXaxis()->SetRangeUser(-1.7, 1.7);
-   //hPix->GetXaxis()->SetRangeUser(-3.0, 3.0);
-   hPix->GetXaxis()->SetRangeUser(-2.5, 2.5);
+   hPix->GetXaxis()->SetRangeUser(-3.0, 3.0);
+   //hPix->GetXaxis()->SetRangeUser(-2.5, 2.5);
    hPix->GetYaxis()->SetRangeUser(0.0, 1.1);
+   //hPix->GetYaxis()->SetRangeUser(0.5, 1.1);
    hPix->GetYaxis()->SetTitle("Efficiency");
    hPix->GetYaxis()->SetTitleOffset(1.2);
    hPix->GetYaxis()->SetTitleSize(0.055);
@@ -187,8 +192,8 @@ void eff_plot::Loop()
    hPixIso->SetMarkerColor(8);
    hPixIso->SetLineColor(8);
    hPixIso->SetLineWidth(1);
-   hPixIso->SetMarkerStyle(22);
-   hPixIso->SetMarkerSize(1.8);
+   hPixIso->SetMarkerStyle(20);
+   hPixIso->SetMarkerSize(1.);
    hPixIso->Draw("pe samel");
 
    hPixMatching->SetMarkerColor(4);
@@ -210,7 +215,7 @@ void eff_plot::Loop()
    //Lgd->AddEntry(hEG,"Phase-2 L1 EG(barrel ECAL/ HGCAL)","lp");
    Lgd->AddEntry(hEG,"Phase-2 L1 EG","lp");
    Lgd->AddEntry(hPix,"Phase-2 L1 EG + Pixel","lp");
-   Lgd->AddEntry(hPixIso,"Phase-2 L1 EG + Pixel + Isolation","lp");
+   Lgd->AddEntry(hPixIso,"Phase-2 L1 EG + Pixel + Track Isolation","lp");
    Lgd->AddEntry(hTrack,"Phase-2 L1 EG + L1 Track","lp");
    Lgd->AddEntry(hTrackLoose,"Phase-2 L1 EG + L1 Track (loose matching)","lp");
    Lgd->Draw();
@@ -219,7 +224,7 @@ void eff_plot::Loop()
    float t_ = c1->GetTopMargin();
 
    //TLatex t(1-r_,1-t_+0.2*t_,"CMSSW_10_1_7, Phase 2, <PU>=200");
-   TLatex t(1-r_,1-t_+0.2*t_,"CMSSW_10_1_7, Phase 2, <PU>=0");
+   TLatex t(1-r_,1-t_+0.2*t_,"CMSSW_10_1_7, Phase 2, <PU>=200");
    t.SetNDC();
    t.SetTextFont(42);
    t.SetTextAlign(31);
@@ -251,6 +256,7 @@ void eff_plot::Loop()
    hPixEff->GetXaxis()->SetLabelSize(0.05);
    hPixEff->GetYaxis()->SetLabelSize(0.05);
    hPixEff->GetXaxis()->SetRangeUser(-3.0, 3.0);
+   //hPixEff->GetXaxis()->SetRangeUser(-2.5, 2.5);
    hPixEff->GetYaxis()->SetRangeUser(0., 1.1);
    hPixEff->GetYaxis()->SetTitle("Efficiency");
    hPixEff->GetYaxis()->SetTitleOffset(1.2);
@@ -259,20 +265,35 @@ void eff_plot::Loop()
    hPixEff->SetMarkerColor(4);
    hPixEff->SetLineColor(4);
    hPixEff->SetLineWidth(1);
-   hPixEff->SetMarkerStyle(29);
-   hPixEff->SetMarkerSize(1.8);
+   hPixEff->SetMarkerStyle(20);
+   hPixEff->SetMarkerSize(1.);
    hPixEff->Draw("ape");
    
    hPixEffIso->SetMarkerColor(8);
    hPixEffIso->SetLineColor(8);
    hPixEffIso->SetLineWidth(1);
-   hPixEffIso->SetMarkerStyle(22);
-   hPixEffIso->SetMarkerSize(1.8);
+   hPixEffIso->SetMarkerStyle(20);
+   hPixEffIso->SetMarkerSize(1.);
    hPixEffIso->Draw("pe same");
+   
+   hTrkEff->SetMarkerColor(1);
+   hTrkEff->SetLineColor(1);
+   hTrkEff->SetLineWidth(1);
+   hTrkEff->SetMarkerStyle(20);
+   hTrkEff->SetMarkerSize(1.);
+   hTrkEff->Draw("pe same");
 
-   TLegend *Lgd1 = new TLegend(0.25, 0.9, 0.95, 0.95);
+   hTrklooseEff->SetMarkerColor(1);
+   hTrklooseEff->SetLineColor(1);
+   hTrklooseEff->SetLineWidth(1);
+   hTrklooseEff->SetMarkerStyle(24);
+   hTrklooseEff->SetMarkerSize(1.);
+   hTrklooseEff->Draw("pe same");
 
-   Lgd1->SetNColumns(4);
+   //TLegend *Lgd1 = new TLegend(0.25, 0.9, 0.95, 0.95);
+   TLegend *Lgd1 = new TLegend(0.3, 0.15, 0.7, 0.45);
+
+   //Lgd1->SetNColumns(4);
    Lgd1->SetFillColor(0);
    Lgd1->SetTextFont(42);
    Lgd1->SetTextSize(0.03);
@@ -280,6 +301,8 @@ void eff_plot::Loop()
    Lgd1->SetFillStyle(0);
    Lgd1->AddEntry(hPixEff,"Pixel matching","lp");
    Lgd1->AddEntry(hPixEffIso,"Pixel mathcing + Track isolation","lp");
+   Lgd1->AddEntry(hTrkEff,"L1 Track","lp");
+   Lgd1->AddEntry(hTrklooseEff,"L1 Track (loose matching)","lp");
    Lgd1->Draw();
 
    TLatex t1(-1.8,1.11,"CMS Preliminary Simulation, Phase 2, <PU>=200");
@@ -290,7 +313,7 @@ void eff_plot::Loop()
    pt_cut1.SetTextSize(0.035);
    pt_cut1.Draw();
  
-   c2->Print("Algorithm-Eff.png");
+   //c2->Print("Algorithm-Eff.png");
    //c2->Print("Algorithm-Eff.pdf");
     
 

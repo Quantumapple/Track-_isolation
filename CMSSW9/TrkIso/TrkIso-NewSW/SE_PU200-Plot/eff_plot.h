@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Fri Oct  5 03:50:08 2018 by ROOT version 6.10/05
+// Fri Oct 12 08:59:28 2018 by ROOT version 6.10/05
 // from TTree t/t
 // found on file: Tree_SE_PU200.root
 //////////////////////////////////////////////////////////
@@ -47,15 +47,8 @@ public :
    Int_t           nPix234_segments;
    vector<bool>    *ntCl_match;
    vector<bool>    *ntCl_iso_match;
-   vector<bool>    *isTrack_match;
-   vector<float>   *chi2;
-   vector<float>   *track_dr;
    vector<bool>    *withoutEM_match;
    vector<bool>    *withEM_match;
-   vector<int>     *ntfirstPix;
-   vector<int>     *ntsecondPix;
-   vector<int>     *ntthirdPix;
-   vector<int>     *ntfourthPix;
    Float_t         nt_genPhi;
    Float_t         nt_genEta;
    Float_t         nt_genPt;
@@ -89,15 +82,8 @@ public :
    TBranch        *b_nPix234_segments;   //!
    TBranch        *b_ntCl_match;   //!
    TBranch        *b_ntCl_iso_match;   //!
-   TBranch        *b_isTrack_match;   //!
-   TBranch        *b_chi2;   //!
-   TBranch        *b_track_dr;   //!
    TBranch        *b_withoutEM_match;   //!
    TBranch        *b_withEM_match;   //!
-   TBranch        *b_ntfirstPix;   //!
-   TBranch        *b_ntsecondPix;   //!
-   TBranch        *b_ntthirdPix;   //!
-   TBranch        *b_ntfourthPix;   //!
    TBranch        *b_nt_genPhi;   //!
    TBranch        *b_nt_genEta;   //!
    TBranch        *b_nt_genPt;   //!
@@ -127,9 +113,11 @@ eff_plot::eff_plot(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("Tree_SE_PU200.root");
+      //TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("Tree_SE_PU200.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("Tree_SE_PU200-v2.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("Tree_SE_PU200.root");
+         //f = new TFile("Tree_SE_PU200.root");
+         f = new TFile("Tree_SE_PU200-v2.root");
       }
       f->GetObject("t",tree);
 
@@ -188,15 +176,8 @@ void eff_plot::Init(TTree *tree)
    pix_comb = 0;
    ntCl_match = 0;
    ntCl_iso_match = 0;
-   isTrack_match = 0;
-   chi2 = 0;
-   track_dr = 0;
    withoutEM_match = 0;
    withEM_match = 0;
-   ntfirstPix = 0;
-   ntsecondPix = 0;
-   ntthirdPix = 0;
-   ntfourthPix = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -225,15 +206,8 @@ void eff_plot::Init(TTree *tree)
    fChain->SetBranchAddress("nPix234_segments", &nPix234_segments, &b_nPix234_segments);
    fChain->SetBranchAddress("ntCl_match", &ntCl_match, &b_ntCl_match);
    fChain->SetBranchAddress("ntCl_iso_match", &ntCl_iso_match, &b_ntCl_iso_match);
-   fChain->SetBranchAddress("isTrack_match", &isTrack_match, &b_isTrack_match);
-   fChain->SetBranchAddress("chi2", &chi2, &b_chi2);
-   fChain->SetBranchAddress("track_dr", &track_dr, &b_track_dr);
    fChain->SetBranchAddress("withoutEM_match", &withoutEM_match, &b_withoutEM_match);
    fChain->SetBranchAddress("withEM_match", &withEM_match, &b_withEM_match);
-   fChain->SetBranchAddress("ntfirstPix", &ntfirstPix, &b_ntfirstPix);
-   fChain->SetBranchAddress("ntsecondPix", &ntsecondPix, &b_ntsecondPix);
-   fChain->SetBranchAddress("ntthirdPix", &ntthirdPix, &b_ntthirdPix);
-   fChain->SetBranchAddress("ntfourthPix", &ntfourthPix, &b_ntfourthPix);
    fChain->SetBranchAddress("nt_genPhi", &nt_genPhi, &b_nt_genPhi);
    fChain->SetBranchAddress("nt_genEta", &nt_genEta, &b_nt_genEta);
    fChain->SetBranchAddress("nt_genPt", &nt_genPt, &b_nt_genPt);
