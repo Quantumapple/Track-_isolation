@@ -1,0 +1,499 @@
+Error in <TTree::SetBranchStatus>: unknown branch -> maxBrempos
+Error in <TTree::SetBranchStatus>: unknown branch -> maxBrempos
+dcap://cluster142.knu.ac.kr//pnfs/knu.ac.kr/data/cms/store/user/jhkim/SingleE_FlatPt-2to100/SingleElectron_200PU_PhaseIIFall17D/180829_174202/0000/SingleEle200PU__1.root
+dcap://cluster142.knu.ac.kr//pnfs/knu.ac.kr/data/cms/store/user/jhkim/SingleE_FlatPt-2to100/SingleElectron_200PU_PhaseIIFall17D/180829_174202/0000/SingleEle200PU__38.root
+(test &) @0x7f1474efc000
+Processing entry 0/1429
+0.216238
+-0.774964
+0.488514
+37.0311
+1st layer
+  0th pixel
+   Delta R : 0.288856
+    x: 1.37876, y: -2.47744, z: 1.65849
+1st layer
+  1th pixel
+   Delta R : 0.256827
+    x: 2.7228, y: -1.59033, z: 2.07031
+1st layer
+  2th pixel
+   Delta R : 0.20937
+    x: 2.59909, y: -1.7141, z: 1.48462
+1st layer
+  3th pixel
+   Delta R : 0.136032
+    x: 2.43813, y: -1.87511, z: 1.99294
+1st layer
+  4th pixel
+   Delta R : 0.142312
+    x: 2.42071, y: -1.89254, z: 1.455
+1st layer
+  5th pixel
+   Delta R : 0.137125
+    x: 2.38555, y: -1.92771, z: 1.42045
+1st layer
+  6th pixel
+   Delta R : 0.14502
+    x: 2.33438, y: -1.9789, z: 2.198
+1st layer
+  7th pixel
+   Delta R : 0.0279057
+    x: 2.21167, y: -2.10167, z: 1.665
+1st layer
+  8th pixel
+   Delta R : 0.0196078
+    x: 2.13891, y: -2.17445, z: 1.74099
+1st layer
+  9th pixel
+   Delta R : 0.0486434
+    x: 2.07631, y: -2.23708, z: 1.73727
+1st layer
+  10th pixel
+   Delta R : 0.120304
+    x: 2.06825, y: -2.24513, z: 2.12722
+1st layer
+  11th pixel
+   Delta R : 0.0926017
+    x: 2.0295, y: -2.2839, z: 1.545
+1st layer
+  12th pixel
+   Delta R : 0.152813
+    x: 2.00821, y: -2.30519, z: 1.31615
+1st layer
+  13th pixel
+   Delta R : 0.246965
+    x: 1.99908, y: -2.31434, z: 0.990143
+1st layer
+  14th pixel
+   Delta R : 0.198999
+    x: 1.95156, y: -2.36187, z: 1.195
+1st layer
+  15th pixel
+   Delta R : 0.123354
+    x: 1.93019, y: -2.38324, z: 1.90052
+1st layer
+  16th pixel
+   Delta R : 0.116609
+    x: 1.92941, y: -2.38403, z: 1.72533
+1st layer
+  17th pixel
+   Delta R : 0.273536
+    x: 1.92322, y: -2.39022, z: 0.948097
+1st layer
+  18th pixel
+   Delta R : 0.161084
+    x: 1.90119, y: -2.41226, z: 2.095
+1st layer
+  19th pixel
+   Delta R : 0.133146
+    x: 1.8927, y: -2.42075, z: 1.745
+1st layer
+  20th pixel
+   Delta R : 0.146655
+    x: 1.89316, y: -2.42029, z: 1.97389
+1st layer
+  21th pixel
+   Delta R : 0.176652
+    x: 1.80796, y: -2.50553, z: 1.62239
+1st layer
+  22th pixel
+   Delta R : 0.17811
+    x: 1.79592, y: -2.51758, z: 1.835
+1st layer
+  23th pixel
+   Delta R : 0.183667
+    x: 1.78122, y: -2.53227, z: 1.765
+1st layer
+  24th pixel
+   Delta R : 0.200193
+    x: 1.74824, y: -2.56527, z: 1.865
+1st layer
+  25th pixel
+   Delta R : 0.290137
+    x: 1.74013, y: -2.57338, z: 1.07941
+1st layer
+  26th pixel
+   Delta R : 0.238765
+    x: 1.71296, y: -2.60057, z: 2.155
+1st layer
+  27th pixel
+   Delta R : 0.256048
+    x: 1.67602, y: -2.63752, z: 1.40333
+1st layer
+  28th pixel
+   Delta R : 0.238577
+    x: 1.66082, y: -2.65272, z: 1.69985
+1st layer
+  29th pixel
+   Delta R : 0.263431
+    x: 1.65949, y: -2.65405, z: 1.39902
+1st layer
+  30th pixel
+   Delta R : 0.301108
+    x: 2.55394, y: -1.75926, z: 2.68929
+1st layer
+  31th pixel
+   Delta R : 0.220589
+    x: 2.53579, y: -1.77741, z: 2.305
+1st layer
+  32th pixel
+   Delta R : 0.237972
+    x: 2.43186, y: -1.88139, z: 2.5129
+1st layer
+  33th pixel
+   Delta R : 0.205599
+    x: 2.40446, y: -1.90879, z: 2.395
+1st layer
+  34th pixel
+   Delta R : 0.265814
+    x: 2.31854, y: -1.99475, z: 2.695
+1st layer
+  35th pixel
+   Delta R : 0.155027
+    x: 2.18398, y: -2.12937, z: 2.29591
+1st layer
+  36th pixel
+   Delta R : 0.264846
+    x: 2.14927, y: -2.16408, z: 2.713
+1st layer
+  37th pixel
+   Delta R : 0.165825
+    x: 2.02762, y: -2.28578, z: 2.28025
+1st layer
+  38th pixel
+   Delta R : 0.23397
+    x: 1.88123, y: -2.43223, z: 2.43917
+1st layer
+  39th pixel
+   Delta R : 0.229096
+    x: 1.77437, y: -2.53912, z: 2.245
+1st layer
+  40th pixel
+   Delta R : 0.286819
+    x: 1.74219, y: -2.57132, z: 2.52222
+1st layer
+  41th pixel
+   Delta R : 0.2928
+    x: 1.68821, y: -2.62532, z: 2.46667
+
+Pt : 38.3276
+1st pixel cluster
+X: 2.13891, Y: -2.17445, Z: 1.74099
+
+2nd layer
+  0th pixel
+   Delta R : 0.240943
+    x: 3.62922, y: -5.82686, z: 3.84222
+2nd layer
+  1th pixel
+   Delta R : 0.25694
+    x: 3.68027, y: -5.79479, z: 2.815
+2nd layer
+  2th pixel
+   Delta R : 0.264727
+    x: 3.68579, y: -5.79133, z: 4.69778
+2nd layer
+  3th pixel
+   Delta R : 0.228068
+    x: 3.72214, y: -5.7685, z: 3.325
+2nd layer
+  4th pixel
+   Delta R : 0.222619
+    x: 3.72944, y: -5.76391, z: 3.61285
+2nd layer
+  5th pixel
+   Delta R : 0.24597
+    x: 3.76182, y: -5.74358, z: 4.575
+2nd layer
+  6th pixel
+   Delta R : 0.232301
+    x: 3.76046, y: -5.74443, z: 4.305
+2nd layer
+  7th pixel
+   Delta R : 0.242662
+    x: 3.84901, y: -5.68882, z: 2.65571
+2nd layer
+  8th pixel
+   Delta R : 0.19365
+    x: 3.89922, y: -5.65728, z: 3.58078
+2nd layer
+  9th pixel
+   Delta R : 0.195269
+    x: 3.92433, y: -5.64151, z: 3.29095
+2nd layer
+  10th pixel
+   Delta R : 0.201219
+    x: 3.95509, y: -5.6222, z: 4.3065
+2nd layer
+  11th pixel
+   Delta R : 0.192666
+    x: 3.96412, y: -5.61652, z: 3.1893
+2nd layer
+  12th pixel
+   Delta R : 0.163844
+    x: 4.07273, y: -5.54831, z: 3.735
+2nd layer
+  13th pixel
+   Delta R : 0.151138
+    x: 4.14643, y: -5.50202, z: 3.625
+2nd layer
+  14th pixel
+   Delta R : 0.212282
+    x: 4.14538, y: -5.50268, z: 4.86286
+2nd layer
+  15th pixel
+   Delta R : 0.291053
+    x: 4.19276, y: -5.47292, z: 5.76167
+2nd layer
+  16th pixel
+   Delta R : 0.198615
+    x: 4.2495, y: -5.43728, z: 2.575
+2nd layer
+  17th pixel
+   Delta R : 0.14333
+    x: 4.31582, y: -5.39563, z: 3.1114
+2nd layer
+  18th pixel
+   Delta R : 0.254157
+    x: 5.59455, y: -4.53796, z: 2.005
+2nd layer
+  19th pixel
+   Delta R : 0.228535
+    x: 5.31234, y: -4.82005, z: 2.08066
+2nd layer
+  20th pixel
+   Delta R : 0.151342
+    x: 5.53828, y: -4.5942, z: 2.825
+2nd layer
+  21th pixel
+   Delta R : 0.0673219
+    x: 5.4653, y: -4.66715, z: 3.85957
+2nd layer
+  22th pixel
+   Delta R : 0.123707
+    x: 5.35705, y: -4.77536, z: 2.915
+2nd layer
+  23th pixel
+   Delta R : 0.153211
+    x: 5.25076, y: -4.88161, z: 5.07045
+2nd layer
+  24th pixel
+   Delta R : 0.129843
+    x: 5.20623, y: -4.92612, z: 2.805
+2nd layer
+  25th pixel
+   Delta R : 0.245973
+    x: 5.19155, y: -4.94079, z: 5.90912
+2nd layer
+  26th pixel
+   Delta R : 0.221037
+    x: 5.07553, y: -5.05676, z: 5.68227
+2nd layer
+  27th pixel
+   Delta R : 0.273911
+    x: 5.04122, y: -5.09106, z: 6.16409
+2nd layer
+  28th pixel
+   Delta R : 0.0828085
+    x: 5.02696, y: -5.10531, z: 3.175
+2nd layer
+  29th pixel
+   Delta R : 0.0191978
+    x: 5.02713, y: -5.10514, z: 3.79881
+2nd layer
+  30th pixel
+   Delta R : 0.139721
+    x: 4.96382, y: -5.16843, z: 2.74924
+2nd layer
+  31th pixel
+   Delta R : 0.0659316
+    x: 4.94372, y: -5.18852, z: 4.26143
+2nd layer
+  32th pixel
+   Delta R : 0.095229
+    x: 4.92946, y: -5.20277, z: 3.125
+2nd layer
+  33th pixel
+   Delta R : 0.275424
+    x: 4.88926, y: -5.24296, z: 6.14967
+2nd layer
+  34th pixel
+   Delta R : 0.169876
+    x: 4.88558, y: -5.24664, z: 5.175
+2nd layer
+  35th pixel
+   Delta R : 0.0899119
+    x: 4.83099, y: -5.30121, z: 4.375
+2nd layer
+  36th pixel
+   Delta R : 0.160531
+    x: 4.7847, y: -5.34747, z: 2.67796
+2nd layer
+  37th pixel
+   Delta R : 0.131327
+    x: 4.744, y: -5.38816, z: 2.9699
+2nd layer
+  38th pixel
+   Delta R : 0.085777
+    x: 4.71501, y: -5.41713, z: 4.055
+2nd layer
+  39th pixel
+   Delta R : 0.155583
+    x: 4.6973, y: -5.43484, z: 4.905
+2nd layer
+  40th pixel
+   Delta R : 0.0925439
+    x: 4.65429, y: -5.47783, z: 3.825
+2nd layer
+  41th pixel
+   Delta R : 0.242624
+    x: 5.38727, y: -4.32853, z: 2.035
+2nd layer
+  42th pixel
+   Delta R : 0.257746
+    x: 5.62426, y: -3.95153, z: 2.17818
+2nd layer
+  43th pixel
+   Delta R : 0.0984137
+    x: 5.38174, y: -4.33733, z: 3.865
+2nd layer
+  44th pixel
+   Delta R : 0.302412
+    x: 5.40649, y: -4.29796, z: 6.05064
+2nd layer
+  45th pixel
+   Delta R : 0.155708
+    x: 5.42179, y: -4.27362, z: 2.82134
+2nd layer
+  46th pixel
+   Delta R : 0.150445
+    x: 5.42816, y: -4.26349, z: 4.50636
+2nd layer
+  47th pixel
+   Delta R : 0.220737
+    x: 5.44886, y: -4.23056, z: 5.20714
+2nd layer
+  48th pixel
+   Delta R : 0.1965
+    x: 5.45043, y: -4.22806, z: 4.96
+2nd layer
+  49th pixel
+   Delta R : 0.127575
+    x: 5.45176, y: -4.22594, z: 3.2475
+2nd layer
+  50th pixel
+   Delta R : 0.194383
+    x: 5.49845, y: -4.15166, z: 2.57219
+2nd layer
+  51th pixel
+   Delta R : 0.230234
+    x: 5.52724, y: -4.10586, z: 2.285
+2nd layer
+  52th pixel
+   Delta R : 0.158067
+    x: 5.52775, y: -4.10505, z: 4.31322
+2nd layer
+  53th pixel
+   Delta R : 0.156792
+    x: 5.58736, y: -4.01023, z: 3.355
+2nd layer
+  54th pixel
+   Delta R : 0.236408
+    x: 5.59588, y: -3.99669, z: 2.33179
+2nd layer
+  55th pixel
+   Delta R : 0.237235
+    x: 5.60615, y: -3.98034, z: 2.34105
+2nd layer
+  56th pixel
+   Delta R : 0.186707
+    x: 5.67127, y: -3.87675, z: 3.155
+2nd layer
+  57th pixel
+   Delta R : 0.189186
+    x: 5.68103, y: -3.86123, z: 3.155
+2nd layer
+  58th pixel
+   Delta R : 0.237545
+    x: 5.74822, y: -3.75434, z: 2.65
+2nd layer
+  59th pixel
+   Delta R : 0.203777
+    x: 5.77816, y: -3.70672, z: 3.585
+2nd layer
+  60th pixel
+   Delta R : 0.215487
+    x: 5.79878, y: -3.67391, z: 3.26658
+2nd layer
+  61th pixel
+   Delta R : 0.250092
+    x: 5.93863, y: -3.45144, z: 3.385
+2nd layer
+  62th pixel
+   Delta R : 0.290601
+    x: 5.99858, y: -3.35608, z: 4.62878
+2nd layer
+  63th pixel
+   Delta R : 0.297335
+    x: 6.04776, y: -3.27783, z: 4.515
+2nd pixel cluster
+X: 5.02713, Y: -5.10514, Z: 3.79881
+
+X,y,z position information of each combination
+----- L123 -----
+  1st pixel cluster x: 2.13891, y: -2.17445, z: 1.74099
+  2nd pixel cluster x: 5.02713, y: -5.10514, z: 3.79881
+  3rd pixel cluster x: 8.22617, y: -8.34102, z: 6.07244
+
+
+----- L124 -----
+  1st pixel cluster x: 2.13891, y: -2.17445, z: 1.74099
+  2nd pixel cluster x: 5.02713, y: -5.10514, z: 3.79881
+  3rd pixel cluster x: 11.2125, y: -11.3529, z: 8.19258
+
+  1st pixel cluster x: 2.13891, y: -2.17445, z: 1.74099
+  2nd pixel cluster x: 5.02713, y: -5.10514, z: 3.79881
+  3rd pixel cluster x: 11.2037, y: -11.3602, z: 8.19173
+
+  1st pixel cluster x: 2.13891, y: -2.17445, z: 1.74099
+  2nd pixel cluster x: 5.02713, y: -5.10514, z: 3.79881
+  3rd pixel cluster x: 11.0132, y: -11.1527, z: 8.05166
+
+
+----- L134 -----
+  1st pixel cluster x: 2.13891, y: -2.17445, z: 1.74099
+  2nd pixel cluster x: 8.22617, y: -8.34102, z: 6.07244
+  3rd pixel cluster x: 11.2125, y: -11.3529, z: 8.19258
+
+  1st pixel cluster x: 2.13891, y: -2.17445, z: 1.74099
+  2nd pixel cluster x: 8.22617, y: -8.34102, z: 6.07244
+  3rd pixel cluster x: 11.0132, y: -11.1527, z: 8.05166
+
+
+----- L234 -----
+  1st pixel cluster x: 5.02713, y: -5.10514, z: 3.79881
+  2nd pixel cluster x: 8.22617, y: -8.34102, z: 6.07244
+  3rd pixel cluster x: 11.2125, y: -11.3529, z: 8.19258
+
+  1st pixel cluster x: 5.02713, y: -5.10514, z: 3.79881
+  2nd pixel cluster x: 8.22617, y: -8.34102, z: 6.07244
+  3rd pixel cluster x: 11.0132, y: -11.1527, z: 8.05166
+
+
+Number of tracks from each combination after first remove
+  L123 : 1
+  L124 : 1
+  L134 : 1
+  L234 : 1
+
+Number of collected tracks
+  All : 4
+
+Number of collected tracks after first remove
+  All : 1
+
+Number of collected tracks after second remove
+  All : 1
+
+The final number of tracks: 1

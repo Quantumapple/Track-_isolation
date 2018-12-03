@@ -1,0 +1,3 @@
+dcap://cluster142.knu.ac.kr//pnfs/knu.ac.kr/data/cms/store/user/jhkim/SingleNeutrino/SingleNeutrino_200PU_PhaseIIFall17D/180829_180356/0000/SingleNeutrino200PU__102.root
+dcap://cluster142.knu.ac.kr//pnfs/knu.ac.kr/data/cms/store/user/jhkim/SingleNeutrino/SingleNeutrino_200PU_PhaseIIFall17D/180829_180356/0000/SingleNeutrino200PU__103.root
+dcap://cluster142.knu.ac.kr//pnfs/knu.ac.kr/data/cms/store/user/jhkim/SingleNeutrino/SingleNeutrino_200PU_PhaseIIFall17D/180829_180356/0000/SingleNeutrino200PU__91.root
