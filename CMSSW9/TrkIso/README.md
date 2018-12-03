@@ -1,8 +1,8 @@
 How to run TrackIsolation code
 ==============================
 
-Running method of all codes is the same as submtting signal window code. But in PiXTRK code, BDT egamma ID of HGCAL is added. So someone who wants to run codes, he/she must use these variables: <br>
-
+Running method of all codes is the same as submtting signal window code. 
+But in PiXTRK code, BDT egamma ID of HGCAL is added. So someone who wants to run codes, you must use these variables: <br>
 
 For signal sample: <br>
 <blockquote>
