@@ -32,8 +32,6 @@ void test::Loop()
    const double PiX_PiX_deta_width_[9] = {0.0017, 0.003, 0.0015, 0.0033, 0.0035, 0.0037, 0.0039, 0.004, 0.005};
 
    TH1F *h1 = new TH1F("h1","Pt ratio distribution; Isolation; ",100,0,1);
-   TH1F *h2 = new TH1F("h2","Number of tracks",100,0,100);
-   TH1F *h3 = new TH1F("h3","#Delta z distribution",1000,-0.2,0.2);
    
    for (Long64_t jentry=0; jentry<nentries;jentry++) { //nentries
    //for (Long64_t jentry=0; jentry<10;jentry++) { //nentries
@@ -201,10 +199,11 @@ void test::Loop()
       if( fabs(EgEta) <= 1.7 && fabs(EgEta) > 1.4 ) eta_region =3;
       if( fabs(EgEta) <= 2.1 && fabs(EgEta) > 1.7 ) eta_region =4;
       if( fabs(EgEta) <= 2.7 && fabs(EgEta) > 2.1 ) eta_region =5;
+      //if( fabs(EgEta) <= 2.3 && fabs(EgEta) > 2.2 ) eta_region =5;
       if( fabs(EgEta) <= 3.0 && fabs(EgEta) > 2.7 ) eta_region =6;
 
       if( fabs(EgEta) > 3.0 ) continue;
-      //if( eta_region != 6 ) continue;
+      //if( eta_region != 5 ) continue;
       
       Bool_t flag123 = false;
       Bool_t flag124 = false;
@@ -501,7 +500,8 @@ void test::Loop()
                                }
                               }
 
-                         if( all_cut_pass_Ele == 1 || all_cut_pass_Pos == 1 ) { PixTrkPassed = true;}
+                         //if( all_cut_pass_Ele == 1 || all_cut_pass_Pos == 1 ) { PixTrkPassed = true;}
+                         if( all_cut_pass_Ele == 1 ) { PixTrkPassed = true;}
                          if( withoutEM_pass_Ele == 1 ) withoutEM_count_Ele = 1;
                          if( withEM_pass_Ele == 1 ) withEM_count_Ele = 1;
                        } // loop for third layer hits
@@ -520,7 +520,6 @@ void test::Loop()
      
      TrkIsoPassed = false;
      if( !PixTrkPassed ) {
-         ntCl_iso_match.push_back(false);
          continue; // Skip when L1 Egamma doesn't pass PixTRK algorithm
      }
 
@@ -550,10 +549,6 @@ void test::Loop()
          if( !flag124 && !flag234 && !flag123 && flag134 ) recoPV = zp3;
      }
    
-     Float_t z0 = recoPV - simVz->at(0);
-     h3->Fill(z0);
-  
-     
      // initialize pixel hit variables to use in track isolation algorithm
      first_hits.clear();
      second_hits.clear();
@@ -641,17 +636,15 @@ void test::Loop()
      all.erase(unique(all.begin(), all.end(), track::uni32),all.end());
      
      // For distribution, we consider L1 e/gamma larger than 20 GeV
-     if( EgEt < 20. ) continue;
+     //if( EgEt < 20. ) continue;
 
      vector<Float_t> pT_vector;
      Int_t all_size = all.size();
-     h2->Fill(all_size);
      
      cout << "Number of tracks: " << all_size << endl;
      
      if( all.size() <= 1 ) { 
         TrkIsoPassed = true;
-        ntCl_iso_match.push_back(true);
         h1->Fill(0);
      } // When the last vector size <= 1
      
@@ -703,47 +696,51 @@ void test::Loop()
          }
 
          sort(pT_vector.begin(), pT_vector.end());
+         
          Float_t denomi = 0.; Float_t nomi = 0.;
          Int_t vec_size = pT_vector.size();
-         //cout << "    pT list" << endl;
-         //for(Int_t k = 0; k < vec_size; k++) cout << "     pT: " << pT_vector.at(k) << endl;
          for(Int_t k = 0; k < vec_size; k++) denomi += pT_vector.at(k);
          for(Int_t k = 0; k < vec_size-1; k++) nomi += pT_vector.at(k);
-         //cout << "      ratio: " << nomi/denomi << endl;
-         //cout << "---------------------------------" << endl;
-         //if( all_size <= 1 ) cout << "Number of tracks : " << all_size << endl;
-         //if( all_size >= 2 ) cout << "Ratio : " << nomi/denomi << endl;
-         cout << endl;
+         
          Float_t ratio = nomi/denomi;
          h1->Fill(ratio);
 
          if( eta_region == 1 || eta_region == 2 ) {
-            if( ratio < 0.05 ) { 
-                ntCl_iso_match.push_back(true);
-                TrkIsoPassed = true;
-            }
-            else ntCl_iso_match.push_back(false);
+            if( ratio < 0.05 ) TrkIsoPassed = true;
          }
+
          if( eta_region == 3 ) {
-            if( ratio < 0.03 ) { 
-                ntCl_iso_match.push_back(true);
-                TrkIsoPassed = true;
-            }
-            else ntCl_iso_match.push_back(false);
+            if( ratio < 0.03 ) TrkIsoPassed = true;
          }
+         
          if( eta_region == 4 ) {
-            if( ratio < 0.07 ) { 
-                ntCl_iso_match.push_back(true);
-                TrkIsoPassed = true;
-            }
-            else ntCl_iso_match.push_back(false);
+            if( ratio < 0.07 ) TrkIsoPassed = true;
          }
-         if( eta_region == 5 || eta_region == 6 ) {
-            if( ratio < 0.3 ) { 
-                ntCl_iso_match.push_back(true);
-                TrkIsoPassed = true;
+         
+         if( eta_region == 5 ) {
+            
+            Int_t seg_flag = 0;
+            if( fabs(EgEta) > 2.1 && fabs(EgEta) <= 2.2 ) seg_flag = 1;
+            else if( fabs(EgEta) > 2.2 && fabs(EgEta) <= 2.3 ) seg_flag = 2;
+            else seg_flag = 3;
+
+            switch( seg_flag ) {
+                case 1:
+                    if( ratio < 0.48 ) TrkIsoPassed = true;
+                    break;
+
+                case 2:
+                    if( ratio < 0.47 ) TrkIsoPassed = true;
+                    break;
+                
+                case 3:
+                    if( ratio < 0.45 ) TrkIsoPassed = true;
+                    break;
             }
-            else ntCl_iso_match.push_back(false);
+         }
+         
+         if( eta_region == 6 ) {
+            if( ratio < 0.4 ) TrkIsoPassed = true;
          }
          
      }

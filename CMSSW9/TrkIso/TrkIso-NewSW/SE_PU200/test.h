@@ -681,7 +681,6 @@ public :
    vector<int> trigger_bit_width_iso;
 
    vector<bool> ntCl_match; 
-   vector<bool> ntCl_iso_match;
    vector<bool> isTrack_match; 
    vector<float> chi2; 
    vector<float> track_dr;
@@ -712,7 +711,7 @@ test::test(TTree *tree) : fChain(0)
    if (tree == 0) {
       TChain * chain = new TChain("l1PiXTRKTree/L1PiXTRKTree","");
       string line;
-      ifstream myfile("txt_to_path"); // txt_to_path will be replaced by the name of txt file that contains the location of input files
+      ifstream myfile("SE_PU200_1.txt"); // SE_PU200_1.txt will be replaced by the name of txt file that contains the location of input files
       if (myfile.is_open())
         {
           while ( getline (myfile,line) )
@@ -733,7 +732,7 @@ test::test(TTree *tree) : fChain(0)
    Ele = 1, Pos = 2;
    skip = 0;
 
-   outfile = new TFile("../output_tmp/Tree_output","recreate");
+   outfile = new TFile("../output_tmp/Tree_SE_PU200_1.root","recreate");
    pixtrk_tree = new TTree("t","t");
 
    count_Entry = 1;
@@ -758,7 +757,6 @@ test::test(TTree *tree) : fChain(0)
    pixtrk_tree->Branch("pix_comb",&pix_comb);
 
    pixtrk_tree->Branch("ntCl_match",&ntCl_match);
-   pixtrk_tree->Branch("ntCl_iso_match",&ntCl_iso_match);
    pixtrk_tree->Branch("withoutEM_match",&withoutEM_match);
    pixtrk_tree->Branch("withEM_match",&withEM_match);
 
