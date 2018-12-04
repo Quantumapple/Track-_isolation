@@ -162,10 +162,11 @@ void test::Loop()
       if( fabs(EgEta) <= 1.7 && fabs(EgEta) > 1.4 ) eta_region =3;
       if( fabs(EgEta) <= 2.1 && fabs(EgEta) > 1.7 ) eta_region =4;
       if( fabs(EgEta) <= 2.7 && fabs(EgEta) > 2.1 ) eta_region =5;
+      //if( fabs(EgEta) <= 2.3 && fabs(EgEta) > 2.2 ) eta_region =5;
       if( fabs(EgEta) <= 3.0 && fabs(EgEta) > 2.7 ) eta_region =6;
 
       if( fabs(EgEta) > 3. ) continue;
-      //if( eta_region != 6 ) continue;
+      //if( eta_region != 5 ) continue;
       
       Bool_t flag123 = false;
       Bool_t flag124 = false;
@@ -814,12 +815,37 @@ void test::Loop()
               }
               else ntCl_iso_match.push_back(false);
           }
-          if( eta_region == 5 || eta_region == 6 ) {
-              if( ratio < 0.3 ) { 
-                  ntCl_iso_match.push_back(true);
+          
+          if( eta_region == 5 ) {
+
+              Int_t seg_flag = 0;
+              if( fabs(EgEta) > 2.1 && fabs(EgEta) <= 2.2 ) seg_flag = 1;
+              else if( fabs(EgEta) > 2.2 && fabs(EgEta) <= 2.3 ) seg_flag = 2;
+              else seg_flag = 3;
+
+              switch( seg_flag ) {
+                  case 1:
+                      if( ratio < 0.48 ) ntCl_iso_match.push_back(true);
+                      else ntCl_iso_match.push_back(false);
+                      break;
+
+                  case 2:
+                      if( ratio < 0.47 ) ntCl_iso_match.push_back(true);
+                      else ntCl_iso_match.push_back(false);
+                      break;
+
+                  case 3:
+                      if( ratio < 0.45 ) ntCl_iso_match.push_back(true);
+                      else ntCl_iso_match.push_back(false);
+                      break;
               }
+          }
+
+          if( eta_region == 6 ) {
+              if( ratio < 0.4 ) ntCl_iso_match.push_back(true);
               else ntCl_iso_match.push_back(false);
           }
+          
           
       }
      
@@ -847,10 +873,11 @@ void test::Loop()
       if( fabs(EgEta) <= 1.7 && fabs(EgEta) > 1.4 ) eta_region =3;
       if( fabs(EgEta) <= 2.1 && fabs(EgEta) > 1.7 ) eta_region =4;
       if( fabs(EgEta) <= 2.7 && fabs(EgEta) > 2.1 ) eta_region =5;
+      //if( fabs(EgEta) <= 2.3 && fabs(EgEta) > 2.2 ) eta_region =5;
       if( fabs(EgEta) <= 3.0 && fabs(EgEta) > 2.7 ) eta_region =6;
       
       if( fabs(EgEta) > 3. ) continue;
-      //if( eta_region != 6 ) continue;
+      //if( eta_region != 5 ) continue;
       
       Bool_t flag123 = false;
       Bool_t flag124 = false;
@@ -1499,10 +1526,34 @@ void test::Loop()
              }
              else ntCl_iso_match.push_back(false);
          }
-         if( eta_region == 5 || eta_region == 6 ) {
-             if( ratio < 0.3 ) { 
-                 ntCl_iso_match.push_back(true);
+         
+         if( eta_region == 5 ) {
+
+             Int_t seg_flag = 0;
+             if( fabs(EgEta) > 2.1 && fabs(EgEta) <= 2.2 ) seg_flag = 1;
+             else if( fabs(EgEta) > 2.2 && fabs(EgEta) <= 2.3 ) seg_flag = 2;
+             else seg_flag = 3;
+
+             switch( seg_flag ) {
+                 case 1:
+                     if( ratio < 0.48 ) ntCl_iso_match.push_back(true);
+                     else ntCl_iso_match.push_back(false);
+                     break;
+
+                 case 2:
+                     if( ratio < 0.47 ) ntCl_iso_match.push_back(true);
+                     else ntCl_iso_match.push_back(false);
+                     break;
+
+                 case 3:
+                     if( ratio < 0.45 ) ntCl_iso_match.push_back(true);
+                     else ntCl_iso_match.push_back(false);
+                     break;
              }
+         }
+
+         if( eta_region == 6 ) {
+             if( ratio < 0.4 ) ntCl_iso_match.push_back(true);
              else ntCl_iso_match.push_back(false);
          }
          
@@ -1510,19 +1561,6 @@ void test::Loop()
 
   
   } // end of egamma loop  
-
-  //Int_t ntSize1 = ntCl_match.size();
-  //Int_t ntSize2 = ntCl_iso_match.size();
-
-  //for(Int_t i = 0; i < ntSize1; i++) {
-  //  cout << ntCl_match.at(i) << ", ";
-  //}
-  //cout << endl;
-  //
-  //for(Int_t i = 0; i < ntSize2; i++) {
-  //  cout << ntCl_iso_match.at(i) << ", ";
-  //}
-  //cout << endl;
 
   if(pass_egobjects_check){ event_denominator = 1; FillCutFlow("EvtCut", 1.);}
   if(all_cut_pass_eg) event_nominator = 1; 

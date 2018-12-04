@@ -739,7 +739,7 @@ test::test(TTree *tree) : fChain(0)
    if (tree == 0) {
       TChain * chain = new TChain("l1PiXTRKTree/L1PiXTRKTree","");
       string line;
-      ifstream myfile("txt_to_path"); // txt_to_path will be replaced by the name of txt file that contains the location of input files
+      ifstream myfile("MinBias_PU200_1.txt"); // MinBias_PU200_1.txt will be replaced by the name of txt file that contains the location of input files
       if (myfile.is_open())
         {
           while ( getline (myfile,line) )
@@ -760,7 +760,7 @@ test::test(TTree *tree) : fChain(0)
    Ele = 1, Pos = 2;
    skip = 1;
 
-   file3 = new TFile("../output_tmp/Tree_output","recreate");
+   file3 = new TFile("../output_tmp/Tree_MinBias_PU200_1.root","recreate");
    pixtrk_tree = new TTree("t","t");
 
    count_Entry = 1;
